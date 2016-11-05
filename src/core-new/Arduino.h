@@ -1,24 +1,4 @@
-/*
-  Arduino.h - Main include file for the Arduino SDK
-  Copyright (c) 2005-2013 Arduino Team.  All right reserved.
-
-  This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
-  License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
-
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public
-  License along with this library; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
-
-#ifndef Arduino_h
-#define Arduino_h
+#pragma once
 
 #include <stdlib.h>
 #include <stdbool.h>
@@ -29,11 +9,11 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-#include "binary.h"
-
 #ifdef __cplusplus
 extern "C"{
 #endif
+
+#define ARD_CUSTOM
 
 void yield(void);
 
@@ -61,28 +41,9 @@ void yield(void);
 #define FALLING 2
 #define RISING 3
 
-#if defined(__AVR_ATtiny24__) || defined(__AVR_ATtiny44__) || defined(__AVR_ATtiny84__)
-  #define DEFAULT 0
-  #define EXTERNAL 1
-  #define INTERNAL1V1 2
-  #define INTERNAL INTERNAL1V1
-#elif defined(__AVR_ATtiny25__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny85__)
-  #define DEFAULT 0
-  #define EXTERNAL 4
-  #define INTERNAL1V1 8
-  #define INTERNAL INTERNAL1V1
-  #define INTERNAL2V56 9
-  #define INTERNAL2V56_EXTCAP 13
-#else
-#if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1284__) || defined(__AVR_ATmega1284P__) || defined(__AVR_ATmega644__) || defined(__AVR_ATmega644A__) || defined(__AVR_ATmega644P__) || defined(__AVR_ATmega644PA__)
-#define INTERNAL1V1 2
-#define INTERNAL2V56 3
-#else
 #define INTERNAL 3
-#endif
 #define DEFAULT 1
 #define EXTERNAL 0
-#endif
 
 // undefine stdlib's abs if encountered
 #ifdef abs
@@ -113,15 +74,6 @@ void yield(void);
 #define bitClear(value, bit) ((value) &= ~(1UL << (bit)))
 #define bitWrite(value, bit, bitvalue) (bitvalue ? bitSet(value, bit) : bitClear(value, bit))
 
-// avr-libc defines _NOP() since 1.6.2
-#ifndef _NOP
-#define _NOP() do { __asm__ volatile ("nop"); } while (0)
-#endif
-
-typedef unsigned int word;
-
-#define bit(b) (1UL << (b))
-
 typedef bool boolean;
 typedef uint8_t byte;
 
@@ -138,15 +90,6 @@ unsigned long millis(void);
 unsigned long micros(void);
 void delay(unsigned long);
 void delayMicroseconds(unsigned int us);
-
-void shiftOut(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder, uint8_t val);
-uint8_t shiftIn(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder);
-
-void attachInterrupt(uint8_t, void (*)(void), int mode);
-void detachInterrupt(uint8_t);
-
-void setup(void);
-void loop(void);
 
 // Get the bit location within the hardware port of the given virtual pin.
 // This comes from the pins_*.c file for the active board configuration.
@@ -226,26 +169,7 @@ extern const uint8_t PROGMEM digital_pin_to_timer_PGM[];
 #include "WString.h"
 #include "HardwareSerial.h"
 #include "USBAPI.h"
-#if defined(HAVE_HWSERIAL0) && defined(HAVE_CDCSERIAL)
-#error "Targets with both UART0 and CDC serial not supported"
-#endif
-
-uint16_t makeWord(uint16_t w);
-uint16_t makeWord(byte h, byte l);
-
-#define word(...) makeWord(__VA_ARGS__)
-
-void tone(uint8_t _pin, unsigned int frequency, unsigned long duration = 0);
-void noTone(uint8_t _pin);
-
-// WMath prototypes
-long random(long);
-long random(long, long);
-void randomSeed(unsigned long);
-long map(long, long, long, long, long);
 
 #endif
 
 #include "pins_arduino.h"
-
-#endif

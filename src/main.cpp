@@ -18,7 +18,11 @@ int main(void) {
         continue;
       }
 
-      OledDrawStr(0, 0, "Hey Stephanie!");
+#ifdef ARD_CUSTOM
+      OledDrawStr(0, 0, "Custom Arduino");
+#else
+      OledDrawStr(0, 0, "Standard Arduino");
+#endif
       SysLoopEnd();
       if (serialEventRun) serialEventRun();
     }

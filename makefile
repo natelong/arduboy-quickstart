@@ -30,7 +30,7 @@ CFILES = \
 	$(wildcard $(SRCDIR)/**/*.cpp) \
 
 VPATH  = $(dir $(CFILES))
-INCDIR = $(COREDIR)/
+INCDIR = $(COREDIR)/ $(SRCDIR)/core-new
 
 OBJDIR     = obj
 OUTDIR     = bin
