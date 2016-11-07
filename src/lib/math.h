@@ -12,8 +12,8 @@ extern "C" {
 
 //---------------------------------------------------------------------------
 void MathInit(void);
-s8   MathSin(u8 deg);
-s8   MathCos(u8 deg);
+int8_t   MathSin(uint8_t deg);
+int8_t   MathCos(uint8_t deg);
 
 
 #ifdef __cplusplus

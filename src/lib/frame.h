@@ -4,29 +4,30 @@
 extern "C" {
 #endif
 
+#include <stdint.h>
 #include "common.h"
 
 //---------------------------------------------------------------------------
 typedef struct {
-	u8   rate;
-	u16  count;
-	u32  nextStart;
-	u32  lastStart;
-	u8   lastDurationMs;
-	u8   eachMillis;
-	bool isPostRender;
+    uint8_t   rate;
+    uint16_t  count;
+    uint32_t  nextStart;
+    uint32_t  lastStart;
+    uint8_t   lastDurationMs;
+    uint8_t   eachMillis;
+    bool isPostRender;
 
-	u16  cpuMaxPercent;
-	u8   cnt;
+    uint16_t  cpuMaxPercent;
+    uint8_t   cnt;
 } ST_FRAME;
 
 
 //---------------------------------------------------------------------------
 void FrameInit(void);
-void FrameSetRate(u8 rate);
-u16  FrameGetCpuPercent(void);
-u16  FrameGetCpuPercentMax(void);
-u8   FrameGetCnt(void);
+void FrameSetRate(uint8_t rate);
+uint16_t  FrameGetCpuPercent(void);
+uint16_t  FrameGetCpuPercentMax(void);
+uint8_t   FrameGetCnt(void);
 
 bool FrameLoop(void);
 

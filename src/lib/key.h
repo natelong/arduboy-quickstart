@@ -60,11 +60,11 @@ enum {
 
 //---------------------------------------------------------------------------
 typedef struct {
-	u8 cnt;
-	u8 trg;
-	u8 off;
-	u8 rep;
-	s8 repCnt;
+	uint8_t cnt;
+	uint8_t trg;
+	uint8_t off;
+	uint8_t rep;
+	int8_t repCnt;
 
 } ST_KEY;
 
@@ -72,10 +72,10 @@ typedef struct {
 void KeyInit(void);
 void KeyLoop(void);
 
-u8   KeyGetCnt(void);
-u8   KeyGetTrg(void);
-u8   KeyGetOff(void);
-u8   KeyGetRep(void);
+uint8_t   KeyGetCnt(void);
+uint8_t   KeyGetTrg(void);
+uint8_t   KeyGetOff(void);
+uint8_t   KeyGetRep(void);
 
 
 #ifdef __cplusplus

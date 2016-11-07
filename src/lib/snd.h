@@ -34,22 +34,22 @@ enum {
 
 //---------------------------------------------------------------------------
 typedef struct {
-	vu8* pPinPort;
-	u8   pinMask;
+	volatile uint8_t* pPinPort;
+	uint8_t   pinMask;
 } ST_SND_CH;
 
 typedef struct {
 	// Score
 	bool isScorePlay;
 	bool isScoreCh[SND_MAX_CHANNEL];
-	u32  scoreCnt;
-	u32  scoreFreqCnt;
-	u8*  pScoreStart;
-	u8*  pScoreCur;
+	uint32_t  scoreCnt;
+	uint32_t  scoreFreqCnt;
+	uint8_t*  pScoreStart;
+	uint8_t*  pScoreCur;
 
 	// Tone
 	bool isTonePlay;
-	u32  toneCnt;
+	uint32_t  toneCnt;
 
 	// Pin
 	ST_SND_CH ch[SND_MAX_CHANNEL];
@@ -60,18 +60,18 @@ typedef struct {
 //---------------------------------------------------------------------------
 void SndInit(void);
 
-void SndPlayScore(const u8* p);
+void SndPlayScore(const uint8_t* p);
 void SndStopScore(void);
 void SndStepScore(void);
 
-void SndPlayNote(u8 ch, u8 note);
-void SndStopNote(u8 ch);
-void SndPlayTone(u16 freq, u32 duration);
+void SndPlayNote(uint8_t ch, uint8_t note);
+void SndStopNote(uint8_t ch);
+void SndPlayTone(uint16_t freq, uint32_t duration);
 void SndStopTone(void);
 
 void SndStartTimerCh0(void);
-void SndStartTimerCh(u8 ch, u32 freq);
-void SndStopTimer(u8 ch);
+void SndStartTimerCh(uint8_t ch, uint32_t freq);
+void SndStopTimer(uint8_t ch);
 
 
 #ifdef __cplusplus

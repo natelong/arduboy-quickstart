@@ -33,7 +33,7 @@ extern "C" {
 
 //---------------------------------------------------------------------------
 typedef struct {
-	u8 buf[OLED_SCREEN_CX * (OLED_SCREEN_CY / 8)];
+	uint8_t buf[OLED_SCREEN_CX * (OLED_SCREEN_CY / 8)];
 
 } ST_OLED;
 
@@ -42,12 +42,12 @@ typedef struct {
 void OledInit(void);
 void OledDisplay(void);
 
-void OledDrawStr(u8 fx, u8 fy, const char* fmt, ...);
-void OledDrawChr(u8 fx, u8 fy, char chr);
-void OledDrawDot(u8 x, u8 y);
+void OledDrawStr(uint8_t fx, uint8_t fy, const char* fmt, ...);
+void OledDrawChr(uint8_t fx, uint8_t fy, char chr);
+void OledDrawDot(uint8_t x, uint8_t y);
 void OledDrawCls(void);
 
-void OledDrawBmp(s8 sx, s8 sy, u8* p);
+void OledDrawBmp(int8_t sx, int8_t sy, uint8_t* p);
 
 
 #ifdef __cplusplus

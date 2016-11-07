@@ -11,21 +11,21 @@ extern "C" {
 
 //---------------------------------------------------------------------------
 typedef struct {
-	u8* adr;
+	uint8_t* adr;
 
 } ST_EEP;
 
 
 //---------------------------------------------------------------------------
 void EepInit(void);
-void EepSeek(u16 adr);
+void EepSeek(uint16_t adr);
 
-u8   EepRead8(void);
-u16  EepRead16(void);
-u32  EepRead32(void);
-void EepWrite8(u8 data);
-void EepWrite16(u16 data);
-void EepWrite32(u32 data);
+uint8_t   EepRead8(void);
+uint16_t  EepRead16(void);
+uint32_t  EepRead32(void);
+void EepWrite8(uint8_t data);
+void EepWrite16(uint16_t data);
+void EepWrite32(uint32_t data);
 
 
 #ifdef __cplusplus

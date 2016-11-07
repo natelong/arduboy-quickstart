@@ -11,10 +11,10 @@ extern "C" {
 
 //---------------------------------------------------------------------------
 void RndInit(void);
-void RndInitSeed(u32 num);
+void RndInitSeed(uint32_t num);
 
-u32  Rnd32(void);
-u32  Rnd(u32 num);
+uint32_t  Rnd32(void);
+uint32_t  Rnd(uint32_t num);
 
 
 #ifdef __cplusplus

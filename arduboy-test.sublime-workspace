@@ -1,0 +1,1941 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"updateLo",
+				"updateLoading"
+			],
+			[
+				"TARG",
+				"TARGET_HEX"
+			],
+			[
+				"TARGE",
+				"TARGET_HEX"
+			],
+			[
+				"TARGET",
+				"TARGET_ELF"
+			],
+			[
+				"Tar",
+				"TARGET_HEX"
+			],
+			[
+				"IDENT_TYE",
+				"IDENT_TYPE_REGISTER"
+			],
+			[
+				"isbin",
+				"isBinStr"
+			],
+			[
+				"uin",
+				"uint16_t"
+			],
+			[
+				"const",
+				"constantCount"
+			],
+			[
+				"Identi",
+				"Identifier_getLiteralValue"
+			],
+			[
+				"instruc",
+				"Instruction_clear"
+			],
+			[
+				"INSTR",
+				"INSTR_OP_COUNT"
+			],
+			[
+				"identifier",
+				"identifierIRef"
+			],
+			[
+				"ide",
+				"identifierI"
+			],
+			[
+				"Identif",
+				"Identifier_isEqual"
+			],
+			[
+				"Identifi",
+				"Identifier_create"
+			],
+			[
+				"size",
+				"size_t"
+			],
+			[
+				"instruction",
+				"instructionOffset"
+			],
+			[
+				"uint",
+				"uint8_t"
+			],
+			[
+				"rom_",
+				"Rom_dump"
+			],
+			[
+				"SDL_",
+				"SDL_RWclose"
+			],
+			[
+				"MAX",
+				"MAX_ROM_SZ"
+			],
+			[
+				"Rom_",
+				"Rom_appendInstruction"
+			],
+			[
+				"IDENT_TYPE",
+				"IDENT_TYPE_LITERAL"
+			],
+			[
+				"IDENT_",
+				"IDENT_TYPE_REGISTER"
+			],
+			[
+				"print",
+				"printIdentifierType"
+			],
+			[
+				"IDENT",
+				"IDENT_TYPE_LITERAL"
+			],
+			[
+				"get",
+				"getLabelAddress"
+			],
+			[
+				"Ident",
+				"Identifier_isEqual"
+			],
+			[
+				"IDENT_TY",
+				"IDENT_TYPE_I"
+			],
+			[
+				"IDEN",
+				"IDENT_TYPE_LABEL"
+			],
+			[
+				"label",
+				"getLabelAddress"
+			],
+			[
+				"Iden",
+				"Identifier_isEqual"
+			],
+			[
+				"init",
+				"Identifier_init"
+			],
+			[
+				"Instruc",
+				"Instruction_init"
+			],
+			[
+				"Instructi",
+				"InstructionType"
+			],
+			[
+				"MAX_",
+				"MAX_INSTR_CNT"
+			],
+			[
+				"Instru",
+				"Instruction"
+			],
+			[
+				"is",
+				"isWordchar"
+			],
+			[
+				"curr",
+				"currKeys"
+			],
+			[
+				"breakpoi",
+				"breakpointTriggered"
+			],
+			[
+				"break",
+				"breakpointTriggered"
+			],
+			[
+				"n",
+				"NULL"
+			],
+			[
+				"breakpoitn",
+				"breakpointSet"
+			],
+			[
+				"SCREEN",
+				"SCREEN_WIDTH"
+			],
+			[
+				"CHIP",
+				"CHIP8_DEBUG"
+			],
+			[
+				"ROM",
+				"ROM_OFFSET"
+			],
+			[
+				"int",
+				"int64_t"
+			],
+			[
+				"continue",
+				"continueExecution"
+			],
+			[
+				"contin",
+				"continueExecution"
+			],
+			[
+				"SDLK_",
+				"SDLK_1"
+			],
+			[
+				"window",
+				"WINDOW_WIDTH"
+			],
+			[
+				"wind",
+				"WINDOW_WIDTH"
+			],
+			[
+				"SCREE",
+				"SCREEN_WIDTH"
+			],
+			[
+				"WINDOW",
+				"WINDOW_WIDTH"
+			],
+			[
+				"scree",
+				"SCREEN_HEIGHT"
+			],
+			[
+				"PROJ",
+				"PROJECTILE_CAPACITY"
+			],
+			[
+				"projec",
+				"projectiles"
+			],
+			[
+				"projectil",
+				"projectileCount"
+			],
+			[
+				"Projec",
+				"Projectiles"
+			],
+			[
+				"project",
+				"projectileCount"
+			],
+			[
+				"pro",
+				"Projectile"
+			],
+			[
+				"lef",
+				"Left"
+			],
+			[
+				"wallj",
+				"wallJumpTimer"
+			],
+			[
+				"WallJ",
+				"WallJumping"
+			],
+			[
+				"Play",
+				"PlayerMoveState"
+			],
+			[
+				"Pl",
+				"PlayerMoveState"
+			],
+			[
+				"shouldM",
+				"shouldJump"
+			],
+			[
+				"shouldMo",
+				"shouldMoveLeft"
+			],
+			[
+				"start",
+				"startFrame"
+			],
+			[
+				"sampe",
+				"sampleCount"
+			],
+			[
+				"pla",
+				"platform"
+			],
+			[
+				"St",
+				"STAGE_HEIGHT"
+			],
+			[
+				"en",
+				"entities"
+			],
+			[
+				"ent",
+				"entityCount"
+			],
+			[
+				"entit",
+				"entityCount"
+			],
+			[
+				"enti",
+				"entities"
+			],
+			[
+				"ST",
+				"STAGE_WIDTH"
+			],
+			[
+				"STAGE",
+				"STAGE_HEIGHT"
+			],
+			[
+				"C",
+				"CXXFLAGS"
+			],
+			[
+				"vie",
+				"viewportRect"
+			],
+			[
+				"windo",
+				"windowSize"
+			],
+			[
+				"STAE",
+				"STAGE_HEIGHT"
+			],
+			[
+				"stage",
+				"STAGE_HEIGHT"
+			],
+			[
+				"STAG",
+				"STAGE_WIDTH"
+			],
+			[
+				"TILE",
+				"TILE_WIDTH\t Ɩ"
+			],
+			[
+				"ve",
+				"viewTeamSelectMenu\t Ɩ"
+			],
+			[
+				"foo",
+				"footbowl-client"
+			],
+			[
+				"de",
+				"retryDelay\tuint ν"
+			],
+			[
+				"Teams",
+				"TeamSelectMenuState\tuint16 ʈ"
+			],
+			[
+				"teamsele",
+				"TeamSelectMenuStateDefault\t Ɩ"
+			],
+			[
+				"team",
+				"TeamSelectMenuStateWaiting\t Ɩ"
+			],
+			[
+				"Teamse",
+				"TeamSelectMenuStateWaiting\t Ɩ"
+			],
+			[
+				"uin6",
+				"uint64\tbuilt-in ʈ"
+			],
+			[
+				"Login",
+				"LoginResponse\tstruct ʈ"
+			],
+			[
+				"footb",
+				"footbowl-server"
+			],
+			[
+				"Sti",
+				"StringVar\t ƒ"
+			],
+			[
+				"view",
+				"viewMainMenu\t Ɩ"
+			],
+			[
+				"Server",
+				"ServerManager\tstruct ʈ"
+			],
+			[
+				"Lo",
+				"LoginResponse\tstruct ʈ"
+			],
+			[
+				"handl",
+				"HandleFunc\t ƒ"
+			],
+			[
+				"Respon",
+				"ResponseWriter\tinterface ¡"
+			],
+			[
+				"set",
+				"SetColorMod\terror ƒ"
+			],
+			[
+				"fram",
+				"frameStart\ttime.Time ν"
+			],
+			[
+				"pass",
+				"passwordField\t*ui.TextField ν"
+			],
+			[
+				"usernam",
+				"usernameField\t*ui.TextField ν"
+			],
+			[
+				"but",
+				"submitButton\t*ui.Button ν"
+			],
+			[
+				"Butotn",
+				"ButtonListener\tinterface ¡"
+			],
+			[
+				"Button",
+				"ButtonListener\tinterface ¡"
+			],
+			[
+				"pas",
+				"passwordField\t*ui.TextField ν"
+			],
+			[
+				"user",
+				"usernameField\t*ui.TextField ν"
+			],
+			[
+				"password",
+				"passwordField\tlib.UITextField ν"
+			],
+			[
+				"Pas",
+				"passwordField\tlib.UITextField ν"
+			],
+			[
+				"KeyRigh",
+				"KeyRightCtrl\t Ɩ"
+			],
+			[
+				"KeyR",
+				"KeyRightMeta\t Ɩ"
+			],
+			[
+				"KeyLef",
+				"KeyLeftMeta\t Ɩ"
+			],
+			[
+				"SCANCODE_BAC",
+				"SCANCODE_BACKSPACE\t Ɩ"
+			],
+			[
+				"textinpu",
+				"textInputLen\tint ν"
+			],
+			[
+				"TE",
+				"TEXTINPUT\t Ɩ"
+			],
+			[
+				"KEYDO",
+				"KEYDOWN\t Ɩ"
+			],
+			[
+				"Quit",
+				"QUIT\t Ɩ"
+			],
+			[
+				"KEYUP",
+				"KEYUP\t Ɩ"
+			],
+			[
+				"TILE_BOX",
+				"TILE_BOX_TOP\t Ɩ"
+			],
+			[
+				"pause",
+				"PauseNs\t[256]uint64 ν"
+			],
+			[
+				"Paus",
+				"PauseTotalNs\tuint64 ν"
+			],
+			[
+				"PRin",
+				"Printf\t ƒ"
+			],
+			[
+				"stateMainmenu",
+				"stateMainMenuOptions\t Ɩ"
+			],
+			[
+				"state",
+				"stateOptionsBack\t Ɩ"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "src/main.cpp",
+			"settings":
+			{
+				"buffer_size": 421,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/game.cpp",
+			"settings":
+			{
+				"buffer_size": 930,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/game.h",
+			"settings":
+			{
+				"buffer_size": 517,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/lib/oled.cpp",
+			"settings":
+			{
+				"buffer_size": 3907,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/lib/common.h",
+			"settings":
+			{
+				"buffer_size": 1337,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 357.0,
+		"last_filter": "avr",
+		"selected_items":
+		[
+			[
+				"avr",
+				"Set Syntax: AVR ASM"
+			],
+			[
+				"boxy",
+				"Boxy Theme: Preferences"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"hex",
+				"Hex Viewer: Toggle Hex View"
+			],
+			[
+				"endi",
+				"Hex Viewer: Toggle Endianness (Big|Little)"
+			],
+			[
+				"typesc",
+				"Set Syntax: TypeScript"
+			],
+			[
+				"color",
+				"Colorsublime: Install Theme"
+			],
+			[
+				"gotode",
+				"GoSublime: Goto Definition"
+			],
+			[
+				"go to de",
+				"GoSublime: Goto Definition"
+			],
+			[
+				"undersc",
+				"Set Syntax: HTML (Underscore)"
+			],
+			[
+				"go",
+				"Set Syntax: Go"
+			],
+			[
+				"packa",
+				"Package Control: Upgrade Package"
+			],
+			[
+				"javasc\t",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"c++",
+				"Set Syntax: C++"
+			],
+			[
+				"make",
+				"Set Syntax: Makefile"
+			],
+			[
+				"lisp",
+				"Set Syntax: Lisp"
+			],
+			[
+				"javasc",
+				"Javascript Beautify"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"package",
+				"Package Control: Remove Package"
+			],
+			[
+				"makefile",
+				"Set Syntax: Makefile"
+			],
+			[
+				"makefil",
+				"Set Syntax: Makefile"
+			],
+			[
+				"yaml",
+				"Set Syntax: YAML"
+			],
+			[
+				"makef",
+				"Set Syntax: Makefile"
+			],
+			[
+				"diff",
+				"Set Syntax: Diff"
+			],
+			[
+				"c",
+				"Set Syntax: C"
+			],
+			[
+				"idl",
+				"Set Syntax: IDL"
+			],
+			[
+				"ruby",
+				"Set Syntax: Ruby"
+			],
+			[
+				"C",
+				"Set Syntax: C"
+			],
+			[
+				"markdown",
+				"GitHub Flavored Markdown: Preview"
+			],
+			[
+				"intsal",
+				"Package Control: Install Package"
+			],
+			[
+				"package up",
+				"Package Control: Upgrade Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"git",
+				"GitGutter: Show Comparing Against"
+			],
+			[
+				"glsl",
+				"Set Syntax: GLSL"
+			],
+			[
+				"ejs",
+				"Set Syntax: EJS (<% and %>)"
+			],
+			[
+				"beau",
+				"Javascript Beautify"
+			],
+			[
+				"INSTALL",
+				"Package Control: Install Package"
+			],
+			[
+				"JAVA",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"jinj",
+				"Set Syntax: HTML (Jinja Templates)"
+			],
+			[
+				"jinja",
+				"Set Syntax: HTML (Jinja Templates)"
+			],
+			[
+				"jin",
+				"Set Syntax: HTML (Jinja Templates)"
+			],
+			[
+				"ji",
+				"Set Syntax: HTML (Jinja Templates)"
+			]
+		],
+		"width": 431.0
+	},
+	"console":
+	{
+		"height": 313.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/nate/src/arduboy-test",
+		"/Users/nate/src/arduboy-test/src",
+		"/Users/nate/src/arduboy-test/src/lib"
+	],
+	"file_history":
+	[
+		"/Users/nate/src/arduboy-test/src/lib/oled.h",
+		"/Users/nate/src/arduboy-test/src/lib/oled.cpp",
+		"/Users/nate/src/arduboy-test/src/lib/common.cpp",
+		"/Users/nate/src/arduboy-test/src/lib/frame.cpp",
+		"/Users/nate/src/arduboy-test/src/lib/frame.h",
+		"/Users/nate/src/arduboy-test/src/lib/sys.h",
+		"/Users/nate/src/arduboy-test/makefile",
+		"/Users/nate/src/arduboy-test/src/core/wiring_private.h",
+		"/Users/nate/src/arduboy-test/src/core/wiring.c",
+		"/Users/nate/src/arduboy-test/src/core-new/Arduino.h",
+		"/Users/nate/src/arduboy-test/src/core/CDC.cpp",
+		"/Users/nate/src/arduboy-test/src/core/Tone.cpp",
+		"/Users/nate/src/arduboy-test/src/core/USBAPI.h",
+		"/Users/nate/src/arduboy-test/src/core/HardwareSerial.cpp",
+		"/Users/nate/src/arduboy-test/src/main.cpp",
+		"/Users/nate/src/arduboy-test/src/core/Arduino-old.h",
+		"/Users/nate/src/arduboy-test/src/core/abi.cpp",
+		"/Users/nate/src/arduboy-test/src/core/binary.h",
+		"/Users/nate/src/arduboy-test/src/core/USBCore.cpp",
+		"/Users/nate/src/arduboy-test/src/core/Udp.h",
+		"/Users/nate/src/arduboy-test/src/core/Client.h",
+		"/Users/nate/src/arduboy-test/src/core/HardwareSerial.h",
+		"/Users/nate/src/arduboy-test/src/core/Stream.h",
+		"/Users/nate/src/arduboy-test/src/core/WMath.cpp",
+		"/Users/nate/src/arduboy-test/src/core/wiring_analog.c",
+		"/Users/nate/src/arduboy-test/src/core/WInterrupts.c",
+		"/Users/nate/src/arduboy-test/src/game.cpp",
+		"/Users/nate/src/arduboy-test/src/lib/common.h",
+		"/Users/nate/src/arduboy-test/src/lib/sys.cpp",
+		"/Users/nate/src/arduboy-test/src/lib/key.cpp",
+		"/Users/nate/src/arduboy-test/src/lib/tinymt32.h",
+		"/Users/nate/src/arduboy-test/src/lib/rnd.h",
+		"/Users/nate/src/arduboy-test/src/core/wiring_pulse.S",
+		"/Users/nate/src/arduboy-test/src/core/Arduino.h",
+		"/Users/nate/src/arduboy-test/src/core/wiring_pulse.c",
+		"/Users/nate/src/arduboy-test/.gitignore",
+		"/Users/nate/src/arduboy-test/src/ino.cpp",
+		"/Users/nate/src/arduboy-test/src/ino.h",
+		"/Users/nate/src/arduboy-test/src/core/main.cpp",
+		"/Users/nate/src/arduboy-test/tool/reset.py",
+		"/Users/nate/src/arduboy-test/src/reset.py",
+		"/Users/nate/src/arduboy-test/src/game.h",
+		"/Users/nate/src/arduboy-test/src/core/pins_arduino.h",
+		"/Users/nate/src/arduboy/src/glcdfont.c",
+		"/Users/nate/src/arduboy-quickstart/makefile",
+		"/Users/nate/src/arduboy-quickstart/src/core/abi.cpp",
+		"/Users/nate/src/arduboy-quickstart/src/game.h",
+		"/Users/nate/src/arduboy-quickstart/src/panel.cpp",
+		"/Users/nate/src/arduboy-quickstart/src/lib/common.h",
+		"/Users/nate/src/arduboy-quickstart/src/game.cpp",
+		"/Users/nate/src/arduboy-quickstart/src/lib/frame.cpp",
+		"/Users/nate/src/arduboy-quickstart/src/anime.cpp",
+		"/Users/nate/src/arduboy-quickstart/src/lib/sys.cpp",
+		"/Users/nate/src/arduboy-quickstart/src/ino.cpp",
+		"/Users/nate/src/arduboy-quickstart/src/ino.h",
+		"/Users/nate/src/arduboy-quickstart/src/anime.h",
+		"/Users/nate/Dropbox/iTermProfile.json",
+		"/Users/nate/Dropbox/boxy-config.json",
+		"/Users/nate/src/arduboy-quickstart/src/lib/oled.cpp",
+		"/Users/nate/src/arduboy-quickstart/src/lib/key.cpp",
+		"/Users/nate/src/arduboy-quickstart/src/lib/sys.h",
+		"/Users/nate/src/arduboy-quickstart/src/core/avr5.xn",
+		"/Applications/Arduino.app/Contents/Java/hardware/tools/avr/etc/avrdude.conf",
+		"/Users/nate/src/arduboy-quickstart/src/lib/rnd.cpp",
+		"/Users/nate/src/arduboy-quickstart/src/lib/tinymt32.c",
+		"/Users/nate/src/arduboy-quickstart/src/lib/tinymt32.h",
+		"/Users/nate/src/arduboy-quickstart/src/lib/common.cpp",
+		"/Users/nate/src/arduboy-quickstart/src/core/Client.h",
+		"/Users/nate/src/arduboy-quickstart/src/core/CDC.cpp",
+		"/Users/nate/src/arduboy-quickstart/readme.txt",
+		"/Users/nate/src/arduboy-tiny-2048/makefile",
+		"/Users/nate/src/arduboy-tiny-2048/.gitignore",
+		"/Users/nate/src/arduboy-tiny-2048/log.txt",
+		"/Users/nate/src/arduboy-tiny-2048/src/core/wiring_pulse.c",
+		"/Users/nate/src/arduboy-tiny-2048/src/core/wiring_pulse.S",
+		"/Users/nate/src/arduboy-tiny-2048/src/core/main.cpp",
+		"/Users/nate/src/arduboy-tiny-2048/src/core/Arduino.h",
+		"/Users/nate/src/arduboy-tiny-2048/src/ino.cpp",
+		"/Users/nate/src/arduboy-tiny-2048/src/game.cpp",
+		"/Users/nate/src/arduboy-tiny-2048/src/res.h",
+		"/Users/nate/src/arduboy-tiny-2048/src/make_usb.bat",
+		"/Users/nate/src/arduboy-tiny-2048/tool/reset.py",
+		"/Users/nate/src/arduboy-tiny-2048/src/core/wiring_private.h",
+		"/Users/nate/src/arduboy-tiny-2048/src/lib/sys.h",
+		"/Users/nate/src/arduboy-tiny-2048/src/.editorconfig",
+		"/Users/nate/Downloads/Apocalyx/ZekeOnYourSix.lua",
+		"/Users/nate/Desktop/Aerodynamics.md",
+		"/Users/nate/Library/Application Support/Sublime Text 3/Packages/GoSublime/CHANGELOG.md",
+		"/Users/nate/src/chip8/log.txt",
+		"/Users/nate/src/chip8/notes.md",
+		"/Users/nate/src/chip8/roms/src/maze.src",
+		"/Users/nate/src/chip8/out.ch8",
+		"/Users/nate/src/chip8/roms/src/Maze.asm.txt",
+		"/Users/nate/src/chip8/roms/bin/Maze.ch8",
+		"/Users/nate/src/chip8/roms/src/parsetest.src",
+		"/Users/nate/src/termbox/src/termbox.h",
+		"/Users/nate/src/chip8/src/ansi.c",
+		"/Users/nate/src/chip8/.gitignore",
+		"/Users/nate/src/chip8/chip8.c",
+		"/Users/nate/src/chip8/assembler.c",
+		"/Users/nate/src/chip8/maze.src",
+		"/Users/nate/src/chip8/kaleid.asm.txt",
+		"/Users/nate/src/chip8/makefile",
+		"/Users/nate/src/chip8/font.h",
+		"/Users/nate/src/chip8/Maze.asm.txt",
+		"/Users/nate/src/chip8/merlin.asm.txt",
+		"/Users/nate/src/chip8/pong.asm.txt",
+		"/Users/nate/src/chip8/spec.html",
+		"/Users/nate/src/chip8/disassembler.c",
+		"/Users/nate/src/jumpy/DataArray.hpp",
+		"/Users/nate/src/jumpy/makefile",
+		"/Users/nate/src/DataArray/makefile",
+		"/Users/nate/Downloads/JavaCHIP8/src/chip8emu/games/Maze.ch8",
+		"/Users/nate/Downloads/Trip8 Demo (2008) [Revival Studios].ch8",
+		"/Users/nate/src/jumpy/main.cpp",
+		"/Users/nate/src/jumpy/util.h",
+		"/Users/nate/src/jumpy/entity.cpp",
+		"/Users/nate/src/jumpy/entity.h",
+		"/Users/nate/src/jumpy/window.cpp",
+		"/Users/nate/Library/Application Support/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/Users/nate/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/nate/src/jumpy/window.h",
+		"/Users/nate/src/jumpy/game.cpp",
+		"/Users/nate/src/jumpy/sfml.h",
+		"/Users/nate/src/jumpy/config.h",
+		"/Users/nate/src/jumpy/game.h",
+		"/Users/nate/src/jumpy/actor.h",
+		"/Users/nate/Dropbox/DJSite/burntvillage/EventSchedule2016.html"
+	],
+	"find":
+	{
+		"height": 48.0
+	},
+	"find_in_files":
+	{
+		"height": 91.0,
+		"where_history":
+		[
+			"/Users/nate/src/arduboy-test/src/",
+			"/Users/nate/src/arduboy-test/src/core",
+			"/Users/nate/src/arduboy-test/src/",
+			"/Users/nate/src/arduboy-test/src/core",
+			"",
+			"/Users/nate/src/arduboy-tiny-2048/src/core",
+			"",
+			"/Users/nate/src/libfc/bld",
+			"/Users/nate/src/libfc/",
+			"/Users/nate/src/libfc/src/",
+			"/Users/nate/src/bx",
+			"/Users/nate/src/bgfx/src",
+			"/Users/nate/src/bgfx",
+			"/Users/nate/src/bgfx/src",
+			"/Users/nate/src/bgfx",
+			"/Users/nate/src/bgfx/examples",
+			"/Users/nate/src/bgfx",
+			"/Users/nate/src/bgfx/examples",
+			"/Users/nate/src/bgfx",
+			"/Users/nate/src/bgfx/src",
+			"/Users/nate/src/bgfx",
+			"/Users/nate/src/bx/include",
+			"/Users/nate/src/bx/include/bx",
+			"/Users/nate/src/bgfx/src",
+			"/Users/nate/src/bgfx",
+			"/Users/nate/src/bgfx/include",
+			"/Users/nate/src/bx",
+			"/Users/nate/src/bgfx",
+			"/Users/nate/src/bx",
+			"/Users/nate/src/bgfx",
+			"/Users/nate/src/bgfx/",
+			"/Users/nate/src/bgfx/scripts",
+			"/Users/nate/src/bgfx",
+			"/Users/nate/src/bgfx/src",
+			"/Users/nate/src/vc/include/GLES2",
+			"/Users/nate/src/libfc/src",
+			"/Users/nate/src/libfc",
+			"/Users/nate/src/libfc/src",
+			"/Users/nate/src/libfc",
+			"/Users/nate/src/libfc/src",
+			"/Users/nate/src/vc/src/hello_pi",
+			"/Users/nate/src/vc",
+			"/Users/nate/src/vc/include",
+			"/Users/nate/Dropbox/src/genie",
+			"<project>",
+			"/Users/nate/src/go/src/github.com/natelong/smpl",
+			"<project>"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"_SprintfDo",
+			"FrameSetRate",
+			"sei(",
+			"sei",
+			"sei(",
+			"init(",
+			"CDC_GetInterface",
+			"WEAK",
+			"B0",
+			"binary.h",
+			"B00000000",
+			"CDC_Setup",
+			"Stream.h",
+			"Stream.",
+			"PROGMEM",
+			"port_to_mode_PGM",
+			"makeWord",
+			"TIMER5A",
+			"NOT_AN_INTERRUPT",
+			"analogInPinToBit",
+			"detachInterrupt",
+			"attachInterrupt",
+			"shiftIn",
+			"shiftOut",
+			"pinMode",
+			"\\bbyte\\b",
+			"boolean",
+			"\\bbit\\(",
+			"bit(",
+			"\\bword\\b",
+			"word",
+			"LSBFIRST",
+			"yield",
+			"OledDrawStr",
+			"INCDIR",
+			"K",
+			"ASFLAGS",
+			"$(AS)",
+			"AS",
+			".S",
+			"sfiles",
+			"countPulseASM",
+			"wiring_pulse",
+			"pulseIn(",
+			"countPulseASM(",
+			"countPulseASM",
+			"pulseIn(",
+			"pulseIn",
+			"countPulseASM",
+			"void init(",
+			"USBCON",
+			"serialEventRun",
+			"atexit",
+			"setupUSB",
+			"initVariant",
+			"void setup",
+			"void init(",
+			"init(",
+			"init",
+			"tools",
+			"FrameGetCpuPercentMax",
+			"OledDrawStr",
+			"USB",
+			"pins_arduino",
+			"pinsArduino",
+			"serialEventRun",
+			"serialevent",
+			"ASSERT",
+			"FrameGetCpuPercentMax",
+			"MAPFILE",
+			"LDFLAGS",
+			"avr5.",
+			"tinymt32_init",
+			"B0000000",
+			"GFLAGS",
+			".S",
+			"pulseIn(",
+			"countPulseASM",
+			"@echo",
+			"COREDIR",
+			"ino",
+			"atmega32u4",
+			"DFILES",
+			"VPATH",
+			"ino",
+			"ino.",
+			"ino",
+			"ino.cpp",
+			"2",
+			"void setup",
+			"setup",
+			"echo",
+			"\\n",
+			"LIB_DIR",
+			"CORE_DIR",
+			"SRC_DIR",
+			"setup",
+			"core",
+			"lib",
+			"core",
+			"\t=",
+			"LDFLAGS",
+			"\"Arduino Leonardo\"",
+			"atmega32u4",
+			"ARDUBOY_MODEL",
+			"BINPATH",
+			"INCDIR",
+			"pulseIn(",
+			"pulseIn",
+			"countPulseASM",
+			"pulseInSimpl",
+			"Clda",
+			",",
+			"F",
+			"Bin",
+			"ident.",
+			"data",
+			"getliteralValue",
+			"0x10",
+			"getConstantValue",
+			"Constant",
+			"else",
+			"} else",
+			", ",
+			"EQU",
+			"equIdent",
+			"exit(1);",
+			"INSTR_OP_COUNT"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"0x",
+			"",
+			"<br>",
+			"</td>",
+			"<td>",
+			"</tr>",
+			"<tr>",
+			"wallReleaseTimer",
+			"wallLeapTimer",
+			"inputDrop",
+			"inputJump",
+			"inputLeft",
+			"inputRight",
+			"airSpeed",
+			"EntityLayer",
+			"_nextState",
+			"UI_LIST_STATE_",
+			"utils.hpp",
+			"1",
+			"0",
+			"W",
+			"B",
+			"C_B",
+			"CLR_W",
+			"CLR_B",
+			"W",
+			"w",
+			"B",
+			"O",
+			"X",
+			"HLT",
+			"PSH",
+			"fc_file",
+			"FC_Shader",
+			"FC_Mesh",
+			"FC_Shader",
+			"_window_impl",
+			"_nativewindow",
+			" ",
+			"be_intMapNode",
+			"[Back to top](#table-of-contents)\n\n---",
+			"[Back to top](#table-of-contents)\n---",
+			"p.lookahead.Literal",
+			"testType(",
+			"fmt.Printf",
+			"consume",
+			"return;",
+			"return 0;",
+			"t->",
+			"EOL",
+			"Func",
+			"Decl",
+			"=",
+			"/cards/",
+			"cards/"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "src/main.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 421,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								66,
+								66
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "src/game.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 930,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								434,
+								434
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 2,
+					"file": "src/game.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 517,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								136,
+								136
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "src/lib/oled.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3907,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "src/lib/common.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1337,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								481,
+								481
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			0.5,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.GoSublime-main-output":
+	{
+		"height": 102.0
+	},
+	"output.GsDoc-output-output":
+	{
+		"height": 96.0
+	},
+	"output.doc":
+	{
+		"height": 0.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.hex_viewer_inspector":
+	{
+		"height": 369.0
+	},
+	"output.unsaved_changes":
+	{
+		"height": 96.0
+	},
+	"pinned_build_system": "",
+	"project": "arduboy-test.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"oledc",
+				"src/lib/oled.cpp"
+			],
+			[
+				"oled",
+				"src/lib/oled.h"
+			],
+			[
+				"common.h",
+				"src/lib/common.h"
+			],
+			[
+				"makef",
+				"makefile"
+			],
+			[
+				"wiring_priave",
+				"src/core/wiring_private.h"
+			],
+			[
+				"main.cpp",
+				"src/main.cpp"
+			],
+			[
+				"arduino",
+				"src/core/Arduino.h"
+			],
+			[
+				"arduino.h",
+				"src/core/Arduino.h"
+			],
+			[
+				"reset",
+				"src/reset.py"
+			],
+			[
+				"noted",
+				"notes.md"
+			],
+			[
+				"out.c",
+				"out.ch8"
+			],
+			[
+				"maze.",
+				"roms/src/maze.src"
+			],
+			[
+				"src/ass",
+				"src/assembler.c"
+			],
+			[
+				"chip",
+				"src/chip8.c"
+			],
+			[
+				"make",
+				"makefile"
+			],
+			[
+				"main.c",
+				"main.cpp"
+			],
+			[
+				"main",
+				"main.cpp"
+			],
+			[
+				"util.h",
+				"util.h"
+			],
+			[
+				"util",
+				"util.h"
+			],
+			[
+				"entity",
+				"entity.cpp"
+			],
+			[
+				"game.h",
+				"game.h"
+			],
+			[
+				"ent",
+				"entity.h"
+			],
+			[
+				"game.cpp",
+				"game.cpp"
+			],
+			[
+				"windo",
+				"window.cpp"
+			],
+			[
+				"enti",
+				"entity.h"
+			],
+			[
+				"window",
+				"window.cpp"
+			],
+			[
+				"makefil",
+				"makefile"
+			],
+			[
+				"game",
+				"game.cpp"
+			],
+			[
+				"sfml",
+				"sfml.h"
+			],
+			[
+				"entit",
+				"entity.cpp"
+			],
+			[
+				"config",
+				"config.h"
+			],
+			[
+				"conf",
+				"config.h"
+			],
+			[
+				"apaplic",
+				"game/Application.go"
+			],
+			[
+				"render",
+				"lib/RenderManager.go"
+			],
+			[
+				"mainmen",
+				"game/MainMenu.go"
+			],
+			[
+				"appli",
+				"game/Application.go"
+			],
+			[
+				"lobbymen",
+				"game/LobbyMenu.go"
+			],
+			[
+				"player",
+				"game/Player.go"
+			],
+			[
+				"loginmen",
+				"game/LoginMenu.go"
+			],
+			[
+				"serverman",
+				"game/ServerManager.go"
+			],
+			[
+				"lob",
+				"game/LobbyMenu.go"
+			],
+			[
+				"log",
+				"game/LoginMenu.go"
+			],
+			[
+				"button",
+				"lib/ui/Button.go"
+			],
+			[
+				"lobby",
+				"game/LobbyMenu.go"
+			],
+			[
+				"login",
+				"game/LoginMenu.go"
+			],
+			[
+				"appl",
+				"game/Application.go"
+			],
+			[
+				"client.go",
+				"cmd/client/client.go"
+			],
+			[
+				"trans",
+				"transport/transport.go"
+			],
+			[
+				"viewman",
+				"lib/ViewManager.go"
+			],
+			[
+				"makefile",
+				"makefile"
+			],
+			[
+				"reder",
+				"lib/RenderManager.go"
+			],
+			[
+				"applic",
+				"game/Application.go"
+			],
+			[
+				"renderma",
+				"lib/RenderManager.go"
+			],
+			[
+				"server.go",
+				"game/ServerManager.go"
+			],
+			[
+				"server",
+				"footbowl/cmd/server/server.go"
+			],
+			[
+				"testmenu",
+				"footbowl/game/TestMenu.go"
+			],
+			[
+				"mainmenu",
+				"footbowl/game/MainMenu.go"
+			],
+			[
+				"text",
+				"footbowl/lib/ui/TextField.go"
+			],
+			[
+				"inputman",
+				"footbowl/lib/InputManager.go"
+			],
+			[
+				"network",
+				"footbowl/lib/NetworkManager.go"
+			],
+			[
+				"textfi",
+				"footbowl/lib/ui/TextField.go"
+			],
+			[
+				"container",
+				"footbowl/lib/ui/Container.go"
+			],
+			[
+				"rm",
+				"lib/RenderManager.go"
+			],
+			[
+				"rend",
+				"lib/RenderManager.go"
+			],
+			[
+				"main.go",
+				"main.go"
+			],
+			[
+				"te",
+				"lib/ui/TextField.go"
+			],
+			[
+				"spacer",
+				"lib/ui/Spacer.go"
+			],
+			[
+				"label",
+				"lib/ui/Label.go"
+			],
+			[
+				"button.",
+				"lib/ui/Button.go"
+			],
+			[
+				"uielem",
+				"lib/UIElement.go"
+			],
+			[
+				"viewm",
+				"lib/ViewManager.go"
+			],
+			[
+				"uilist",
+				"lib/UIList.go"
+			],
+			[
+				"renderman",
+				"lib/RenderManager.go"
+			],
+			[
+				"app",
+				"game/Application.go"
+			],
+			[
+				"footbowl.",
+				"src/footbowl.hpp"
+			],
+			[
+				"uilis",
+				"src/UIList.hpp"
+			],
+			[
+				"team",
+				"src/Team.hpp"
+			],
+			[
+				"team.hpp",
+				"src/Team.hpp"
+			],
+			[
+				"ui",
+				"src/UIList.hpp"
+			],
+			[
+				"gameman",
+				"src/GameManager.hpp"
+			],
+			[
+				"footbowl.hpp",
+				"src/footbowl.hpp"
+			],
+			[
+				"footbowl.cpp",
+				"src/footbowl.cpp"
+			],
+			[
+				"team.cpp",
+				"src/Team.cpp"
+			],
+			[
+				"vire",
+				"src/ViewManager.hpp"
+			],
+			[
+				"footbowl",
+				"src/footbowl.hpp"
+			],
+			[
+				"tileman",
+				"src/TileManager.hpp"
+			],
+			[
+				"footbo",
+				"src/footbowl.hpp"
+			],
+			[
+				"view",
+				"src/ViewManager.hpp"
+			],
+			[
+				"input",
+				"src/InputManager.cpp"
+			],
+			[
+				"options",
+				"src/OptionsView.cpp"
+			],
+			[
+				"viewmanager",
+				"src/ViewManager.hpp"
+			],
+			[
+				"ievent",
+				"src/IEventListener.hpp"
+			],
+			[
+				"iview",
+				"src/IView.hpp"
+			],
+			[
+				"ieven",
+				"src/IEventListener.hpp"
+			],
+			[
+				"optios",
+				"src/OptionsView.hpp"
+			],
+			[
+				"option",
+				"src/OptionsView.hpp"
+			],
+			[
+				"view.hpp",
+				"src/View.hpp"
+			],
+			[
+				"optionsv",
+				"src/OptionsView.cpp"
+			],
+			[
+				"inptuma",
+				"src/InputManager.hpp"
+			],
+			[
+				"tilemana",
+				"footbowl/src/TileManager.cpp"
+			],
+			[
+				"teamsel",
+				"footbowl/src/TeamSelectView.hpp"
+			],
+			[
+				"footb",
+				"footbowl/src/footbowl.cpp"
+			],
+			[
+				"utils",
+				"src/Utils.hpp"
+			],
+			[
+				"fotbowl",
+				"src/footbowl.cpp"
+			],
+			[
+				"foo",
+				"src/footbowl.cpp"
+			],
+			[
+				"info",
+				"Info.plist"
+			],
+			[
+				"arr",
+				"src/array.h"
+			],
+			[
+				"main.js",
+				"out/main.js"
+			],
+			[
+				"callctojs",
+				"src/CallCtoJS.c"
+			],
+			[
+				"v7.c",
+				"src/v7.c"
+			],
+			[
+				"delta",
+				"dat/deltablue.js"
+			],
+			[
+				"calljstoc",
+				"src/CallJStoC.c"
+			],
+			[
+				"v7.h",
+				"inc/v7.h"
+			],
+			[
+				"inde",
+				"index.html"
+			],
+			[
+				"dist/vm.js",
+				"dist/VM.js"
+			],
+			[
+				"better",
+				"node_modules/better-assert/index.js"
+			],
+			[
+				"packa",
+				"package.json"
+			],
+			[
+				"test.js",
+				"test/test.js"
+			],
+			[
+				"mainjs",
+				"src/main.js"
+			],
+			[
+				"gfx.c",
+				"libfc/src/gfx_gl44.c"
+			],
+			[
+				"sim.h",
+				"zen/src/sim.h"
+			],
+			[
+				"sim.c",
+				"zen/src/sim.c"
+			],
+			[
+				"img.c",
+				"libfc/src/img.c"
+			],
+			[
+				"img",
+				"libfc/inc/fc/img.h"
+			],
+			[
+				"file.h",
+				"libfc/inc/fc/file.h"
+			],
+			[
+				"gfx_",
+				"src/gfx_gl44.c"
+			],
+			[
+				"errors.h",
+				"inc/fc/errors.h"
+			],
+			[
+				"window.h",
+				"inc/fc/window.h"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 1,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": false,
+	"side_bar_width": 302.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

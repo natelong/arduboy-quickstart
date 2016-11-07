@@ -20,17 +20,15 @@ OBJCOPY = $(PREFIX)objcopy
 NM      = $(PREFIX)nm
 
 SRCDIR  = src
-COREDIR = $(SRCDIR)/core
+COREDIR = $(SRCDIR)/core-mini
 LIBDIR  = $(SRCDIR)/lib
 
 CFILES = \
 	$(wildcard $(SRCDIR)/*.c) \
-	$(wildcard $(SRCDIR)/*.cpp) \
 	$(wildcard $(SRCDIR)/**/*.c) \
-	$(wildcard $(SRCDIR)/**/*.cpp) \
 
 VPATH  = $(dir $(CFILES))
-INCDIR = $(COREDIR)/ $(SRCDIR)/core-new
+INCDIR = $(COREDIR)/
 
 OBJDIR     = obj
 OUTDIR     = bin
@@ -51,23 +49,6 @@ DFLAGS = \
     -DUSB_PID=0x8036 \
     -DUSB_MANUFACTURER="Unknown" \
     -D$(ARDUBOY_MODEL)
-
-GFLAGS = \
-    -c \
-    -g \
-    -Os \
-    -Wall \
-    -Wextra \
-    -std=gnu++11 \
-    -fno-exceptions \
-    -ffunction-sections \
-    -fdata-sections \
-    -fno-threadsafe-statics \
-    -MMD \
-    -mmcu=$(MCU_NAME) \
-    $(DFLAGS) \
-    $(foreach incdir,$(INCDIR),-I$(incdir)) \
-    -x c++
 
 CFLAGS = \
     -c \
@@ -132,10 +113,7 @@ $(OUTDIR):
 
 #=============================================================================
 
-.SUFFIXES: .cpp .c .o .a .d
-
-$(OBJDIR)/%.cpp.o: %.cpp
-	$(CPP) $(GFLAGS) $< -o $@
+.SUFFIXES: .c .o .a .d
 
 $(OBJDIR)/%.c.o: %.c
 	$(CC) $(CFLAGS) $< -o $@
