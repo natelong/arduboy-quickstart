@@ -1,8 +1,4 @@
-#ifndef COMMON_H
-#define COMMON_H
-#ifdef __cplusplus
-extern "C" {
-#endif
+#pragma once
 
 #include <stdarg.h>
 #include <stdint.h>
@@ -23,8 +19,3 @@ char* _SprintfStr(char* val, char* s);
 bool  _IsDigit(char c);
 
 void  _SystemError(const char* f, ...);
-
-#ifdef __cplusplus
-}
-#endif
-#endif

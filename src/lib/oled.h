@@ -1,8 +1,4 @@
-#ifndef OLED_H
-#define OLED_H
-#ifdef __cplusplus
-extern "C" {
-#endif
+#pragma once
 
 #include "common.h"
 
@@ -48,9 +44,3 @@ void OledDrawDot(uint8_t x, uint8_t y);
 void OledDrawCls(void);
 
 void OledDrawBmp(int8_t sx, int8_t sy, uint8_t* p);
-
-
-#ifdef __cplusplus
-}
-#endif
-#endif

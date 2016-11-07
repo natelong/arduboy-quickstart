@@ -9,10 +9,6 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-#ifdef __cplusplus
-extern "C"{
-#endif
-
 #define ARD_MINI
 
 #define HIGH 0x1
@@ -96,9 +92,5 @@ extern const uint8_t PROGMEM digital_pin_to_timer_PGM[];
 #define TIMER5A 16
 #define TIMER5B 17
 #define TIMER5C 18
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 
 #include "pins_arduino.h"

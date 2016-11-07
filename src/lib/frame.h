@@ -1,8 +1,4 @@
-#ifndef FRAME_H
-#define FRAME_H
-#ifdef __cplusplus
-extern "C" {
-#endif
+#pragma once
 
 #include <stdint.h>
 #include "common.h"
@@ -30,9 +26,3 @@ uint16_t  FrameGetCpuPercentMax(void);
 uint8_t   FrameGetCnt(void);
 
 bool FrameLoop(void);
-
-
-#ifdef __cplusplus
-}
-#endif
-#endif

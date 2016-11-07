@@ -1,11 +1,4 @@
-#ifndef SND_H
-#define SND_H
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-// ISR(TIMER3_COMPA_vect)
-// ISR(TIMER1_COMPA_vect)
+#pragma once
 
 #include "common.h"
 
@@ -20,17 +13,8 @@ enum {
 };
 
 //---------------------------------------------------------------------------
-#if defined(ARDUBOY_10)
-
-	#define SND_PIN1 5			// PC6
-	#define SND_PIN2 13			// PC7
-
-#elif defined(ARDUBOY_DEVKIT)
-
-	#define SND_PIN1 A2
-	#define SND_PIN2 A3
-
-#endif
+#define SND_PIN1 5			// PC6
+#define SND_PIN2 13			// PC7
 
 //---------------------------------------------------------------------------
 typedef struct {
@@ -72,9 +56,3 @@ void SndStopTone(void);
 void SndStartTimerCh0(void);
 void SndStartTimerCh(uint8_t ch, uint32_t freq);
 void SndStopTimer(uint8_t ch);
-
-
-#ifdef __cplusplus
-}
-#endif
-#endif

@@ -1,7 +1,5 @@
 #include <avr/pgmspace.h>
 #include "math.h"
-#include "tinymt32.h"
-
 
 //---------------------------------------------------------------------------
 PROGMEM const int8_t MathSinTable[] = {

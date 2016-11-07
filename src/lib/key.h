@@ -1,8 +1,4 @@
-#ifndef KEY_H
-#define KEY_H
-#ifdef __cplusplus
-extern "C" {
-#endif
+#pragma once
 
 #include <pins_arduino.h>
 #include "common.h"
@@ -76,9 +72,3 @@ uint8_t   KeyGetCnt(void);
 uint8_t   KeyGetTrg(void);
 uint8_t   KeyGetOff(void);
 uint8_t   KeyGetRep(void);
-
-
-#ifdef __cplusplus
-}
-#endif
-#endif
