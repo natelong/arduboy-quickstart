@@ -13,16 +13,16 @@
 #define FRACT_INC ((MICROSECONDS_PER_TIMER0_OVERFLOW % 1000) >> 3)
 #define FRACT_MAX (1000 >> 3)
 
-volatile unsigned long timer0_overflow_count = 0;
-volatile unsigned long timer0_millis = 0;
-static unsigned char timer0_fract = 0;
+volatile uint32_t timer0_overflow_count = 0;
+volatile uint32_t timer0_millis = 0;
+static uint8_t timer0_fract = 0;
 
 ISR(TIMER0_OVF_vect)
 {
 	// copy these to local variables so they can be stored in registers
 	// (volatile variables must be read from memory on every access)
-	unsigned long m = timer0_millis;
-	unsigned char f = timer0_fract;
+	uint32_t m = timer0_millis;
+	uint8_t f = timer0_fract;
 
 	m += MILLIS_INC;
 	f += FRACT_INC;
@@ -36,9 +36,9 @@ ISR(TIMER0_OVF_vect)
 	timer0_overflow_count++;
 }
 
-unsigned long millis()
+uint32_t millis()
 {
-	unsigned long m;
+	uint32_t m;
 	uint8_t oldSREG = SREG;
 
 	// disable interrupts while we read timer0_millis or we might get an
@@ -50,8 +50,8 @@ unsigned long millis()
 	return m;
 }
 
-unsigned long micros() {
-	unsigned long m;
+uint32_t micros() {
+	uint32_t m;
 	uint8_t oldSREG = SREG, t;
 
 	cli();
@@ -67,7 +67,7 @@ unsigned long micros() {
 	return ((m << 8) + t) * (64 / mini_clocksPerMicrosecond());
 }
 
-void delay(unsigned long ms)
+void delay(uint32_t ms)
 {
 	uint32_t start = micros();
 

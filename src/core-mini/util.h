@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdint.h>
+
 // undefine stdlib's abs if encountered
 #ifdef abs
 #undef abs
@@ -16,7 +18,7 @@
 #define max(a,b)                ((a)>(b)?(a):(b))
 #define abs(x)                  ((x)>0?(x):-(x))
 #define constrain(amt,low,high) ((amt)<(low)?(low):((amt)>(high)?(high):(amt)))
-#define round(x)                ((x)>=0?(long)((x)+0.5):(long)((x)-0.5))
+#define round(x)                ((x)>=0?(int32_t)((x)+0.5):(int32_t)((x)-0.5))
 #define radians(deg)            ((deg)*DEG_TO_RAD)
 #define degrees(rad)            ((rad)*RAD_TO_DEG)
 #define sq(x)                   ((x)*(x))

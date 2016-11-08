@@ -1,10 +1,11 @@
-#ifndef FONT5X8_H
-#define FONT5X8_H
+#pragma once
+
+#include <stdint.h>
 
 // Arduboy Library
 // standard ascii 5x8 font
 
-PROGMEM const unsigned char font[] =
+PROGMEM const uint8_t font[] =
 {
     0x00, 0x00, 0x00, 0x00, 0x00,
     0x3E, 0x5B, 0x4F, 0x5B, 0x3E,
@@ -263,5 +264,3 @@ PROGMEM const unsigned char font[] =
     0x00, 0x3C, 0x3C, 0x3C, 0x3C,
     0x00, 0x00, 0x00, 0x00, 0x00,
 };
-
-#endif

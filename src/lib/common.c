@@ -1,6 +1,8 @@
 #include "common.h"
 #include "oled.h"
 
+#include <stdint.h>
+
 //---------------------------------------------------------------------------
 void _Memset(void* s, uint8_t c, int16_t size)
 {
@@ -94,7 +96,7 @@ void _SprintfDo(char* str, const char* fmt, va_list ap)
 			break;
 
 		case 'l':
-			str = (isCol == true) ? _SprintfHexCol((uint32_t)va_arg(ap, long), str, col, colChr, true, 'a') : _SprintfHex((uint32_t)va_arg(ap, long), str, 'a');
+			str = (isCol == true) ? _SprintfHexCol((uint32_t)va_arg(ap, int32_t), str, col, colChr, true, 'a') : _SprintfHex((uint32_t)va_arg(ap, int32_t), str, 'a');
 			break;
 
 		case 's':

@@ -6,7 +6,6 @@
 #include "key.h"
 #include "oled.h"
 #include "eep.h"
-#include "math.h"
 #include "rnd.h"
 
 //---------------------------------------------------------------------------
@@ -24,7 +23,6 @@ void SysInit(void)
 	SndInit();
 	EepInit();
 	KeyInit();
-	MathInit();
 	RndInit();
 }
 //---------------------------------------------------------------------------

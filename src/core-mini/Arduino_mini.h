@@ -27,9 +27,9 @@ void mini_init(void);
 void mini_pinMode(uint8_t, uint8_t);
 void mini_digitalWrite(uint8_t, uint8_t);
 
-unsigned long millis(void);
-unsigned long micros(void);
-void delay(unsigned long);
+uint32_t millis(void);
+uint32_t micros(void);
+void delay(uint32_t);
 
 // On the ATmega1280, the addresses of some of the port registers are
 // greater than 255, so we can't store them in uint8_t's.
