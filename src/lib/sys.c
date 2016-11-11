@@ -8,43 +8,36 @@
 #include "eep.h"
 #include "rnd.h"
 
-//---------------------------------------------------------------------------
-void SysInit(void)
-{
+void ab_init(void) {
 	power_timer2_disable();
 	power_adc_disable();
 	power_twi_disable();
 	power_usart0_disable();
 	power_usart1_disable();
 
-
-	OledInit();
+	ab_oled_init();
 	FrameInit();
 	SndInit();
 	EepInit();
 	KeyInit();
 	RndInit();
 }
-//---------------------------------------------------------------------------
-void SysIdle(void)
-{
+
+void ab_idle(void) {
 	set_sleep_mode(SLEEP_MODE_IDLE);
 	sleep_mode();
 }
-//---------------------------------------------------------------------------
-bool SysLoop(void)
-{
-	if(FrameLoop() == false)
-	{
+
+bool ab_loopStart(void) {
+	if(FrameLoop() == false) {
 		return false;
 	}
 
 	KeyLoop();
 	return true;
 }
-//---------------------------------------------------------------------------
-void SysLoopEnd(void)
-{
-	OledDisplay();
-	OledDrawCls();
+
+void ab_loopEnd(void) {
+	ab_oled_display();
+	ab_oled_clear();
 }

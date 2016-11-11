@@ -2,35 +2,27 @@
 #include "frame.h"
 #include "sys.h"
 
-// timer 0 millis()
-
-
-//---------------------------------------------------------------------------
 ST_FRAME Frame;
 
 
-//---------------------------------------------------------------------------
-void FrameInit(void)
-{
+void FrameInit(void) {
 	_Memset(&Frame, 0x00, sizeof(ST_FRAME));
 
 	FrameSetRate(60);
 }
-//---------------------------------------------------------------------------
-void FrameSetRate(uint8_t rate)
-{
+
+void FrameSetRate(uint8_t rate) {
 	Frame.rate = rate;
 	Frame.eachMillis = 1000 / rate;
 }
-//---------------------------------------------------------------------------
+
 // returns the load on the CPU as a percentage
-uint16_t FrameGetCpuPercent(void)
-{
+uint16_t FrameGetCpuPercent(void) {
 	return (Frame.lastDurationMs * 100) / Frame.eachMillis;
 }
-//---------------------------------------------------------------------------
-uint16_t FrameGetCpuPercentMax(void)
-{
+
+
+uint16_t FrameGetCpuPercentMax(void) {
 	uint16_t per = FrameGetCpuPercent();
 
 	if(Frame.cpuMaxPercent < per)
@@ -40,15 +32,13 @@ uint16_t FrameGetCpuPercentMax(void)
 
 	return Frame.cpuMaxPercent;
 }
-//---------------------------------------------------------------------------
-uint8_t FrameGetCnt(void)
-{
+
+uint8_t FrameGetCnt(void) {
 	return Frame.cnt;
 }
-//---------------------------------------------------------------------------
-bool FrameLoop(void)
-{
-	uint32_t now = millis();
+
+bool FrameLoop(void) {
+	uint32_t now = mini_millis();
 
 	if(Frame.isPostRender == true)
 	{
@@ -64,7 +54,7 @@ bool FrameLoop(void)
 
 		if(remaining > 1)
 		{
-			SysIdle();
+			ab_idle();
 		}
 
 		return false;

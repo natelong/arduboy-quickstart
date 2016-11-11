@@ -5,8 +5,11 @@
 // Arduboy Library
 // standard ascii 5x8 font
 
-PROGMEM const uint8_t font[] =
-{
+#define AB_FONT_WIDTH  6
+#define AB_FONT_HEIGHT 8
+#define AB_FONT_SIZE   5
+
+const uint8_t font[] PROGMEM = {
     0x00, 0x00, 0x00, 0x00, 0x00,
     0x3E, 0x5B, 0x4F, 0x5B, 0x3E,
     0x3E, 0x6B, 0x4F, 0x6B, 0x3E,

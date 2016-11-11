@@ -2,45 +2,16 @@
 
 #include "common.h"
 
-//---------------------------------------------------------------------------
-#define OLED_FONT_CX			6
-#define OLED_FONT_CY			8
-#define OLED_FONT_SIZE			5
+#define AB_OLED_WIDTH      128
+#define AB_OLED_HEIGHT      64
+#define AB_OLED_CHARWIDTH  (AB_OLED_WIDTH / AB_FONT_WIDTH) // 21
+#define AB_OLED_CHARHEIGHT (AB_OLED_HEIGHT / AB_FONT_HEIGHT) // 8
 
-#define OLED_SCREEN_CX			128
-#define OLED_SCREEN_CY			64
-#define OLED_SCREEN_FONT_CX		(OLED_SCREEN_CX / OLED_FONT_CX)		// 21
-#define OLED_SCREEN_FONT_CY		(OLED_SCREEN_CY / OLED_FONT_CY)		// 8
+void ab_oled_init(void);
+void ab_oled_display(void);
+void ab_oled_clear(void);
 
-//---------------------------------------------------------------------------
-#if defined(ARDUBOY_10)
-
-	#define OLED_PIN_CS			12
-	#define OLED_PIN_DC			4
-	#define OLED_PIN_RST		6
-
-#elif defined(ARDUBOY_DEVKIT)
-
-	#define OLED_PIN_CS			6
-	#define OLED_PIN_DC			4
-	#define OLED_PIN_RST		12
-
-#endif
-
-//---------------------------------------------------------------------------
-typedef struct {
-	uint8_t buf[OLED_SCREEN_CX * (OLED_SCREEN_CY / 8)];
-
-} ST_OLED;
-
-
-//---------------------------------------------------------------------------
-void OledInit(void);
-void OledDisplay(void);
-
-void OledDrawStr(uint8_t fx, uint8_t fy, const char* fmt, ...);
-void OledDrawChr(uint8_t fx, uint8_t fy, char chr);
-void OledDrawDot(uint8_t x, uint8_t y);
-void OledDrawCls(void);
-
-void OledDrawBmp(int8_t sx, int8_t sy, uint8_t* p);
+void ab_oled_drawStr(uint8_t fx, uint8_t fy, const char* fmt, ...);
+void ab_oled_drawChr(uint8_t fx, uint8_t fy, char chr);
+void ab_oled_drawDot(uint8_t x, uint8_t y);
+void ab_oled_drawBmp(int8_t sx, int8_t sy, uint8_t* p);

@@ -2,7 +2,7 @@
 
 #include "common.h"
 
-void SysInit(void);
-void SysIdle(void);
-bool SysLoop(void);
-void SysLoopEnd(void);
+void ab_init(void);
+void ab_idle(void);
+bool ab_loopStart(void);
+void ab_loopEnd(void);

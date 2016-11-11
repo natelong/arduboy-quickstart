@@ -14,11 +14,10 @@
 #define FRACT_MAX (1000 >> 3)
 
 volatile uint32_t timer0_overflow_count = 0;
-volatile uint32_t timer0_millis = 0;
-static uint8_t timer0_fract = 0;
+volatile uint32_t timer0_millis         = 0;
+static   uint8_t  timer0_fract          = 0;
 
-ISR(TIMER0_OVF_vect)
-{
+ISR(TIMER0_OVF_vect) {
 	// copy these to local variables so they can be stored in registers
 	// (volatile variables must be read from memory on every access)
 	uint32_t m = timer0_millis;
@@ -36,8 +35,7 @@ ISR(TIMER0_OVF_vect)
 	timer0_overflow_count++;
 }
 
-uint32_t millis()
-{
+uint32_t mini_millis() {
 	uint32_t m;
 	uint8_t oldSREG = SREG;
 
@@ -50,7 +48,7 @@ uint32_t millis()
 	return m;
 }
 
-uint32_t micros() {
+uint32_t mini_micros() {
 	uint32_t m;
 	uint8_t oldSREG = SREG, t;
 
@@ -67,12 +65,11 @@ uint32_t micros() {
 	return ((m << 8) + t) * (64 / mini_clocksPerMicrosecond());
 }
 
-void delay(uint32_t ms)
-{
-	uint32_t start = micros();
+void mini_delay(uint32_t ms) {
+	uint32_t start = mini_micros();
 
 	while (ms > 0) {
-		while ( ms > 0 && (micros() - start) >= 1000) {
+		while (ms > 0 && (mini_micros() - start) >= 1000) {
 			ms--;
 			start += 1000;
 		}
@@ -85,7 +82,7 @@ void mini_init() {
 
 	// on the ATmega168, timer 0 is also used for fast hardware pwm
 	// (using phase-correct PWM would mean that timer 0 overflowed half as often
-	// resulting in different millis() behavior on the ATmega8 and ATmega168)
+	// resulting in different mini_millis() behavior on the ATmega8 and ATmega168)
 	sbi(TCCR0A, WGM01);
 	sbi(TCCR0A, WGM00);
 	sbi(TCCR0B, CS01); // this combination is for the standard 168/328/1280/2560

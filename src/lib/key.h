@@ -1,32 +1,19 @@
 #pragma once
 
-#include <pins_arduino.h>
+#include <Arduino_mini.h>
 #include "common.h"
 
 //---------------------------------------------------------------------------
 #define KEY_REPEAT_CNT			10
 
 //---------------------------------------------------------------------------
-// Using symbolic pin names from pins_arduino.h
-#if defined(ARDUBOY_10)
 
-	#define KEY_PIN_L				A2		// PF5
-	#define KEY_PIN_R				A1		// PF6
-	#define KEY_PIN_U				A0		// PF7
-	#define KEY_PIN_D				A3		// PF4
-	#define KEY_PIN_A				7		// PE6
-	#define KEY_PIN_B				8		// PB4
-
-#elif defined(ARDUBOY_DEVKIT)
-
-	#define KEY_PIN_L				9
-	#define KEY_PIN_R				5
-	#define KEY_PIN_U				8
-	#define KEY_PIN_D				10
-	#define KEY_PIN_A				A0
-	#define KEY_PIN_B				A1
-
-#endif
+	#define KEY_PIN_L PIN_A2 // PF5
+	#define KEY_PIN_R PIN_A1 // PF6
+	#define KEY_PIN_U PIN_A0 // PF7
+	#define KEY_PIN_D PIN_A3 // PF4
+	#define KEY_PIN_A 7      // PE6
+	#define KEY_PIN_B 8		 // PB4
 
 //---------------------------------------------------------------------------
 enum {

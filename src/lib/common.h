@@ -5,7 +5,7 @@
 #include <stdbool.h>
 
 //---------------------------------------------------------------------------
-#define ASSERT(x)				if(!(x)) _SystemError("%s(%d):"#x"\n", __FILE__, __LINE__)
+#define ASSERT(x) if(!(x)) _SystemError("%s(%d):"#x"\n", __FILE__, __LINE__)
 
 //---------------------------------------------------------------------------
 void  _Memset(void* s, uint8_t c, int16_t size);

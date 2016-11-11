@@ -1,20 +1,17 @@
 #include "Arduino_mini.h"
 
-#include "lib/common.h"
-#include "lib/sys.h"
-#include "lib/oled.h"
-#include "lib/key.h"
+#include "lib/ab.h"
 
 int main(void) {
     mini_init();
 
-    SysInit();
+    ab_init();
 
     uint8_t x = 0;
     uint8_t y = 0;
 
     for (;;) {
-        if(SysLoop() == false) continue;
+        if(ab_loopStart() == false) continue;
 
         uint8_t trg = KeyGetTrg();
         if (trg & KEY_U) y--;
@@ -22,8 +19,8 @@ int main(void) {
         if (trg & KEY_L) x--;
         if (trg & KEY_R) x++;
 
-        OledDrawStr(x, y, "Arduino Mini");
-        SysLoopEnd();
+        ab_oled_drawStr(x, y, "Arduino Mini");
+        ab_loopEnd();
     }
 
     return 0;
