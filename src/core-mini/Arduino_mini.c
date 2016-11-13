@@ -14,6 +14,18 @@ const mini_Pin mini_OLED_CS  = {&DDRD, &PORTD, &PIND, (1 << 6)}; // 12
 const mini_Pin mini_OLED_DC  = {&DDRD, &PORTD, &PIND, (1 << 4)}; // 4
 const mini_Pin mini_OLED_RST = {&DDRD, &PORTD, &PIND, (1 << 7)}; // 6
 
+const mini_Pin mini_SND_1 = {&DDRC, &PORTC, &PINC, (1 << 6)}; // 5
+const mini_Pin mini_SND_2 = {&DDRC, &PORTC, &PINC, (1 << 7)}; // 13
+
+const mini_Pin mini_KEY_L = {&DDRF, &PORTF, &PINF, (1 << 5)}; // 20
+const mini_Pin mini_KEY_R = {&DDRF, &PORTF, &PINF, (1 << 6)}; // 19
+const mini_Pin mini_KEY_U = {&DDRF, &PORTF, &PINF, (1 << 7)}; // 18
+const mini_Pin mini_KEY_D = {&DDRF, &PORTF, &PINF, (1 << 4)}; // 21
+
+const mini_Pin mini_KEY_A = {&DDRE, &PORTE, &PINE, (1 << 6)}; // 7
+const mini_Pin mini_KEY_B = {&DDRB, &PORTB, &PINB, (1 << 4)}; // 8
+
+
 #define cbi(sfr, bit) (_SFR_BYTE(sfr) &= ~_BV(bit))
 #define sbi(sfr, bit) (_SFR_BYTE(sfr) |= _BV(bit))
 
@@ -131,57 +143,6 @@ void mini_init() {
     sbi(ADCSRA, ADPS1);
     sbi(ADCSRA, ADPS0);
     sbi(ADCSRA, ADEN);  // enable a2d conversions
-}
-
-void mini_pinMode(uint8_t pin, uint8_t mode) {
-    uint8_t bit = digitalPinToBitMask(pin);
-    uint8_t port = digitalPinToPort(pin);
-    volatile uint8_t *reg, *out;
-
-    if (port == NOT_A_PIN) return;
-
-    reg = portModeRegister(port);
-    out = portOutputRegister(port);
-
-    if (mode == INPUT) {
-        uint8_t oldSREG = SREG;
-        cli();
-        *reg &= ~bit;
-        *out &= ~bit;
-        SREG = oldSREG;
-    } else if (mode == INPUT_PULLUP) {
-        uint8_t oldSREG = SREG;
-        cli();
-        *reg &= ~bit;
-        *out |= bit;
-        SREG = oldSREG;
-    } else {
-        uint8_t oldSREG = SREG;
-        cli();
-        *reg |= bit;
-        SREG = oldSREG;
-    }
-}
-
-void mini_digitalWrite(uint8_t pin, uint8_t val) {
-    uint8_t bit = digitalPinToBitMask(pin);
-    uint8_t port = digitalPinToPort(pin);
-    volatile uint8_t *out;
-
-    if (port == NOT_A_PIN) return;
-
-    out = portOutputRegister(port);
-
-    uint8_t oldSREG = SREG;
-    cli();
-
-    if (val == LOW) {
-        *out &= ~bit;
-    } else {
-        *out |= bit;
-    }
-
-    SREG = oldSREG;
 }
 
 void mini_pinModeInput(const mini_Pin* pin) {

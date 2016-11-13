@@ -61,22 +61,17 @@ void ab_oled_init(void) {
     mini_pinModeOutput(&mini_OLED_RST);
 
     // VDD (3.3V) goes high at start, lets just chill for a ms
-    //mini_digitalWrite(OLED_PIN_RST, HIGH);
     mini_setPinHigh(&mini_OLED_RST);
     mini_delay(1);
 
     // bring reset low. wait 10ms
-    //mini_digitalWrite(OLED_PIN_RST, LOW);
     mini_setPinLow(&mini_OLED_RST);
     mini_delay(10);
 
     // bring out of reset
-    //mini_digitalWrite(OLED_PIN_RST, HIGH);
     mini_setPinHigh(&mini_OLED_RST);
 
     // setup the ports we need to talk to the OLED
-    //volatile uint8_t* pCs = OLED_PIN_CS_OUT_REG;
-    // volatile uint8_t* pDc = OLED_PIN_DC_OUT_REG;
     volatile uint8_t* pCs = mini_OLED_CS.out;
     volatile uint8_t* pDc = mini_OLED_DC.out;
 

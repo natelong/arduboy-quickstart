@@ -3,7 +3,6 @@
 #include "snd.h"
 #include "oled.h"
 
-//---------------------------------------------------------------------------
 PROGMEM const unsigned int SndMidiNoteFreq[128] = {
 	16,17,18,19,21,22,23,24,26,28,29,31,33,35,37,39,41,44,46,49,52,55,58,62,65,
 	69,73,78,82,87,92,98,104,110,117,123,131,139,147,156,165,175,185,196,208,220,
@@ -14,27 +13,19 @@ PROGMEM const unsigned int SndMidiNoteFreq[128] = {
 	10548,11175,11840,12544,13290,14080,14917,15804,16744,17740,18795,19912,21096,
 	22351,23680,25088
 };
-//---------------------------------------------------------------------------
+
 ST_SND Snd;
 
 
-//---------------------------------------------------------------------------
-void SndInit(void)
-{
+
+void SndInit(void) {
 	_Memset(&Snd, 0x00, sizeof(ST_SND));
 
-	mini_pinMode(SND_PIN1, OUTPUT);
-	Snd.ch[0].pPinPort = portOutputRegister(digitalPinToPort(SND_PIN1));
-	Snd.ch[0].pinMask  = digitalPinToBitMask(SND_PIN1);
+	mini_pinModeOutput(&mini_SND_1);
+	Snd.ch[0] = &mini_SND_1;
 
-#if defined(ARDUBOY_10)
-
-	mini_pinMode(SND_PIN2, OUTPUT);
-	Snd.ch[1].pPinPort = portOutputRegister(digitalPinToPort(SND_PIN2));
-	Snd.ch[1].pinMask  = digitalPinToBitMask(SND_PIN2);
-
-#endif
-
+	mini_pinModeOutput(&mini_SND_2);
+	Snd.ch[1] = &mini_SND_2;
 
 	TCCR3A = 0;
 	TCCR3B = 0;
@@ -49,9 +40,8 @@ void SndInit(void)
 	power_timer3_enable();
 	power_timer1_enable();
 }
-//---------------------------------------------------------------------------
-void SndPlayScore(const uint8_t* p)
-{
+
+void SndPlayScore(const uint8_t* p) {
 	Snd.pScoreStart  = (uint8_t*)p;
 	Snd.pScoreCur    = (uint8_t*)p;
 	Snd.scoreCnt     = 1;
@@ -62,26 +52,22 @@ void SndPlayScore(const uint8_t* p)
 
 	SndStartTimerCh0();
 }
-//---------------------------------------------------------------------------
-void SndStopScore(void)
-{
+
+void SndStopScore(void) {
 	SndStopTimer(0);
 	SndStopTimer(1);
 
 	Snd.isScorePlay = false;
 }
-//---------------------------------------------------------------------------
-void SndStepScore(void)
-{
-	for(;;)
-	{
+
+void SndStepScore(void) {
+	for(;;) {
 		uint8_t cmd = __LPM(Snd.pScoreCur++);
 
 		uint8_t op  = cmd & 0xf0;
 		uint8_t ch  = cmd & 0x0f;
 
-		switch(op)
-		{
+		switch(op) {
 		case SND_OP_PLAY_NOTE:
 			SndPlayNote(ch, __LPM(Snd.pScoreCur++));
 			break;
@@ -99,14 +85,12 @@ void SndStepScore(void)
 			return;
 
 		default:
-			if(op < 0x80)
-			{
+			if(op < 0x80) {
 				// wait count in msec.
 				uint16_t duration = ((uint16_t)cmd << 8) | __LPM(Snd.pScoreCur++);
 				Snd.scoreCnt = ((uint32_t)Snd.scoreFreqCnt * duration + 500) / 1000;
 
-				if(Snd.scoreCnt == 0)
-				{
+				if(Snd.scoreCnt == 0) {
 					Snd.scoreCnt = 1;
 				}
 				return;
@@ -116,77 +100,61 @@ void SndStepScore(void)
 		}
 	} // for(;;)
 }
-//---------------------------------------------------------------------------
-void SndPlayNote(uint8_t ch, uint8_t note)
-{
-	if(ch == 1 && Snd.isTonePlay == true)
-	{
+
+void SndPlayNote(uint8_t ch, uint8_t note) {
+	if(ch == 1 && Snd.isTonePlay == true) {
 		return;
 	}
 
 
 	uint16_t freq = __LPM_word(SndMidiNoteFreq + note);
 
-	if(ch == 0)
-	{
-		Snd.scoreFreqCnt = freq;
-	}
+	if(ch == 0) Snd.scoreFreqCnt = freq;
 
 	Snd.isScoreCh[ch] = true;
 	SndStartTimerCh(ch, F_CPU / freq);
 }
-//---------------------------------------------------------------------------
-void SndStopNote(uint8_t ch)
-{
+
+void SndStopNote(uint8_t ch) {
 	Snd.isScoreCh[ch] = false;
 
-	*Snd.ch[ch].pPinPort &= ~Snd.ch[ch].pinMask;
+	// TODO: Check this
+	// *Snd.ch[ch].pPinPort &= ~Snd.ch[ch].pinMask;
+	mini_setPinLow(Snd.ch[ch]);
 }
-//---------------------------------------------------------------------------
-void SndPlayTone(uint16_t freq, uint32_t duration)
-{
-	if(Snd.isTonePlay == true)
-	{
-		return;
-	}
-	Snd.isTonePlay = true;
 
+void SndPlayTone(uint16_t freq, uint32_t duration) {
+	if(Snd.isTonePlay == true) return;
+
+	Snd.isTonePlay = true;
 
 	uint32_t cnt = 2 * freq * duration / 1000;
 
-	if(cnt == 0)
-	{
-		return;
-	}
+	if(cnt == 0) return;
 	Snd.toneCnt = cnt;
 
 
 	SndStartTimerCh(1, F_CPU / freq / 2);
 }
-//---------------------------------------------------------------------------
-void SndStopTone(void)
-{
-	SndStopTimer(1);
 
+void SndStopTone(void) {
+	SndStopTimer(1);
 	Snd.isTonePlay = false;
 }
-//---------------------------------------------------------------------------
-void SndStartTimerCh0(void)
-{
+
+void SndStartTimerCh0(void) {
 	TCCR3B = (TCCR3B & 0xf8) | 0x01;
 	OCR3A  = 0xffff;
 
 	mini_bitSet(TIMSK3, OCIE3A);
 }
-//---------------------------------------------------------------------------
-void SndStartTimerCh(uint8_t ch, uint32_t freq)
-{
+
+void SndStartTimerCh(uint8_t ch, uint32_t freq) {
 	// timer ck/1
 	uint32_t ocr = freq;
 	uint8_t  pre = 0x01;
 
-	if(ocr > 0xffff)
-	{
+	if(ocr > 0xffff) {
 		// ck/64
 		ocr /= 64;
 		pre  = 0x03;
@@ -194,75 +162,52 @@ void SndStartTimerCh(uint8_t ch, uint32_t freq)
 	ocr--;
 
 
-	if(ch == 0)
-	{
+	if(ch == 0) {
 		TCCR3B = (TCCR3B & 0xf8) | pre;
 		OCR3A  = ocr;
 		mini_bitSet(TIMSK3, OCIE3A);
 	}
-	else
-	{
+	else {
 		TCCR1B = (TCCR1B & 0xf8) | pre;
 		OCR1A  = ocr;
 		mini_bitSet(TIMSK1, OCIE1A);
 	}
 }
-//---------------------------------------------------------------------------
-void SndStopTimer(uint8_t ch)
-{
-	if(ch == 0)
-	{
+
+void SndStopTimer(uint8_t ch) {
+	if(ch == 0) {
 		TIMSK3 &= ~(1 << OCIE3A);
-		*Snd.ch[0].pPinPort &= ~Snd.ch[0].pinMask;
-	}
-	else
-	{
+		// TODO: test this
+		// *Snd.ch[0].pPinPort &= ~Snd.ch[0].pinMask;
+		mini_setPinLow(Snd.ch[0]);
+	} else {
 		TIMSK1 &= ~(1 << OCIE1A);
-
-#if defined(ARDUBOY_10)
-
-		*Snd.ch[1].pPinPort &= ~Snd.ch[1].pinMask;
-
-#endif
-
+		// TODO: test this
+		// *Snd.ch[1].pPinPort &= ~Snd.ch[1].pinMask;
+		mini_setPinLow(Snd.ch[0]);
 	}
-
 }
-//---------------------------------------------------------------------------
+
 // TIMER 3 ch0
-ISR(TIMER3_COMPA_vect)
-{
-	if(Snd.isScoreCh[0] == true)
-	{
-		*Snd.ch[0].pPinPort ^= Snd.ch[0].pinMask;
+ISR(TIMER3_COMPA_vect) {
+	if(Snd.isScoreCh[0] == true) {
+		// TODO: test this
+		//*Snd.ch[0].pPinPort ^= Snd.ch[0].pinMask;
+		*Snd.ch[0]->out ^= Snd.ch[0]->mask;
 	}
 
 	Snd.scoreCnt--;
 
-	if(Snd.scoreCnt == 0)
-	{
+	if(Snd.scoreCnt == 0) {
 		SndStepScore();
 	}
 }
-//---------------------------------------------------------------------------
+
 // TIMER 1 ch1
-ISR(TIMER1_COMPA_vect)
-{
-
-#if defined(ARDUBOY_10)
-
-	*Snd.ch[1].pPinPort ^= Snd.ch[1].pinMask;
-
-#endif
-
-
-	if(Snd.isTonePlay == false)
-	{
-		return;
-	}
-
-	if(--Snd.toneCnt == 0)
-	{
-		SndStopTone();
-	}
+ISR(TIMER1_COMPA_vect) {
+	// TODO: test this
+	// *Snd.ch[1].pPinPort ^= Snd.ch[1].pinMask;
+	*Snd.ch[1]->out ^= Snd.ch[1]->mask;
+	if(Snd.isTonePlay == false) return;
+	if(--Snd.toneCnt == 0) SndStopTone();
 }

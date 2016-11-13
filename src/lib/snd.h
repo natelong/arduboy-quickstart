@@ -1,6 +1,7 @@
 #pragma once
 
 #include "common.h"
+#include "Arduino_mini.h"
 
 //---------------------------------------------------------------------------
 #define SND_MAX_CHANNEL			2
@@ -13,14 +14,12 @@ enum {
 };
 
 //---------------------------------------------------------------------------
-#define SND_PIN1 5  // PC6
-#define SND_PIN2 13 // PC7
+// typedef struct {
+// 	volatile uint8_t* pPinPort;
+// 	uint8_t   pinMask;
+// } ST_SND_CH;
 
-//---------------------------------------------------------------------------
-typedef struct {
-	volatile uint8_t* pPinPort;
-	uint8_t   pinMask;
-} ST_SND_CH;
+typedef const mini_Pin* ST_SND_CH;
 
 typedef struct {
 	// Score
