@@ -56,6 +56,29 @@ extern const uint8_t PROGMEM digital_pin_to_bit_mask_PGM[];
 #define NOT_A_PORT        0
 #define NOT_AN_INTERRUPT -1
 
+typedef struct {
+    volatile uint8_t* mode;
+    volatile uint8_t* out;
+    volatile uint8_t* in;
+             uint8_t  mask;
+} mini_Pin;
+
+void mini_pinModeInput(const mini_Pin* pin);
+void mini_pinModeInputPullup(const mini_Pin* pin);
+void mini_pinModeOutput(const mini_Pin* pin);
+void mini_setPinLow(const mini_Pin* pin);
+void mini_setPinHigh(const mini_Pin* pin);
+
+extern const mini_Pin mini_SPI_MISO;
+extern const mini_Pin mini_SPI_SCK;
+extern const mini_Pin mini_SPI_MOSI;
+extern const mini_Pin mini_SPI_SS;
+
+extern const mini_Pin mini_OLED_CS;
+extern const mini_Pin mini_OLED_DC;
+extern const mini_Pin mini_OLED_RST;
+
+
 
 #ifdef ARDUINO_MAIN
 
@@ -70,46 +93,6 @@ extern const uint8_t PROGMEM digital_pin_to_bit_mask_PGM[];
 #define PJ 10
 #define PK 11
 #define PL 12
-
-// On the Arduino board, digital pins are also used
-// for the analog output (software PWM).  Analog input
-// pins are a separate set.
-
-// ATMEL ATMEGA32U4 / ARDUINO LEONARDO
-//
-// D0               PD2                 RXD1/INT2
-// D1               PD3                 TXD1/INT3
-// D2               PD1     SDA         SDA/INT1
-// D3#              PD0     PWM8/SCL    OC0B/SCL/INT0
-// D4       A6      PD4                 ADC8
-// D5#              PC6     ???         OC3A/#OC4A
-// D6#      A7      PD7     FastPWM     #OC4D/ADC10
-// D7               PE6                 INT6/AIN0
-//
-// D8       A8      PB4                 ADC11/PCINT4
-// D9#      A9      PB5     PWM16       OC1A/#OC4B/ADC12/PCINT5
-// D10#     A10     PB6     PWM16       OC1B/0c4B/ADC13/PCINT6
-// D11#             PB7     PWM8/16     0C0A/OC1C/#RTS/PCINT7
-// D12      A11     PD6                 T1/#OC4D/ADC9
-// D13#             PC7     PWM10       CLK0/OC4A
-//
-// A0       D18     PF7                 ADC7
-// A1       D19     PF6                 ADC6
-// A2       D20     PF5                 ADC5
-// A3       D21     PF4                 ADC4
-// A4       D22     PF1                 ADC1
-// A5       D23     PF0                 ADC0
-//
-// New pins D14..D17 to map SPI port to digital pins
-//
-// MISO     D14     PB3                 MISO,PCINT3
-// SCK      D15     PB1                 SCK,PCINT1
-// MOSI     D16     PB2                 MOSI,PCINT2
-// SS       D17     PB0                 RXLED,SS/PCINT0
-//
-// TXLED    D30     PD5                 XCK1
-// RXLED    D17     PB0
-// HWB              PE2                 HWB
 
 // these arrays map port names (e.g. port B) to the
 // appropriate addresses for various functions (e.g. reading
@@ -221,12 +204,6 @@ const uint8_t PROGMEM digital_pin_to_bit_mask_PGM[] = {
 };
 
 #endif /* ARDUINO_MAIN */
-
-// Map SPI port to 'new' pins D14..D17
-#define PIN_SPI_SS   (17)
-#define PIN_SPI_MOSI (16)
-#define PIN_SPI_MISO (14)
-#define PIN_SPI_SCK  (15)
 
 // Mapping of analog pins as digital I/O
 // A6-A11 share with digital pins

@@ -4,6 +4,16 @@
 #include <stdio.h>
 #include <stdarg.h>
 
+
+const mini_Pin mini_SPI_MISO = {&DDRB, &PORTB, &PINB, (1 << 3)}; // 14
+const mini_Pin mini_SPI_SCK  = {&DDRB, &PORTB, &PINB, (1 << 1)}; // 15
+const mini_Pin mini_SPI_MOSI = {&DDRB, &PORTB, &PINB, (1 << 2)}; // 16
+const mini_Pin mini_SPI_SS   = {&DDRB, &PORTB, &PINB, (1 << 0)}; // 17
+
+const mini_Pin mini_OLED_CS  = {&DDRD, &PORTD, &PIND, (1 << 6)}; // 12
+const mini_Pin mini_OLED_DC  = {&DDRD, &PORTD, &PIND, (1 << 4)}; // 4
+const mini_Pin mini_OLED_RST = {&DDRD, &PORTD, &PIND, (1 << 7)}; // 6
+
 #define cbi(sfr, bit) (_SFR_BYTE(sfr) &= ~_BV(bit))
 #define sbi(sfr, bit) (_SFR_BYTE(sfr) |= _BV(bit))
 
@@ -171,5 +181,42 @@ void mini_digitalWrite(uint8_t pin, uint8_t val) {
         *out |= bit;
     }
 
+    SREG = oldSREG;
+}
+
+void mini_pinModeInput(const mini_Pin* pin) {
+    uint8_t oldSREG = SREG;
+    cli();
+    *pin->mode &= ~pin->mask;
+    *pin->out &= ~pin->mask;
+    SREG = oldSREG;
+}
+
+void mini_pinModeInputPullup(const mini_Pin* pin) {
+    uint8_t oldSREG = SREG;
+    cli();
+    *pin->mode &= ~pin->mask;
+    *pin->out |= pin->mask;
+    SREG = oldSREG;
+}
+
+void mini_pinModeOutput(const mini_Pin* pin) {
+    uint8_t oldSREG = SREG;
+    cli();
+    *pin->mode |= pin->mask;
+    SREG = oldSREG;
+}
+
+void mini_setPinLow(const mini_Pin* pin) {
+    uint8_t oldSREG = SREG;
+    cli();
+    *pin->out &= ~pin->mask;
+    SREG = oldSREG;
+}
+
+void mini_setPinHigh(const mini_Pin* pin) {
+    uint8_t oldSREG = SREG;
+    cli();
+    *pin->out |= pin->mask;
     SREG = oldSREG;
 }
