@@ -14,7 +14,6 @@ void _Memset(void* s, uint8_t c, int16_t size) {
     }
 }
 
-
 char* _Sprintf(char* buf, const char* fmt, ...) {
     va_list ap;
     va_start(ap, fmt);
