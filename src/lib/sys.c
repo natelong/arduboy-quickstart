@@ -17,7 +17,7 @@ void ab_init(void) {
 
     ab_oled_init();
     FrameInit();
-    SndInit();
+    ab_sound_init();
     EepInit();
     KeyInit();
     RndInit();

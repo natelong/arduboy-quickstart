@@ -21,11 +21,11 @@ int main(void) {
         if (trg & KEY_L) x--;
         if (trg & KEY_R) x++;
 
-        if (trg & KEY_A) SndPlayNote(0, 86);
-        if (off & KEY_A) SndStopNote(0);
+        if (trg & KEY_A) ab_sound_playNote(&ab_Channel_1, 64);
+        if (off & KEY_A) ab_sound_stopNote(&ab_Channel_1);
 
-        // if (trg & KEY_B) SndPlayNote(0, 64);
-        // if (off & KEY_B) SndStopNote(0);
+        if (trg & KEY_B) ab_sound_playNote(&ab_Channel_2, 32);
+        if (off & KEY_B) ab_sound_stopNote(&ab_Channel_2);
 
         ab_oled_drawStr(x, y, "Arduino Mini");
         ab_loopEnd();
