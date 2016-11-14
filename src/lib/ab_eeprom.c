@@ -9,7 +9,7 @@ void ab_eeprom_read(void* out, size_t size) {
     if (check == AB_EEP_CHECK) {
         eeprom_read_block(out, AB_EEP_START + sizeof(uint32_t), size);
     } else {
-        _Memset(out, 0, size);
+        memset(out, 0, size);
     }
 }
 

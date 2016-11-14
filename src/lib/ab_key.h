@@ -1,7 +1,7 @@
 #pragma once
 
-#include <Arduino_mini.h>
-#include "common.h"
+#include "Arduino_mini.h"
+#include "ab_common.h"
 
 enum {
     AB_KEY_A = _BV(3),

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "common.h"
 #include "Arduino_mini.h"
+#include "ab_common.h"
 
 typedef struct {
     volatile uint8_t*  mask;

@@ -4,7 +4,7 @@
 ab_KeyState key;
 
 void ab_key_init(void) {
-    _Memset(&key, 0x00, sizeof(ab_KeyState));
+    memset(&key, 0x00, sizeof(ab_KeyState));
 
     mini_pinModeInputPullup(&mini_KEY_L);
     mini_pinModeInputPullup(&mini_KEY_R);

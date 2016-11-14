@@ -1,8 +1,6 @@
 #pragma once
 
-#include "common.h"
+#include "ab_common.h"
 
 void ab_init(void);
-void ab_idle(void);
-bool ab_loopStart(void);
-void ab_loopEnd(void);
+void ab_frame(void);

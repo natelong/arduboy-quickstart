@@ -34,7 +34,7 @@ inline static void spi_transfer(uint8_t data) {
 }
 
 void ab_oled_init(void) {
-    _Memset(&oled, 0x00, sizeof(oled));
+    memset(&oled, 0x00, sizeof(oled));
 
     uint8_t sreg = SREG;
     cli(); // Protect from a scheduler and prevent transactionBegin
@@ -81,9 +81,7 @@ void ab_oled_init(void) {
     *pCs &= ~mini_OLED_CS.mask;
 
     // Send boot Program
-    uint8_t i;
-
-    for(i=0; i<sizeof(OledBootProgram); i++) {
+    for(uint8_t i = 0; i < sizeof(OledBootProgram); i++) {
         spi_transfer(__LPM(OledBootProgram + i));
     }
 
@@ -100,30 +98,51 @@ void ab_oled_display(void) {
     }
 }
 
-void ab_oled_drawStr(uint8_t fx, uint8_t fy, const char* fmt, ...) {
-    char s[40];
-
-    va_list ap;
-    va_start(ap, fmt);
-    _SprintfDo(s, fmt, ap);
-    va_end(ap);
-
-    uint8_t i;
-
-    for(i=0; s[i] != '\0'; i++) {
-        ab_oled_drawChr(fx++, fy, s[i]);
+void ab_oled_drawStr(uint8_t x, uint8_t y, const char* s) {
+    for(uint8_t i = 0; s[i] != '\0'; i++) {
+        ab_oled_drawChr(x++, y, s[i]);
     }
 }
 
-void ab_oled_drawChr(uint8_t fx, uint8_t fy, char chr) {
-    if(fx >= AB_OLED_CHARWIDTH || fy >= AB_OLED_CHARHEIGHT) {
-        return;
+uint8_t numlen(uint32_t n) {
+    if (n < 10)          return  1;
+    if (n < 100)         return  2;
+    if (n < 1000)        return  3;
+    if (n < 10000)       return  4;
+    if (n < 100000)      return  5;
+    if (n < 1000000)     return  6;
+    if (n < 10000000)    return  7;
+    if (n < 100000000)   return  8;
+    if (n < 1000000000)  return  9;
+    return 0;
+}
+
+char getNumChar(uint8_t n) {
+    return '0' + n;
+}
+
+void ab_oled_drawNum(uint8_t x, uint8_t y, uint32_t n) {
+    uint8_t l = numlen(n);
+    char s[10];
+    memset(&s, '\0', 10);
+    uint8_t si = l - 1;
+
+    while (n) {
+        s[si] = getNumChar(n % 10);
+        n /= 10;
+        si--;
     }
 
-    uint8_t x;
+    for(uint8_t i = 0; s[i] != '\0'; i++) {
+        ab_oled_drawChr(x++, y, s[i]);
+    }
+}
 
-    for(x=0; x<AB_FONT_SIZE; x++) {
-        oled[(fx * AB_FONT_WIDTH + x) + (fy * AB_OLED_WIDTH)] = __LPM(font + (chr * AB_FONT_SIZE) + x);
+void ab_oled_drawChr(uint8_t x, uint8_t y, char c) {
+    if(x >= AB_OLED_CHARWIDTH || y >= AB_OLED_CHARHEIGHT) return;
+
+    for(uint8_t i = 0; i < AB_FONT_SIZE; i++) {
+        oled[(x * AB_FONT_WIDTH + i) + (y * AB_OLED_WIDTH)] = __LPM(font + (c * AB_FONT_SIZE) + i);
     }
 }
 
