@@ -1,10 +1,9 @@
 #include "ab.h"
 
-ab_KeyState key;
+static uint8_t current = 0;
+static uint8_t last    = 0;
 
 void ab_key_init(void) {
-    memset(&key, 0x00, sizeof(ab_KeyState));
-
     uint8_t oldSREG = SREG;
     cli();
 
@@ -32,20 +31,20 @@ void ab_key_init(void) {
 }
 
 void ab_key_update(void) {
-    key.last     = key.current;
-    key.current  = ((~PINF) & 0xf0);      // up, down, left, right
-    key.current |= ((~PINE) & 0x40) >> 3; // A
-    key.current |= ((~PINB) & 0x10) >> 2; // B
+    last     = current;
+    current  = ((~PINF) & 0xf0);      // up, down, left, right
+    current |= ((~PINE) & 0x40) >> 3; // A
+    current |= ((~PINB) & 0x10) >> 2; // B
 }
 
 uint8_t ab_key_getCurrent(void) {
-    return key.current;
+    return current;
 }
 
 uint8_t ab_key_getPressed(void) {
-    return (key.last ^ key.current) & ~key.last;
+    return (last ^ current) & ~last;
 }
 
 uint8_t ab_key_getReleased(void) {
-    return (key.last ^ key.current) & ~key.current;
+    return (last ^ current) & ~current;
 }

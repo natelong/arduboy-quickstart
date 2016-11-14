@@ -13,11 +13,6 @@ enum {
     AB_DPAD  = (AB_KEY_U | AB_KEY_D | AB_KEY_L | AB_KEY_R),
 };
 
-typedef struct {
-    uint8_t current;
-    uint8_t last;
-} ab_KeyState;
-
 void    ab_key_init(void);
 void    ab_key_update(void);
 uint8_t ab_key_getCurrent(void);
