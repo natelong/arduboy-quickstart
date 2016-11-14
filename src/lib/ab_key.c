@@ -5,12 +5,30 @@ ab_KeyState key;
 void ab_key_init(void) {
     memset(&key, 0x00, sizeof(ab_KeyState));
 
-    mini_pinModeInputPullup(&mini_KEY_L);
-    mini_pinModeInputPullup(&mini_KEY_R);
-    mini_pinModeInputPullup(&mini_KEY_U);
-    mini_pinModeInputPullup(&mini_KEY_D);
-    mini_pinModeInputPullup(&mini_KEY_A);
-    mini_pinModeInputPullup(&mini_KEY_B);
+    uint8_t oldSREG = SREG;
+    cli();
+
+    // L
+    DDRF  &= ~(1 << 5);
+    PORTF |=  (1 << 5);
+    // R
+    DDRF  &= ~(1 << 6);
+    PORTF |=  (1 << 6);
+    // U
+    DDRF  &= ~(1 << 7);
+    PORTF |=  (1 << 7);
+    // D
+    DDRF  &= ~(1 << 4);
+    PORTF |=  (1 << 4);
+
+    // A
+    DDRE  &= ~(1 << 6);
+    PORTE |=  (1 << 6);
+    // B
+    DDRB  &= ~(1 << 4);
+    PORTB |=  (1 << 4);
+
+    SREG = oldSREG;
 }
 
 void ab_key_update(void) {

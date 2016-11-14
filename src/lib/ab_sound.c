@@ -11,8 +11,13 @@ const ab_Channel ab_Channel_1 = {&TIMSK1, &OCR1A};
 const ab_Channel ab_Channel_2 = {&TIMSK3, &OCR3A};
 
 void ab_sound_init(void) {
-    mini_pinModeOutput(&mini_SND_1);
-    mini_pinModeOutput(&mini_SND_2);
+    { // Set sound pins to output mode
+        uint8_t oldSREG = SREG;
+        cli();
+        DDRC |= (1 << 6);
+        DDRC |= (1 << 7);
+        SREG = oldSREG;
+    }
 
     TCCR3A = 0;
     TCCR1A = 0;
@@ -35,10 +40,10 @@ void ab_sound_stopNote(const ab_Channel* channel) {
 
 // TIMER 3 ch0
 ISR(TIMER3_COMPA_vect) {
-    *mini_SND_1.out ^= mini_SND_1.mask;
+    PORTC ^= (1 << 6);
 }
 
 // TIMER 1 ch1
 ISR(TIMER1_COMPA_vect) {
-    *mini_SND_2.out ^= mini_SND_2.mask;
+    PORTC ^= (1 << 7);
 }

@@ -1,26 +1,5 @@
 #include "ab_core.h"
 
-const mini_Pin mini_SPI_MISO = {&DDRB, &PORTB, /*&PINB,*/ (1 << 3)}; // 14
-const mini_Pin mini_SPI_SCK  = {&DDRB, &PORTB, /*&PINB,*/ (1 << 1)}; // 15
-const mini_Pin mini_SPI_MOSI = {&DDRB, &PORTB, /*&PINB,*/ (1 << 2)}; // 16
-const mini_Pin mini_SPI_SS   = {&DDRB, &PORTB, /*&PINB,*/ (1 << 0)}; // 17
-
-const mini_Pin mini_OLED_CS  = {&DDRD, &PORTD, /*&PIND,*/ (1 << 6)}; // 12
-const mini_Pin mini_OLED_DC  = {&DDRD, &PORTD, /*&PIND,*/ (1 << 4)}; // 4
-const mini_Pin mini_OLED_RST = {&DDRD, &PORTD, /*&PIND,*/ (1 << 7)}; // 6
-
-const mini_Pin mini_SND_1    = {&DDRC, &PORTC, /*&PINC,*/ (1 << 6)}; // 5
-const mini_Pin mini_SND_2    = {&DDRC, &PORTC, /*&PINC,*/ (1 << 7)}; // 13
-
-const mini_Pin mini_KEY_L    = {&DDRF, &PORTF, /*&PINF,*/ (1 << 5)}; // 20
-const mini_Pin mini_KEY_R    = {&DDRF, &PORTF, /*&PINF,*/ (1 << 6)}; // 19
-const mini_Pin mini_KEY_U    = {&DDRF, &PORTF, /*&PINF,*/ (1 << 7)}; // 18
-const mini_Pin mini_KEY_D    = {&DDRF, &PORTF, /*&PINF,*/ (1 << 4)}; // 21
-
-const mini_Pin mini_KEY_A    = {&DDRE, &PORTE, /*&PINE,*/ (1 << 6)}; // 7
-const mini_Pin mini_KEY_B    = {&DDRB, &PORTB, /*&PINB,*/ (1 << 4)}; // 8
-
-
 #define cbi(sfr, bit) (_SFR_BYTE(sfr) &= ~_BV(bit))
 #define sbi(sfr, bit) (_SFR_BYTE(sfr) |= _BV(bit))
 
@@ -28,7 +7,7 @@ typedef void (*voidFuncPtr)(void);
 
 // the prescaler is set so that timer0 ticks every 64 clock cycles, and the
 // the overflow handler is called every 256 ticks.
-#define MICROSECONDS_PER_TIMER0_OVERFLOW (mini_clocksToMicroseconds(64 * 256))
+#define MICROSECONDS_PER_TIMER0_OVERFLOW ((64 * 256) / (F_CPU / 1000000L))
 
 // the whole number of milliseconds per timer0 overflow
 #define MILLIS_INC (MICROSECONDS_PER_TIMER0_OVERFLOW / 1000)
@@ -88,7 +67,7 @@ uint32_t mini_micros() {
 
     SREG = oldSREG;
 
-    return ((m << 8) + t) * (64 / mini_clocksPerMicrosecond());
+    return ((m << 8) + t) * (64 / (F_CPU / 1000000L));
 }
 
 void mini_delay(uint32_t ms) {
@@ -140,33 +119,10 @@ void mini_init() {
     sbi(ADCSRA, ADEN);  // enable a2d conversions
 }
 
-void mini_pinModeInput(const mini_Pin* pin) {
-    uint8_t oldSREG = SREG;
-    cli();
-    *pin->mode &= ~pin->mask;
-    *pin->out &= ~pin->mask;
-    SREG = oldSREG;
-}
-
-void mini_pinModeInputPullup(const mini_Pin* pin) {
-    uint8_t oldSREG = SREG;
-    cli();
-    *pin->mode &= ~pin->mask;
-    *pin->out |= pin->mask;
-    SREG = oldSREG;
-}
-
 void mini_pinModeOutput(const mini_Pin* pin) {
     uint8_t oldSREG = SREG;
     cli();
     *pin->mode |= pin->mask;
-    SREG = oldSREG;
-}
-
-void mini_setPinLow(const mini_Pin* pin) {
-    uint8_t oldSREG = SREG;
-    cli();
-    *pin->out &= ~pin->mask;
     SREG = oldSREG;
 }
 

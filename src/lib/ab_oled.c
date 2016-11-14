@@ -3,6 +3,13 @@
 
 // SSD1306 OLED
 
+const mini_Pin mini_SPI_SCK  = {&DDRB, &PORTB, (1 << 1)}; // 15
+const mini_Pin mini_SPI_MOSI = {&DDRB, &PORTB, (1 << 2)}; // 16
+const mini_Pin mini_SPI_SS   = {&DDRB, &PORTB, (1 << 0)}; // 17
+const mini_Pin mini_OLED_CS  = {&DDRD, &PORTD, (1 << 6)}; // 12
+const mini_Pin mini_OLED_DC  = {&DDRD, &PORTD, (1 << 4)}; // 4
+const mini_Pin mini_OLED_RST = {&DDRD, &PORTD, (1 << 7)}; // 6
+
 #define SPI_CLOCK_DIV2   0x04
 #define SPI_CLOCK_MASK   0x03 // SPR1 = bit 1, SPR0 = bit 0 on SPCR
 #define SPI_2XCLOCK_MASK 0x01 // SPI2X = bit 0 on SPSR
@@ -47,7 +54,7 @@ inline static void spi_transfer(uint8_t data) {
 }
 
 void ab_oled_init(void) {
-    memset(&oled, 0x00, sizeof(oled));
+    ab_oled_clear();
 
     uint8_t sreg = SREG;
     cli(); // Protect from a scheduler and prevent transactionBegin
@@ -78,7 +85,12 @@ void ab_oled_init(void) {
     mini_delay(1);
 
     // bring reset low. wait 10ms
-    mini_setPinLow(&mini_OLED_RST);
+    {
+        uint8_t oldSREG = SREG;
+        cli();
+        *mini_OLED_RST.out &= ~mini_OLED_RST.mask;
+        SREG = oldSREG;
+    }
     mini_delay(10);
 
     // bring out of reset
