@@ -5,7 +5,6 @@
 #include "snd.h"
 #include "key.h"
 #include "ab_oled.h"
-#include "eep.h"
 #include "rnd.h"
 
 void ab_init(void) {
