@@ -1,5 +1,3 @@
-#include "Arduino_mini.h"
-#include <avr/power.h>
 #include "ab.h"
 
 // 0x03: put timer into waveform generation mode 4: CTC w/ TOP = OCRnA

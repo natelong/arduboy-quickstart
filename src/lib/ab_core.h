@@ -1,13 +1,14 @@
 #pragma once
 
-#include <stdlib.h>
-#include <stdbool.h>
-#include <string.h>
-#include <stdint.h>
+#include "ab_common.h"
 
-#include <avr/pgmspace.h>
-#include <avr/io.h>
 #include <avr/interrupt.h>
+#include <avr/io.h>
+#include <avr/pgmspace.h>
+#include <avr/eeprom.h>
+#include <avr/power.h>
+#include <avr/power.h>
+#include <avr/sleep.h>
 
 #define ARD_MINI
 

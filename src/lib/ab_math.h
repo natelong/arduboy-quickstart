@@ -1,6 +1,6 @@
 #pragma once
 
-#include <stdint.h>
+#include "ab_common.h"
 
 // undefine stdlib's abs if encountered
 #ifdef abs

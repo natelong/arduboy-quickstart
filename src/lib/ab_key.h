@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Arduino_mini.h"
 #include "ab_common.h"
 
 enum {

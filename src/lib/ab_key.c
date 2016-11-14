@@ -1,4 +1,3 @@
-#include "Arduino_mini.h"
 #include "ab.h"
 
 ab_KeyState key;

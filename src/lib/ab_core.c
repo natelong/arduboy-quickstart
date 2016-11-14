@@ -1,8 +1,4 @@
-#define ARDUINO_MAIN
-#include "Arduino_mini.h"
-
-#include <stdio.h>
-#include <stdarg.h>
+#include "ab_core.h"
 
 const mini_Pin mini_SPI_MISO = {&DDRB, &PORTB, /*&PINB,*/ (1 << 3)}; // 14
 const mini_Pin mini_SPI_SCK  = {&DDRB, &PORTB, /*&PINB,*/ (1 << 1)}; // 15

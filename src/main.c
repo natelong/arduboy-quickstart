@@ -1,5 +1,3 @@
-#include "Arduino_mini.h"
-
 #include "lib/ab.h"
 
 typedef struct {

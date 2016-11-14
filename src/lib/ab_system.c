@@ -1,6 +1,3 @@
-#include <avr/power.h>
-#include <avr/sleep.h>
-#include "Arduino_mini.h"
 #include "ab.h"
 
 #ifndef AB_FRAMERATE

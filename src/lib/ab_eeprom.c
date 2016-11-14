@@ -1,4 +1,3 @@
-#include <avr/eeprom.h>
 #include "ab.h"
 
 static const uint32_t AB_EEP_CHECK = 0xDEADBEEF;

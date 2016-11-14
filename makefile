@@ -20,7 +20,6 @@ OBJCOPY = $(PREFIX)objcopy
 NM      = $(PREFIX)nm
 
 SRCDIR  = src
-COREDIR = $(SRCDIR)/core-mini
 LIBDIR  = $(SRCDIR)/lib
 
 CFILES = \
@@ -28,7 +27,6 @@ CFILES = \
 	$(wildcard $(SRCDIR)/**/*.c) \
 
 VPATH  = $(dir $(CFILES))
-INCDIR = $(COREDIR)/
 
 OBJDIR     = obj
 OUTDIR     = bin
