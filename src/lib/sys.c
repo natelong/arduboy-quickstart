@@ -4,7 +4,7 @@
 #include "frame.h"
 #include "snd.h"
 #include "key.h"
-#include "oled.h"
+#include "ab_oled.h"
 #include "eep.h"
 #include "rnd.h"
 

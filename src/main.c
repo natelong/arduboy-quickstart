@@ -35,6 +35,7 @@ int main(void) {
         if (off & KEY_B) ab_sound_stopNote(&ab_Channel_2);
 
         ab_oled_drawStr(x, 0, "Arduino Mini: %d", save.score);
+        ab_oled_drawStr(0, 1, "CPU: %d", FrameGetCpuPercent());
         ab_loopEnd();
     }
 
