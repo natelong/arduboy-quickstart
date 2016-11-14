@@ -12,7 +12,7 @@ void ab_init(void) {
     ab_oled_init();
     FrameInit();
     ab_sound_init();
-    KeyInit();
+    ab_key_init();
 }
 
 void ab_idle(void) {
@@ -25,7 +25,7 @@ bool ab_loopStart(void) {
         return false;
     }
 
-    KeyLoop();
+    ab_key_update();
     return true;
 }
 

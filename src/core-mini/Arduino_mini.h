@@ -14,7 +14,7 @@
 typedef struct {
     volatile uint8_t* mode;
     volatile uint8_t* out;
-    volatile uint8_t* in;
+    // volatile uint8_t* in;
              uint8_t  mask;
 } mini_Pin;
 

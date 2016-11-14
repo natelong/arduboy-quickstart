@@ -4,25 +4,25 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-const mini_Pin mini_SPI_MISO = {&DDRB, &PORTB, &PINB, (1 << 3)}; // 14
-const mini_Pin mini_SPI_SCK  = {&DDRB, &PORTB, &PINB, (1 << 1)}; // 15
-const mini_Pin mini_SPI_MOSI = {&DDRB, &PORTB, &PINB, (1 << 2)}; // 16
-const mini_Pin mini_SPI_SS   = {&DDRB, &PORTB, &PINB, (1 << 0)}; // 17
+const mini_Pin mini_SPI_MISO = {&DDRB, &PORTB, /*&PINB,*/ (1 << 3)}; // 14
+const mini_Pin mini_SPI_SCK  = {&DDRB, &PORTB, /*&PINB,*/ (1 << 1)}; // 15
+const mini_Pin mini_SPI_MOSI = {&DDRB, &PORTB, /*&PINB,*/ (1 << 2)}; // 16
+const mini_Pin mini_SPI_SS   = {&DDRB, &PORTB, /*&PINB,*/ (1 << 0)}; // 17
 
-const mini_Pin mini_OLED_CS  = {&DDRD, &PORTD, &PIND, (1 << 6)}; // 12
-const mini_Pin mini_OLED_DC  = {&DDRD, &PORTD, &PIND, (1 << 4)}; // 4
-const mini_Pin mini_OLED_RST = {&DDRD, &PORTD, &PIND, (1 << 7)}; // 6
+const mini_Pin mini_OLED_CS  = {&DDRD, &PORTD, /*&PIND,*/ (1 << 6)}; // 12
+const mini_Pin mini_OLED_DC  = {&DDRD, &PORTD, /*&PIND,*/ (1 << 4)}; // 4
+const mini_Pin mini_OLED_RST = {&DDRD, &PORTD, /*&PIND,*/ (1 << 7)}; // 6
 
-const mini_Pin mini_SND_1 = {&DDRC, &PORTC, &PINC, (1 << 6)}; // 5
-const mini_Pin mini_SND_2 = {&DDRC, &PORTC, &PINC, (1 << 7)}; // 13
+const mini_Pin mini_SND_1    = {&DDRC, &PORTC, /*&PINC,*/ (1 << 6)}; // 5
+const mini_Pin mini_SND_2    = {&DDRC, &PORTC, /*&PINC,*/ (1 << 7)}; // 13
 
-const mini_Pin mini_KEY_L = {&DDRF, &PORTF, &PINF, (1 << 5)}; // 20
-const mini_Pin mini_KEY_R = {&DDRF, &PORTF, &PINF, (1 << 6)}; // 19
-const mini_Pin mini_KEY_U = {&DDRF, &PORTF, &PINF, (1 << 7)}; // 18
-const mini_Pin mini_KEY_D = {&DDRF, &PORTF, &PINF, (1 << 4)}; // 21
+const mini_Pin mini_KEY_L    = {&DDRF, &PORTF, /*&PINF,*/ (1 << 5)}; // 20
+const mini_Pin mini_KEY_R    = {&DDRF, &PORTF, /*&PINF,*/ (1 << 6)}; // 19
+const mini_Pin mini_KEY_U    = {&DDRF, &PORTF, /*&PINF,*/ (1 << 7)}; // 18
+const mini_Pin mini_KEY_D    = {&DDRF, &PORTF, /*&PINF,*/ (1 << 4)}; // 21
 
-const mini_Pin mini_KEY_A = {&DDRE, &PORTE, &PINE, (1 << 6)}; // 7
-const mini_Pin mini_KEY_B = {&DDRB, &PORTB, &PINB, (1 << 4)}; // 8
+const mini_Pin mini_KEY_A    = {&DDRE, &PORTE, /*&PINE,*/ (1 << 6)}; // 7
+const mini_Pin mini_KEY_B    = {&DDRB, &PORTB, /*&PINB,*/ (1 << 4)}; // 8
 
 
 #define cbi(sfr, bit) (_SFR_BYTE(sfr) &= ~_BV(bit))

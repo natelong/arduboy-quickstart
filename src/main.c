@@ -15,27 +15,26 @@ int main(void) {
 
     ab_eeprom_read(&save, sizeof(SaveData));
 
-    uint8_t x = 0;
     uint8_t num = ab_random();
 
     for (;;) {
         if(ab_loopStart() == false) continue;
 
-        uint8_t trg = KeyGetTrg();
-        uint8_t off = KeyGetOff();
+        uint8_t pressed  = ab_key_getPressed();
+        uint8_t released = ab_key_getReleased();
 
-        if (trg & KEY_U) save.score++;
-        if (trg & KEY_D) ab_eeprom_write(&save, sizeof(SaveData));
-        if (trg & KEY_L) x--;
-        if (trg & KEY_R) num = ab_random();
+        if (pressed & AB_KEY_U) save.score++;
+        if (pressed & AB_KEY_D) ab_eeprom_write(&save, sizeof(SaveData));
+        if (pressed & AB_KEY_L) // placeholder
+        if (pressed & AB_KEY_R) num = ab_random();
 
-        if (trg & KEY_A) ab_sound_playNote(&ab_Channel_1, 64);
-        if (off & KEY_A) ab_sound_stopNote(&ab_Channel_1);
+        if (pressed & AB_KEY_A)  ab_sound_playNote(&ab_Channel_1, 64);
+        if (released & AB_KEY_A) ab_sound_stopNote(&ab_Channel_1);
 
-        if (trg & KEY_B) ab_sound_playNote(&ab_Channel_2, 32);
-        if (off & KEY_B) ab_sound_stopNote(&ab_Channel_2);
+        if (pressed & AB_KEY_B)  ab_sound_playNote(&ab_Channel_2, 32);
+        if (released & AB_KEY_B) ab_sound_stopNote(&ab_Channel_2);
 
-        ab_oled_drawStr(x, 0, "Arduino Mini: %d", save.score);
+        ab_oled_drawStr(0, 0, "Arduino Mini: %d", save.score);
         ab_oled_drawStr(0, 1, "CPU: %d", FrameGetCpuPercent());
         ab_oled_drawStr(0, 2, "Random: %d", num);
         ab_loopEnd();
