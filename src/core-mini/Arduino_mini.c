@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-
 const mini_Pin mini_SPI_MISO = {&DDRB, &PORTB, &PINB, (1 << 3)}; // 14
 const mini_Pin mini_SPI_SCK  = {&DDRB, &PORTB, &PINB, (1 << 1)}; // 15
 const mini_Pin mini_SPI_MOSI = {&DDRB, &PORTB, &PINB, (1 << 2)}; // 16
