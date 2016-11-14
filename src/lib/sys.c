@@ -1,11 +1,6 @@
 #include <avr/power.h>
 #include <avr/sleep.h>
-#include "sys.h"
-#include "frame.h"
-#include "snd.h"
-#include "key.h"
-#include "ab_oled.h"
-#include "rnd.h"
+#include "ab.h"
 
 void ab_init(void) {
     power_timer2_disable();

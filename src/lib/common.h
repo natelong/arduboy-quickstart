@@ -3,6 +3,7 @@
 #include <stdarg.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 //---------------------------------------------------------------------------
 #define ASSERT(x) if(!(x)) _SystemError("%s(%d):"#x"\n", __FILE__, __LINE__)

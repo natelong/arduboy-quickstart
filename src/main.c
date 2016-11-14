@@ -13,7 +13,7 @@ int main(void) {
 
     SaveData save;
 
-    ab_eep_read(&save, sizeof(SaveData));
+    ab_eeprom_read(&save, sizeof(SaveData));
 
     uint8_t x = 0;
 
@@ -24,7 +24,7 @@ int main(void) {
         uint8_t off = KeyGetOff();
 
         if (trg & KEY_U) save.score++;
-        if (trg & KEY_D) ab_eep_write(&save, sizeof(SaveData));
+        if (trg & KEY_D) ab_eeprom_write(&save, sizeof(SaveData));
         if (trg & KEY_L) x--;
         if (trg & KEY_R) x++;
 
