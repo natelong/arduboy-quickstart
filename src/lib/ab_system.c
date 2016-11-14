@@ -13,7 +13,6 @@ void ab_init(void) {
     FrameInit();
     ab_sound_init();
     KeyInit();
-    RndInit();
 }
 
 void ab_idle(void) {

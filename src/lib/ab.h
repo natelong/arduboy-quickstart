@@ -5,6 +5,6 @@
 #include "frame.h"
 #include "key.h"
 #include "ab_oled.h"
-#include "rnd.h"
+#include "ab_random.h"
 #include "ab_sound.h"
 #include "ab_system.h"

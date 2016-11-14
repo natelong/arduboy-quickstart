@@ -16,6 +16,7 @@ int main(void) {
     ab_eeprom_read(&save, sizeof(SaveData));
 
     uint8_t x = 0;
+    uint8_t num = ab_random();
 
     for (;;) {
         if(ab_loopStart() == false) continue;
@@ -26,7 +27,7 @@ int main(void) {
         if (trg & KEY_U) save.score++;
         if (trg & KEY_D) ab_eeprom_write(&save, sizeof(SaveData));
         if (trg & KEY_L) x--;
-        if (trg & KEY_R) x++;
+        if (trg & KEY_R) num = ab_random();
 
         if (trg & KEY_A) ab_sound_playNote(&ab_Channel_1, 64);
         if (off & KEY_A) ab_sound_stopNote(&ab_Channel_1);
@@ -36,6 +37,7 @@ int main(void) {
 
         ab_oled_drawStr(x, 0, "Arduino Mini: %d", save.score);
         ab_oled_drawStr(0, 1, "CPU: %d", FrameGetCpuPercent());
+        ab_oled_drawStr(0, 2, "Random: %d", num);
         ab_loopEnd();
     }
 
