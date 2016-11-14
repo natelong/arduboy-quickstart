@@ -2,19 +2,5 @@
 
 #include "common.h"
 
-//---------------------------------------------------------------------------
-typedef struct {
-	uint8_t* adr;
-} ST_EEP;
-
-
-//---------------------------------------------------------------------------
-void EepInit(void);
-void EepSeek(uint16_t adr);
-
-uint8_t   EepRead8(void);
-uint16_t  EepRead16(void);
-uint32_t  EepRead32(void);
-void EepWrite8(uint8_t data);
-void EepWrite16(uint16_t data);
-void EepWrite32(uint32_t data);
+void ab_eep_read(void* out, size_t size);
+void ab_eep_write(const void* in, size_t size);
