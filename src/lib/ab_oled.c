@@ -1,4 +1,3 @@
-#include <stdarg.h>
 #include "Arduino_mini.h"
 #include "ab.h"
 #include "../res/font.h"
@@ -26,6 +25,21 @@ PROGMEM static const uint8_t OledBootProgram[] = {
 };
 
 static uint8_t oled[AB_OLED_WIDTH * AB_OLED_HEIGHT / 8];
+static uint8_t cursor_x = 0;
+static uint8_t cursor_y = 0;
+
+uint8_t numlen(uint32_t n) {
+    if (n < 10)          return  1;
+    if (n < 100)         return  2;
+    if (n < 1000)        return  3;
+    if (n < 10000)       return  4;
+    if (n < 100000)      return  5;
+    if (n < 1000000)     return  6;
+    if (n < 10000000)    return  7;
+    if (n < 100000000)   return  8;
+    if (n < 1000000000)  return  9;
+    return 0;
+}
 
 inline static void spi_transfer(uint8_t data) {
     SPDR = data;
@@ -98,47 +112,35 @@ void ab_oled_display(void) {
     }
 }
 
-void ab_oled_drawStr(uint8_t x, uint8_t y, const char* s) {
+void ab_oled_setCursor(uint8_t x, uint8_t y) {
+    cursor_x = x;
+    cursor_y = y;
+}
+
+void ab_oled_drawString(const char* s) {
     for(uint8_t i = 0; s[i] != '\0'; i++) {
-        ab_oled_drawChr(x++, y, s[i]);
+        ab_oled_drawChar(cursor_x++, cursor_y, s[i]);
     }
 }
 
-uint8_t numlen(uint32_t n) {
-    if (n < 10)          return  1;
-    if (n < 100)         return  2;
-    if (n < 1000)        return  3;
-    if (n < 10000)       return  4;
-    if (n < 100000)      return  5;
-    if (n < 1000000)     return  6;
-    if (n < 10000000)    return  7;
-    if (n < 100000000)   return  8;
-    if (n < 1000000000)  return  9;
-    return 0;
-}
-
-char getNumChar(uint8_t n) {
-    return '0' + n;
-}
-
-void ab_oled_drawNum(uint8_t x, uint8_t y, uint32_t n) {
+void ab_oled_drawNumber(uint32_t n) {
     uint8_t l = numlen(n);
     char s[10];
     memset(&s, '\0', 10);
     uint8_t si = l - 1;
 
     while (n) {
-        s[si] = getNumChar(n % 10);
+        s[si] = '0' + (n % 10);
         n /= 10;
         si--;
     }
 
     for(uint8_t i = 0; s[i] != '\0'; i++) {
-        ab_oled_drawChr(x++, y, s[i]);
+        ab_oled_drawChar(cursor_x++, cursor_y, s[i]);
     }
 }
 
-void ab_oled_drawChr(uint8_t x, uint8_t y, char c) {
+void ab_oled_drawChar(uint8_t x, uint8_t y, char c) {
     if(x >= AB_OLED_CHARWIDTH || y >= AB_OLED_CHARHEIGHT) return;
 
     for(uint8_t i = 0; i < AB_FONT_SIZE; i++) {
@@ -151,21 +153,10 @@ void ab_oled_drawDot(uint8_t x, uint8_t y) {
 }
 
 void ab_oled_clear(void) {
-    //  uint16_t i;
-    //  for(i=0; i<sizeof(oled); i++) oled[i] = 0x00;
-    asm volatile(
-        "movw  r30, %0                \n\t"
-        "eor __tmp_reg__, __tmp_reg__ \n\t"
-        "loop:                        \n\t"
-        "st Z+, __zero_reg__          \n\t"
-        "st Z+, __zero_reg__          \n\t"
-        "st Z+, __zero_reg__          \n\t"
-        "st Z+, __zero_reg__          \n\t"
-        "inc __tmp_reg__              \n\t"
-        "brne loop                    \n\t"
-
-        : : "r" (oled) : "r30","r31"
-    );
+    uint16_t i;
+    for(i = 0; i < sizeof(oled); i++) {
+        oled[i] = 0x00;
+    }
 }
 
 void ab_oled_drawBmp(int8_t sx, int8_t sy, uint8_t* p) {

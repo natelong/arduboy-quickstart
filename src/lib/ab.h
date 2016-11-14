@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ab_common.h"
 #include "ab_eeprom.h"
 #include "ab_key.h"
 #include "ab_oled.h"

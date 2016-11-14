@@ -41,7 +41,7 @@ int main(void) {
 
         if (pressed & AB_KEY_U) save.score++;
         if (pressed & AB_KEY_D) ab_eeprom_write(&save, sizeof(SaveData));
-        if (pressed & AB_KEY_L) // placeholder
+        if (pressed & AB_KEY_L) num = ab_random();
         if (pressed & AB_KEY_R) num = ab_random();
 
         if (pressed & AB_KEY_A)  ab_sound_playNote(&ab_Channel_1, 64);
@@ -50,12 +50,16 @@ int main(void) {
         if (pressed & AB_KEY_B)  ab_sound_playNote(&ab_Channel_2, 32);
         if (released & AB_KEY_B) ab_sound_stopNote(&ab_Channel_2);
 
-        ab_oled_drawStr( 0, 0, "Arduino Mini: ");
-        ab_oled_drawNum(14, 0, save.score);
-        ab_oled_drawStr( 0, 2, "Random: ");
-        ab_oled_drawNum( 8, 2, num);
-        ab_oled_drawStr( 0, 3, "Frame: ");
-        ab_oled_drawNum( 7, 3, rbuf_total / FRAME_COUNT);
+        ab_oled_setCursor(0, 0);
+        ab_oled_drawString("Arduino Mini: ");
+        ab_oled_drawNumber(save.score);
+        ab_oled_setCursor(0, 1);
+        ab_oled_drawString("Random: ");
+        ab_oled_drawNumber(num);
+        ab_oled_setCursor(0, 2);
+        ab_oled_drawString("Frame: ");
+        ab_oled_drawNumber(rbuf_total / FRAME_COUNT);
+
         ab_frame();
     }
 
