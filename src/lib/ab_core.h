@@ -10,7 +10,8 @@
 #include <avr/power.h>
 #include <avr/sleep.h>
 
-void     mini_init(void);
-uint32_t mini_millis(void);
-uint32_t mini_micros(void);
-void     mini_delay(uint32_t);
+void     ab_init(void);
+uint32_t ab_millis(void);
+uint32_t ab_micros(void);
+void     ab_delay(uint32_t);
+void     ab_frame(void);

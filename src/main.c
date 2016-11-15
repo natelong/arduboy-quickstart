@@ -16,7 +16,6 @@ int main(void) {
         rbuf_frames[i] = 0;
     }
 
-    mini_init();
     ab_init();
 
     ab_eeprom_read(&save, sizeof(SaveData));
@@ -25,7 +24,7 @@ int main(void) {
 
     uint32_t last = 0;
     for (;;) {
-        uint32_t now = mini_millis();
+        uint32_t now = ab_millis();
         uint8_t delta = (uint8_t)(now - last);
         rbuf_total -= rbuf_frames[rbuf_cursor];
         rbuf_total += delta;

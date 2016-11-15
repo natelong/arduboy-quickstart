@@ -50,9 +50,9 @@ void ab_oled_init(void) {
     DDRD |= rstMask; // OLED_RST pin mode to output
 
     PORTD |= rstMask;  // VDD (3.3V) goes high at start
-    mini_delay(1);     // lets just chill for a ms
+    ab_delay(1);       // lets just chill for a ms
     PORTD &= ~rstMask; // bring reset low.
-    mini_delay(10);    // wait 10ms
+    ab_delay(10);      // wait 10ms
     PORTD |= rstMask;  // bring out of reset
 
     // Command Mode
