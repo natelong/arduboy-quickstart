@@ -71,6 +71,8 @@ uint32_t mini_micros() {
 }
 
 void mini_delay(uint32_t ms) {
+    uint8_t sreg = SREG;
+    sei();
     uint32_t start = mini_micros();
 
     while (ms > 0) {
@@ -79,6 +81,7 @@ void mini_delay(uint32_t ms) {
             start += 1000;
         }
     }
+    SREG = sreg;
 }
 
 void mini_init() {
@@ -117,18 +120,4 @@ void mini_init() {
     sbi(ADCSRA, ADPS1);
     sbi(ADCSRA, ADPS0);
     sbi(ADCSRA, ADEN);  // enable a2d conversions
-}
-
-void mini_pinModeOutput(const mini_Pin* pin) {
-    uint8_t oldSREG = SREG;
-    cli();
-    *pin->mode |= pin->mask;
-    SREG = oldSREG;
-}
-
-void mini_setPinHigh(const mini_Pin* pin) {
-    uint8_t oldSREG = SREG;
-    cli();
-    *pin->out |= pin->mask;
-    SREG = oldSREG;
 }

@@ -7,24 +7,17 @@ void ab_key_init(void) {
     uint8_t oldSREG = SREG;
     cli();
 
-    // L
-    DDRF  &= ~(1 << 5);
+    DDRF  &= ~(1 << 5); // L
     PORTF |=  (1 << 5);
-    // R
-    DDRF  &= ~(1 << 6);
+    DDRF  &= ~(1 << 6); // R
     PORTF |=  (1 << 6);
-    // U
-    DDRF  &= ~(1 << 7);
+    DDRF  &= ~(1 << 7); // U
     PORTF |=  (1 << 7);
-    // D
-    DDRF  &= ~(1 << 4);
+    DDRF  &= ~(1 << 4); // D
     PORTF |=  (1 << 4);
-
-    // A
-    DDRE  &= ~(1 << 6);
+    DDRE  &= ~(1 << 6); // A
     PORTE |=  (1 << 6);
-    // B
-    DDRB  &= ~(1 << 4);
+    DDRB  &= ~(1 << 4); // B
     PORTB |=  (1 << 4);
 
     SREG = oldSREG;

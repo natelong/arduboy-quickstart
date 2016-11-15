@@ -17,9 +17,10 @@ void ab_init(void) {
     power_usart0_disable();
     power_usart1_disable();
 
+    ab_key_init();
+    ab_spi_init();
     ab_oled_init();
     ab_sound_init();
-    ab_key_init();
 }
 
 void ab_frame(void) {

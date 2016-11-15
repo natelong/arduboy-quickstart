@@ -3,17 +3,6 @@
 
 // SSD1306 OLED
 
-const mini_Pin mini_SPI_SCK  = {&DDRB, &PORTB, (1 << 1)}; // 15
-const mini_Pin mini_SPI_MOSI = {&DDRB, &PORTB, (1 << 2)}; // 16
-const mini_Pin mini_SPI_SS   = {&DDRB, &PORTB, (1 << 0)}; // 17
-const mini_Pin mini_OLED_CS  = {&DDRD, &PORTD, (1 << 6)}; // 12
-const mini_Pin mini_OLED_DC  = {&DDRD, &PORTD, (1 << 4)}; // 4
-const mini_Pin mini_OLED_RST = {&DDRD, &PORTD, (1 << 7)}; // 6
-
-#define SPI_CLOCK_DIV2   0x04
-#define SPI_CLOCK_MASK   0x03 // SPR1 = bit 1, SPR0 = bit 0 on SPCR
-#define SPI_2XCLOCK_MASK 0x01 // SPI2X = bit 0 on SPSR
-
 PROGMEM static const uint8_t OledBootProgram[] = {
     0xD5,   // Set Display Clock Divisor 0xF0
     0xF0,
@@ -47,79 +36,47 @@ uint8_t numlen(uint32_t n) {
     return 0;
 }
 
-inline static void spi_transfer(uint8_t data) {
-    SPDR = data;
-    asm volatile("nop");
-    while (!(SPSR & _BV(SPIF))) ; // wait
-}
-
 void ab_oled_init(void) {
     ab_oled_clear();
 
+    uint8_t dcMask  = (1 << 4);
+    uint8_t csMask  = (1 << 6);
+    uint8_t rstMask = (1 << 7);
+
     uint8_t sreg = SREG;
     cli(); // Protect from a scheduler and prevent transactionBegin
-    {
-        if(!(*mini_SPI_SS.mode & mini_SPI_SS.mask)) {
-            mini_setPinHigh(&mini_SPI_SS);
-        }
+    DDRD |= dcMask;  // OLED_DC pin mode to output
+    DDRD |= csMask;  // OLED_CS pin mode to output
+    DDRD |= rstMask; // OLED_RST pin mode to output
 
-        mini_pinModeOutput(&mini_SPI_SS);
-
-        SPCR |= _BV(MSTR);
-        SPCR |= _BV(SPE);
-
-        mini_pinModeOutput(&mini_SPI_SCK);
-        mini_pinModeOutput(&mini_SPI_MOSI);
-    }
-    SREG = sreg;
-
-    SPCR = (SPCR & ~SPI_CLOCK_MASK) | (SPI_CLOCK_DIV2 & SPI_CLOCK_MASK);
-    SPSR = (SPSR & ~SPI_2XCLOCK_MASK) | ((SPI_CLOCK_DIV2 >> 2) & SPI_2XCLOCK_MASK);
-
-    mini_pinModeOutput(&mini_OLED_DC);
-    mini_pinModeOutput(&mini_OLED_CS);
-    mini_pinModeOutput(&mini_OLED_RST);
-
-    // VDD (3.3V) goes high at start, lets just chill for a ms
-    mini_setPinHigh(&mini_OLED_RST);
-    mini_delay(1);
-
-    // bring reset low. wait 10ms
-    {
-        uint8_t oldSREG = SREG;
-        cli();
-        *mini_OLED_RST.out &= ~mini_OLED_RST.mask;
-        SREG = oldSREG;
-    }
-    mini_delay(10);
-
-    // bring out of reset
-    mini_setPinHigh(&mini_OLED_RST);
-
-    // setup the ports we need to talk to the OLED
-    volatile uint8_t* pCs = mini_OLED_CS.out;
-    volatile uint8_t* pDc = mini_OLED_DC.out;
+    PORTD |= rstMask;  // VDD (3.3V) goes high at start
+    mini_delay(1);     // lets just chill for a ms
+    PORTD &= ~rstMask; // bring reset low.
+    mini_delay(10);    // wait 10ms
+    PORTD |= rstMask;  // bring out of reset
 
     // Command Mode
-    *pCs |=  mini_OLED_CS.mask;
-    *pDc &= ~mini_OLED_DC.mask;
-    *pCs &= ~mini_OLED_CS.mask;
+    PORTD |=  csMask;
+    PORTD &= ~dcMask;
+    PORTD &= ~csMask;
 
     // Send boot Program
     for(uint8_t i = 0; i < sizeof(OledBootProgram); i++) {
-        spi_transfer(__LPM(OledBootProgram + i));
+        ab_spi_transfer(__LPM(OledBootProgram + i));
     }
 
     // Data Mode
-    *pDc |=  mini_OLED_DC.mask;
-    *pCs &= ~mini_OLED_CS.mask;
+    PORTD |=  dcMask;
+    PORTD &= ~csMask;
+
+    SREG = sreg;
 }
 
 void ab_oled_display(void) {
     uint16_t i;
 
     for(i=0; i<sizeof(oled); i++) {
-        spi_transfer(oled[i]);
+        ab_spi_transfer(oled[i]);
     }
 }
 
