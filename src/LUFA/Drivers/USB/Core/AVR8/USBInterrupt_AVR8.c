@@ -235,24 +235,6 @@ ISR(USB_GEN_vect, ISR_BLOCK)
 		USB_ResetInterface();
 	}
 	#endif
-
-	#if defined(USB_CAN_BE_BOTH)
-	if (USB_INT_HasOccurred(USB_INT_IDTI) && USB_INT_IsEnabled(USB_INT_IDTI))
-	{
-		USB_INT_Clear(USB_INT_IDTI);
-
-		if (USB_DeviceState != DEVICE_STATE_Unattached)
-		  EVENT_USB_Device_Disconnect();
-
-		if (USB_HostState != HOST_STATE_Unattached)
-		  EVENT_USB_Host_DeviceUnattached();
-
-		USB_CurrentMode = USB_GetUSBModeFromUID();
-		USB_ResetInterface();
-
-		EVENT_USB_UIDChange();
-	}
-	#endif
 }
 
 #if defined(INTERRUPT_CONTROL_ENDPOINT) && defined(USB_CAN_BE_DEVICE)

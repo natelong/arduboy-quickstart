@@ -10,7 +10,7 @@
 #define __INCLUDE_FROM_USB_DRIVER
 
 #include "../../Common/Common.h"
-#include "Core/USBMode.h"
+#include "Core/USBMode.h" // done
 
 #include "Core/USBTask.h"
 #include "Core/Events.h"
