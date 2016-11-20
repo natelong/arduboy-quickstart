@@ -97,6 +97,11 @@ void ab_oled_drawNumber(uint32_t n) {
     memset(&s, '\0', 10);
     uint8_t si = l - 1;
 
+    if (n == 0) {
+        ab_oled_drawChar(cursor_x++, cursor_y, '0');
+        return;
+    }
+
     while (n) {
         s[si] = '0' + (n % 10);
         n /= 10;
