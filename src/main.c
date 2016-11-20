@@ -9,6 +9,12 @@ static uint8_t  rbuf_frames[FRAME_COUNT];
 static uint8_t  rbuf_cursor = 0;
 static uint32_t rbuf_total = 0;
 
+typedef struct {
+    uint8_t r;
+    uint8_t g;
+    uint8_t b;
+} Color;
+
 int main(void) {
     SaveData save;
 
@@ -17,12 +23,29 @@ int main(void) {
     }
 
     ab_init();
+    {
+        ab_key_update();
+        uint8_t pressed  = ab_key_getPressed();
+        if (pressed & AB_KEY_U) {
+            ab_setLED(0, 0, 255);
+            while (true) {}
+            return 1;
+        }
+    }
 
     ab_eeprom_read(&save, sizeof(SaveData));
 
     uint8_t num = ab_random();
 
     uint32_t last = 0;
+    Color colors[] = {
+        {255, 255, 255},
+        {  0,   0,   0},
+        {255,   0,   0},
+        {  0, 255,   0},
+        {  0,   0, 255}
+    };
+
     for (;;) {
         uint32_t now = ab_millis();
         uint8_t delta = (uint8_t)(now - last);
@@ -38,7 +61,10 @@ int main(void) {
 
         if (pressed & AB_KEY_U) save.score++;
         if (pressed & AB_KEY_D) ab_eeprom_write(&save, sizeof(SaveData));
-        if (pressed & AB_KEY_L) num = ab_random();
+        if (pressed & AB_KEY_L) {
+            Color c = colors[ab_random() % (sizeof(colors) / sizeof(Color))];
+            ab_setLED(c.r, c.b, c.g);
+        }
         if (pressed & AB_KEY_R) num = ab_random();
 
         if (pressed & AB_KEY_A)  ab_sound_playNote(&ab_Channel_1, 64);
