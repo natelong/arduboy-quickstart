@@ -106,6 +106,18 @@ void ab_frame(void) {
     }
 }
 
+void ab_setLED(uint8_t red, uint8_t green, uint8_t blue) {
+    uint8_t oldSREG = SREG;
+    cli();
+
+    if ((255 - red)   > 128) PORTB |= (1 << 6); else PORTB &= ~(1 << 6);
+    if ((255 - green) > 128) PORTB |= (1 << 7); else PORTB &= ~(1 << 7);
+    if ((255 - blue)  > 128) PORTB |= (1 << 5); else PORTB &= ~(1 << 5);
+
+    SREG = oldSREG;
+}
+
+
 void ab_init() {
     // this needs to be called before setup() or some functions won't work there
     sei();
@@ -141,6 +153,11 @@ void ab_init() {
     sbi(ADCSRA, ADPS1);
     sbi(ADCSRA, ADPS0);
     sbi(ADCSRA, ADEN);  // enable a2d conversions
+
+    DDRB |= (1 << 6);
+    DDRB |= (1 << 7);
+    DDRB |= (1 << 5);
+    ab_setLED(0, 0, 0);
 
     power_timer2_disable();
     power_adc_disable();
