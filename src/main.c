@@ -38,12 +38,18 @@ int main(void) {
     uint8_t num = ab_random();
 
     uint32_t last = 0;
+
+    uint32_t frame = 0;
+    bool lightShow = false;
+    uint8_t colorIndex = 0;
     Color colors[] = {
         {255, 255, 255},
-        {  0,   0,   0},
         {255,   0,   0},
         {  0, 255,   0},
-        {  0,   0, 255}
+        {  0,   0, 255},
+        {255, 255,   0},
+        {255,   0, 255},
+        {  0, 255, 255},
     };
 
     for (;;) {
@@ -62,18 +68,30 @@ int main(void) {
         if (pressed & AB_KEY_U) save.score++;
         if (pressed & AB_KEY_D) ab_eeprom_write(&save, sizeof(SaveData));
         if (pressed & AB_KEY_L) {
-            Color c = colors[ab_random() % (sizeof(colors) / sizeof(Color))];
-            ab_setLED(c.r, c.b, c.g);
+            // Color c = colors[colorIndex++ % (sizeof(colors) / sizeof(Color))];
+            // ab_setLED(c.r, c.g, c.b);
         }
         if (pressed & AB_KEY_R) num = ab_random();
+        if (pressed & AB_KEY_B) {
+            lightShow = !lightShow;
+            ab_setLED(0, 0, 0);
+        }
 
-        if (pressed & AB_KEY_A)  ab_sound_playNote(&ab_Channel_1, 64);
-        if (released & AB_KEY_A) ab_sound_stopNote(&ab_Channel_1);
-
-        if (pressed & AB_KEY_B)  ab_sound_playNote(&ab_Channel_2, 32);
-        if (released & AB_KEY_B) ab_sound_stopNote(&ab_Channel_2);
+        if (pressed & AB_KEY_A) {
+            ab_sound_playNote(&ab_Channel_1, 64);
+            ab_sound_playNote(&ab_Channel_2, 32);
+        }
+        if (released & AB_KEY_A) {
+            ab_sound_stopNote(&ab_Channel_1);
+            ab_sound_stopNote(&ab_Channel_2);
+        }
 
         if ((ab_key_getCurrent() & AB_KEY_ALL) == AB_KEY_ALL) ab_reset();
+
+        if (lightShow && !(frame++ % 15)) {
+            Color c = colors[colorIndex++ % (sizeof(colors) / sizeof(Color))];
+            ab_setLED(c.r, c.g, c.b);
+        }
 
         ab_oled_setCursor(0, 0);
         ab_oled_drawString("Arduino Mini: ");

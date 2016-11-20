@@ -4,6 +4,7 @@ CONFFILE = $(ARDPATH)/hardware/tools/avr/etc/avrdude.conf
 COM      = /dev/cu.usbmodem1411
 PROTOCOL = avr109
 SPEED    = 57600
+F_CPU    = 16000000L
 
 ARDUBOY_MODEL = ARDUBOY_10
 MCU_NAME      = atmega32u4
@@ -42,7 +43,7 @@ TARGET_HEX = $(OUTDIR)/$(NAME).hex
 #=============================================================================
 
 DFLAGS = \
-    -D F_CPU=16000000L \
+    -D F_CPU=$(F_CPU) \
     -D ARDUINO=10606 \
     -D ARDUINO_AVR_LEONARDO \
     -D ARDUINO_ARCH_AVR \
@@ -80,6 +81,43 @@ OFILES = $(addprefix $(OBJDIR)/, $(addsuffix .o, $(notdir $(CFILES))))
 DFILES = $(addprefix $(OBJDIR)/, $(addsuffix .d, $(notdir $(CFILES))))
 
 #=============================================================================
+# LUFA Stuff
+
+VID                  = 0x2341UL
+PID                  = 0x0036UL
+BOARD                = USER
+F_USB                = $(F_CPU)
+FLASH_SIZE_KB        = 32
+BOOT_SECTION_SIZE_KB = 4
+BOOT_START           = 0x$(shell echo "obase=16; ($(FLASH_SIZE_KB) - $(BOOT_SECTION_SIZE_KB)) * 1024" | bc)
+LUFA_PATH            = $(SRCDIR)/lufa
+
+# LUFA library compile-time options and predefined tokens
+DFLAGS  += \
+    -D F_USB=$(F_USB) \
+    -D BOARD=BOARD_$(BOARD) \
+    -D DEVICE_VID=$(VID) \
+	-D DEVICE_PID=$(PID) \
+    -D USB_DEVICE_ONLY \
+    -D DEVICE_STATE_AS_GPIOR=0 \
+    -D ORDERED_EP_CONFIG \
+    -D FIXED_CONTROL_ENDPOINT_SIZE=8 \
+    -D FIXED_NUM_CONFIGURATIONS=1 \
+    -D USE_RAM_DESCRIPTORS \
+    -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" \
+    -D NO_INTERNAL_SERIAL \
+    -D NO_DEVICE_SELF_POWER \
+    -D NO_DEVICE_REMOTE_WAKEUP \
+    -D NO_SOF_EVENTS \
+    -D NO_LOCK_BYTE_WRITE_SUPPORT
+
+# Create the LUFA source path variables by including the LUFA root makefile
+include $(LUFA_PATH)/LUFA/makefile
+
+CFILES += $(LUFA_SRC_USB)
+INCDIR += $(LUFA_PATH)
+
+#=============================================================================
 
 .PHONY: all usb clean
 
@@ -90,6 +128,7 @@ size: all
 	$(BINPATH)/avr-size $(TARGET_ELF) -C --mcu=$(MCU_NAME)
 
 usb:
+	@python tools/reset.py $(COM)
 	@$(BINPATH)/avrdude -C$(CONFFILE) -p$(MCU_NAME) -c$(PROTOCOL) -P$(COM) -b$(SPEED) -D -Uflash:w:$(TARGET_HEX):i
 
 clean:

@@ -97,6 +97,7 @@ void ab_delay(uint32_t ms) {
 void ab_frame(void) {
     ab_oled_display();
     ab_oled_clear();
+    ab_usb_update();
 
     for (;;) {
         now = ab_millis();
@@ -232,4 +233,6 @@ void ab_init() {
     ab_spi_init();
     ab_oled_init();
     ab_sound_init();
+
+    ab_usb_init();
 }
