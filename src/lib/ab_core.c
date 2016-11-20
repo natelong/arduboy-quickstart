@@ -154,10 +154,12 @@ void ab_init() {
     sbi(ADCSRA, ADPS0);
     sbi(ADCSRA, ADEN);  // enable a2d conversions
 
-    DDRB |= (1 << 6);
-    DDRB |= (1 << 7);
-    DDRB |= (1 << 5);
-    ab_setLED(0, 0, 0);
+    DDRB  |= (1 << 6);
+    PORTB |= (1 << 6);
+    DDRB  |= (1 << 7);
+    PORTB |= (1 << 7);
+    DDRB  |= (1 << 5);
+    PORTB |= (1 << 5);
 
     power_timer2_disable();
     power_adc_disable();
