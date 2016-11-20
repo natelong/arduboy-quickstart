@@ -83,6 +83,9 @@ int main(void) {
         ab_oled_drawString("Frame: ");
         ab_oled_drawNumber(rbuf_total / FRAME_COUNT);
 
+
+        ab_debug();
+
         ab_frame();
     }
 
