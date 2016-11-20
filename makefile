@@ -30,11 +30,9 @@ CFILES = \
 	$(wildcard $(SRCDIR)/*.c) \
 	$(wildcard $(SRCDIR)/**/*.c) \
 
-VPATH  = $(dir $(CFILES))
-
 OBJDIR     = obj
 OUTDIR     = bin
-NAME       = test
+NAME       = arduboy
 MAPFILE    = $(OUTDIR)/$(NAME).map
 NMFILE     = $(OUTDIR)/$(NAME).nm
 TARGET_ELF = $(OUTDIR)/$(NAME).elf
@@ -76,10 +74,6 @@ LDFLAGS = \
     -Wl,-Map=$(MAPFILE) \
     -mmcu=$(MCU_NAME)
 
-OFILES = $(addprefix $(OBJDIR)/, $(addsuffix .o, $(notdir $(CFILES))))
-
-DFILES = $(addprefix $(OBJDIR)/, $(addsuffix .d, $(notdir $(CFILES))))
-
 #=============================================================================
 # LUFA Stuff
 
@@ -90,7 +84,7 @@ F_USB                = $(F_CPU)
 FLASH_SIZE_KB        = 32
 BOOT_SECTION_SIZE_KB = 4
 BOOT_START           = 0x$(shell echo "obase=16; ($(FLASH_SIZE_KB) - $(BOOT_SECTION_SIZE_KB)) * 1024" | bc)
-LUFA_PATH            = $(SRCDIR)/lufa
+LUFA_PATH            = $(SRCDIR)/LUFA
 
 # LUFA library compile-time options and predefined tokens
 DFLAGS  += \
@@ -111,11 +105,29 @@ DFLAGS  += \
     -D NO_SOF_EVENTS \
     -D NO_LOCK_BYTE_WRITE_SUPPORT
 
-# Create the LUFA source path variables by including the LUFA root makefile
-include $(LUFA_PATH)/LUFA/makefile
+# Define module source file lists
+CFILES += \
+    $(LUFA_PATH)/Drivers/USB/Core/AVR8/Device_AVR8.c         \
+    $(LUFA_PATH)/Drivers/USB/Core/AVR8/Endpoint_AVR8.c       \
+    $(LUFA_PATH)/Drivers/USB/Core/AVR8/Host_AVR8.c           \
+    $(LUFA_PATH)/Drivers/USB/Core/AVR8/Pipe_AVR8.c           \
+    $(LUFA_PATH)/Drivers/USB/Core/AVR8/USBController_AVR8.c  \
+    $(LUFA_PATH)/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.c   \
+    $(LUFA_PATH)/Drivers/USB/Core/AVR8/EndpointStream_AVR8.c \
+    $(LUFA_PATH)/Drivers/USB/Core/AVR8/PipeStream_AVR8.c     \
+    $(LUFA_PATH)/Drivers/USB/Core/ConfigDescriptor.c         \
+    $(LUFA_PATH)/Drivers/USB/Core/DeviceStandardReq.c        \
+    $(LUFA_PATH)/Drivers/USB/Core/Events.c                   \
+    $(LUFA_PATH)/Drivers/USB/Core/USBTask.c                  \
+    $(LUFA_PATH)/Drivers/USB/Class/Common/HIDParser.c
 
-CFILES += $(LUFA_SRC_USB)
-INCDIR += $(LUFA_PATH)
+INCDIR += $(SRCDIR)
+
+#=============================================================================
+
+VPATH  = $(dir $(CFILES))
+OFILES = $(addprefix $(OBJDIR)/, $(addsuffix .o, $(notdir $(CFILES))))
+DFILES = $(addprefix $(OBJDIR)/, $(addsuffix .d, $(notdir $(CFILES))))
 
 #=============================================================================
 
