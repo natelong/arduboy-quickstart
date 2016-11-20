@@ -1,5 +1,7 @@
 #include "ab.h"
 
+#include <avr/wdt.h>
+
 #define cbi(sfr, bit) (_SFR_BYTE(sfr) &= ~_BV(bit))
 #define sbi(sfr, bit) (_SFR_BYTE(sfr) |= _BV(bit))
 
@@ -117,6 +119,65 @@ void ab_setLED(uint8_t red, uint8_t green, uint8_t blue) {
     SREG = oldSREG;
 }
 
+
+
+
+// Bootloader related fields
+// Old Caterina bootloader places the MAGIC key into unsafe RAM locations (it can be rewritten
+// by the running sketch before to actual reboot).
+// Newer bootloaders, recognizable by the LUFA "signature" at the end of the flash, can handle both
+// the usafe and the safe location. Check once (in USBCore.cpp) if the bootloader in new, then set the global
+// _updatedLUFAbootloader variable to true/false and place the magic key consequently
+#ifndef MAGIC_KEY
+#define MAGIC_KEY 0x7777
+#endif
+
+#ifndef MAGIC_KEY_POS
+#define MAGIC_KEY_POS 0x0800
+#endif
+
+#ifndef NEW_LUFA_SIGNATURE
+#define NEW_LUFA_SIGNATURE 0xDCFB
+#endif
+
+#if MAGIC_KEY_POS != (RAMEND-1)
+    #define LUFA_COMPAT
+#endif
+
+void ab_reset(void) {
+    ab_setLED(0, 255, 0);
+    uint16_t magic_key_pos = MAGIC_KEY_POS;
+    bool _updatedLUFAbootloader = false;
+
+#ifdef LUFA_COMPAT
+    if (pgm_read_word(FLASHEND - 1) == NEW_LUFA_SIGNATURE) {
+        _updatedLUFAbootloader = true;
+    }
+#endif
+
+// If we don't use the new RAMEND directly, check manually if we have a newer bootloader.
+// This is used to keep compatible with the old leonardo bootloaders.
+// You are still able to set the magic key position manually to RAMEND-1 to save a few bytes for this check.
+#ifdef LUFA_COMPAT
+    // For future boards save the key in the inproblematic RAMEND
+    // Which is reserved for the main() return value (which will never return)
+    if (_updatedLUFAbootloader) {
+        // horray, we got a new bootloader!
+        magic_key_pos = (RAMEND-1);
+    }
+
+    // Backup ram value if its not a newer bootloader.
+    // This should avoid memory corruption at least a bit, not fully
+    if (magic_key_pos != (RAMEND-1)) {
+        *(uint16_t *)(RAMEND-1) = *(uint16_t *)magic_key_pos;
+    }
+#endif
+
+    // Store boot key
+    *(uint16_t *)magic_key_pos = MAGIC_KEY;
+    wdt_enable(WDTO_120MS);
+    while (true) ;
+}
 
 void ab_init() {
     // this needs to be called before setup() or some functions won't work there

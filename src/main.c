@@ -73,6 +73,8 @@ int main(void) {
         if (pressed & AB_KEY_B)  ab_sound_playNote(&ab_Channel_2, 32);
         if (released & AB_KEY_B) ab_sound_stopNote(&ab_Channel_2);
 
+        if ((ab_key_getCurrent() & AB_KEY_ALL) == AB_KEY_ALL) ab_reset();
+
         ab_oled_setCursor(0, 0);
         ab_oled_drawString("Arduino Mini: ");
         ab_oled_drawNumber(save.score);
@@ -84,7 +86,7 @@ int main(void) {
         ab_oled_drawNumber(rbuf_total / FRAME_COUNT);
 
 
-        ab_debug();
+        // ab_debug();
 
         ab_frame();
     }

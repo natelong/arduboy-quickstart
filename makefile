@@ -21,6 +21,9 @@ NM      = $(PREFIX)nm
 
 SRCDIR  = src
 LIBDIR  = $(SRCDIR)/lib
+INCDIR  =
+
+#=============================================================================
 
 CFILES = \
 	$(wildcard $(SRCDIR)/*.c) \
@@ -39,14 +42,14 @@ TARGET_HEX = $(OUTDIR)/$(NAME).hex
 #=============================================================================
 
 DFLAGS = \
-    -DF_CPU=16000000L \
-    -DARDUINO=10606 \
-    -DARDUINO_AVR_LEONARDO \
-    -DARDUINO_ARCH_AVR \
-    -DUSB_VID=0x2341 \
-    -DUSB_PID=0x8036 \
-    -DUSB_MANUFACTURER="Unknown" \
-    -D$(ARDUBOY_MODEL)
+    -D F_CPU=16000000L \
+    -D ARDUINO=10606 \
+    -D ARDUINO_AVR_LEONARDO \
+    -D ARDUINO_ARCH_AVR \
+    -D USB_VID=0x2341 \
+    -D USB_PID=0x8036 \
+    -D USB_MANUFACTURER="Unknown" \
+    -D $(ARDUBOY_MODEL)
 
 CFLAGS = \
     -c \
@@ -87,7 +90,6 @@ size: all
 	$(BINPATH)/avr-size $(TARGET_ELF) -C --mcu=$(MCU_NAME)
 
 usb:
-	@python tool/reset.py $(COM)
 	@$(BINPATH)/avrdude -C$(CONFFILE) -p$(MCU_NAME) -c$(PROTOCOL) -P$(COM) -b$(SPEED) -D -Uflash:w:$(TARGET_HEX):i
 
 clean:

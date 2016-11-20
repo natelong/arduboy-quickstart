@@ -10,7 +10,9 @@ enum {
     AB_KEY_U = _BV(7),
     AB_KEY_D = _BV(4),
 
-    AB_DPAD  = (AB_KEY_U | AB_KEY_D | AB_KEY_L | AB_KEY_R),
+    AB_KEY_DPAD  = (AB_KEY_U | AB_KEY_D | AB_KEY_L | AB_KEY_R),
+    AB_KEY_BTN   = (AB_KEY_A | AB_KEY_B),
+    AB_KEY_ALL   = (AB_KEY_DPAD | AB_KEY_BTN)
 };
 
 void    ab_key_init(void);
