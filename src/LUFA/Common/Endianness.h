@@ -47,6 +47,7 @@
 #define cpu_to_le32(x) (x)
 #define cpu_to_be16(x) SwapEndian_16(x)
 #define cpu_to_be32(x) SwapEndian_32(x)
+
 // Compile-time
 #define LE16_TO_CPU(x) (x)
 #define LE32_TO_CPU(x) (x)
