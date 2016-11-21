@@ -118,8 +118,7 @@ CFILES += \
     $(LUFA_PATH)/Drivers/USB/Core/ConfigDescriptor.c         \
     $(LUFA_PATH)/Drivers/USB/Core/DeviceStandardReq.c        \
     $(LUFA_PATH)/Drivers/USB/Core/Events.c                   \
-    $(LUFA_PATH)/Drivers/USB/Core/USBTask.c                  \
-    $(LUFA_PATH)/Drivers/USB/Class/Common/HIDParser.c
+    $(LUFA_PATH)/Drivers/USB/Core/USBTask.c
 
 INCDIR += $(SRCDIR)
 

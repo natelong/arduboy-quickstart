@@ -1,7 +1,8 @@
+// nate
 /*
              LUFA Library
      Copyright (C) Dean Camera, 2011.
-              
+
   dean [at] fourwalledcubicle [dot] com
            www.lufa-lib.org
 */
@@ -9,13 +10,13 @@
 /*
   Copyright 2011  Dean Camera (dean [at] fourwalledcubicle [dot] com)
 
-  Permission to use, copy, modify, distribute, and sell this 
+  Permission to use, copy, modify, distribute, and sell this
   software and its documentation for any purpose is hereby granted
-  without fee, provided that the above copyright notice appear in 
+  without fee, provided that the above copyright notice appear in
   all copies and that both that the copyright notice and this
-  permission notice and warranty disclaimer appear in supporting 
-  documentation, and that the name of the author not be used in 
-  advertising or publicity pertaining to distribution of the 
+  permission notice and warranty disclaimer appear in supporting
+  documentation, and that the name of the author not be used in
+  advertising or publicity pertaining to distribution of the
   software without specific, written prior permission.
 
   The author disclaim all warranties with regard to this
@@ -28,97 +29,32 @@
   this software.
 */
 
-/** \file
- *  \brief Endpoint data stream transmission and reception management.
- *  \copydetails Group_EndpointStreamRW
- *
- *  \note This file should not be included directly. It is automatically included as needed by the USB driver
- *        dispatch header located in LUFA/Drivers/USB/USB.h.
+/**
+ *  Endpoint data stream transmission and reception management.
  */
 
-/** \ingroup Group_EndpointRW  
- *  \defgroup Group_EndpointStreamRW Read/Write of Multi-Byte Streams
- *  \brief Endpoint data stream transmission and reception management.
- *
- *  Functions, macros, variables, enums and types related to data reading and writing of data streams from
- *  and to endpoints.
- *
- *  @{
- */ 
+#pragma once
 
-#ifndef __ENDPOINT_STREAM_H__
-#define __ENDPOINT_STREAM_H__
+#include "../../../Common/Common.h"
+#include "USBMode.h"
 
-	/* Includes: */
-		#include "../../../Common/Common.h"
-		#include "USBMode.h"
+/** Enum for possible error return codes of Endpoint_*_Stream_* functions. */
+enum Endpoint_Stream_RW_ErrorCodes_t {
+    ENDPOINT_RWSTREAM_NoError            = 0, // Command completed successfully, no error.
+    ENDPOINT_RWSTREAM_EndpointStalled    = 1, // Endpoint was stalled during stream transfer by host or device.
+    ENDPOINT_RWSTREAM_DeviceDisconnected = 2, // Device was disconnected from host during transfer.
+    ENDPOINT_RWSTREAM_BusSuspended       = 3, // The USB bus was suspended by host and no traffic can occur until bus has resumed.
+    ENDPOINT_RWSTREAM_Timeout            = 4, // Host failed to accept or send next packet within timeout period from USB_STREAM_TIMEOUT_MS
+    ENDPOINT_RWSTREAM_IncompleteTransfer = 5, // Endpoint bank became full or empty before complete contents of current stream could be
+                                              // transferred. Endpoint stream function should be called again to process next chunk of data.
+};
 
-	/* Enable C linkage for C++ Compilers: */
-		#if defined(__cplusplus)
-			extern "C" {
-		#endif
+/** Enum for possible error return codes of Endpoint_*_Control_Stream_* functions. */
+enum Endpoint_ControlStream_RW_ErrorCodes_t {
+    ENDPOINT_RWCSTREAM_NoError            = 0, // Command completed successfully, no error.
+    ENDPOINT_RWCSTREAM_HostAborted        = 1, // The aborted transfer prematurely.
+    ENDPOINT_RWCSTREAM_DeviceDisconnected = 2, // Device was disconnected from host during transfer.
+    ENDPOINT_RWCSTREAM_BusSuspended       = 3, // USB bus has been suspended by host and no traffic can occur until bus has resumed.
+};
 
-	/* Preprocessor Checks: */
-		#if !defined(__INCLUDE_FROM_USB_DRIVER)
-			#error Do not include this file directly. Include LUFA/Drivers/USB/USB.h instead.
-		#endif
-
-	/* Public Interface - May be used in end-application: */
-		/* Enums: */
-			/** Enum for the possible error return codes of the \c Endpoint_*_Stream_* functions. */
-			enum Endpoint_Stream_RW_ErrorCodes_t
-			{
-				ENDPOINT_RWSTREAM_NoError            = 0, /**< Command completed successfully, no error. */
-				ENDPOINT_RWSTREAM_EndpointStalled    = 1, /**< The endpoint was stalled during the stream
-				                                           *   transfer by the host or device.
-				                                           */
-				ENDPOINT_RWSTREAM_DeviceDisconnected = 2, /**< Device was disconnected from the host during
-				                                           *   the transfer.
-				                                           */
-				ENDPOINT_RWSTREAM_BusSuspended       = 3, /**< The USB bus has been suspended by the host and
-				                                           *   no USB endpoint traffic can occur until the bus
-				                                           *   has resumed.
-				                                           */
-				ENDPOINT_RWSTREAM_Timeout            = 4, /**< The host failed to accept or send the next packet
-				                                           *   within the software timeout period set by the
-				                                           *   \ref USB_STREAM_TIMEOUT_MS macro.
-				                                           */
-				ENDPOINT_RWSTREAM_IncompleteTransfer = 5, /**< Indicates that the endpoint bank became full or empty before
-				                                           *   the complete contents of the current stream could be
-				                                           *   transferred. The endpoint stream function should be called
-				                                           *   again to process the next chunk of data in the transfer.
-				                                           */
-			};
-			
-			/** Enum for the possible error return codes of the \c Endpoint_*_Control_Stream_* functions. */
-			enum Endpoint_ControlStream_RW_ErrorCodes_t
-			{
-				ENDPOINT_RWCSTREAM_NoError            = 0, /**< Command completed successfully, no error. */
-				ENDPOINT_RWCSTREAM_HostAborted        = 1, /**< The aborted the transfer prematurely. */
-				ENDPOINT_RWCSTREAM_DeviceDisconnected = 2, /**< Device was disconnected from the host during
-				                                            *   the transfer.
-				                                            */
-				ENDPOINT_RWCSTREAM_BusSuspended       = 3, /**< The USB bus has been suspended by the host and
-				                                            *   no USB endpoint traffic can occur until the bus
-				                                            *   has resumed.
-				                                            */
-			};
-
-	/* Architecture Includes: */
-		#if (ARCH == ARCH_AVR8)
-			#include "AVR8/EndpointStream_AVR8.h"
-		#elif (ARCH == ARCH_UC3)
-			#include "UC3/EndpointStream_UC3.h"
-		#elif (ARCH == ARCH_XMEGA)
-			#include "XMEGA/EndpointStream_XMEGA.h"	
-		#endif
-
-	/* Disable C linkage for C++ Compilers: */
-		#if defined(__cplusplus)
-			}
-		#endif
-
-#endif
-
-/** @} */
-
+#include "AVR8/EndpointStream_AVR8.h"

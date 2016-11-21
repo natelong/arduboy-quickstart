@@ -1,3 +1,4 @@
+// nate
 #pragma once
 
 /** Forces GCC to create a memory barrier, ensuring that memory accesses are not reordered past the barrier point.
