@@ -86,45 +86,6 @@
 				#define HOST_DEVICE_SETTLE_DELAY_MS        1000
 			#endif
 
-			/** Enum for the error codes for the \ref EVENT_USB_Host_HostError() event.
-			 *
-			 *  \see \ref Group_Events for more information on this event.
-			 */
-			enum USB_Host_ErrorCodes_t
-			{
-				HOST_ERROR_VBusVoltageDip       = 0, /**< VBUS voltage dipped to an unacceptable level. This
-				                                      *   error may be the result of an attached device drawing
-				                                      *   too much current from the VBUS line, or due to the
-				                                      *   AVR's power source being unable to supply sufficient
-				                                      *   current.
-				                                      */
-			};
-
-			/** Enum for the error codes for the \ref EVENT_USB_Host_DeviceEnumerationFailed() event.
-			 *
-			 *  \see \ref Group_Events for more information on this event.
-			 */
-			enum USB_Host_EnumerationErrorCodes_t
-			{
-				HOST_ENUMERROR_NoError          = 0, /**< No error occurred. Used internally, this is not a valid
-				                                      *   ErrorCode parameter value for the \ref EVENT_USB_Host_DeviceEnumerationFailed()
-				                                      *   event.
-				                                      */
-				HOST_ENUMERROR_WaitStage        = 1, /**< One of the delays between enumeration steps failed
-				                                      *   to complete successfully, due to a timeout or other
-				                                      *   error.
-				                                      */
-				HOST_ENUMERROR_NoDeviceDetected = 2, /**< No device was detected, despite the USB data lines
-				                                      *   indicating the attachment of a device.
-				                                      */
-				HOST_ENUMERROR_ControlError     = 3, /**< One of the enumeration control requests failed to
-				                                      *   complete successfully.
-				                                      */
-				HOST_ENUMERROR_PipeConfigError  = 4, /**< The default control pipe (address 0) failed to
-				                                      *   configure correctly.
-				                                      */
-			};
-
 		/* Inline Functions: */
 			/** Returns the current USB frame number, when in host mode. Every millisecond the USB bus is active (i.e. not suspended)
 			 *  the frame number is incremented by one.

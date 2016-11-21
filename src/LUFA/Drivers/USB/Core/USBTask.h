@@ -46,7 +46,6 @@
 #include "Events.h"
 #include "StdRequestType.h"
 #include "StdDescriptors.h"
-
 #include "DeviceStandardReq.h"
 
 /** Indicates if the USB interface is currently initialized but not necessarily connected to a host
@@ -63,7 +62,7 @@ extern volatile bool USB_IsInitialized;
  *
  *  Note: The contents of this structure is automatically endian-corrected for the current CPU architecture.
  */
- extern USB_Request_Header_t USB_ControlRequest;
+extern USB_Request_Header_t USB_ControlRequest;
 
 #define _GET_DEVICE_GPIOR_NAME2(y) GPIOR ## y
 #define _GET_DEVICE_GPIOR_NAME(x)  _GET_DEVICE_GPIOR_NAME2(x)
@@ -74,28 +73,14 @@ extern volatile bool USB_IsInitialized;
  *  in device mode) in order to manage USB communications. This task may be executed inside an RTOS,
  *  fast timer ISR or the main user application loop.
  *
- *  The USB task must be serviced within 30ms while in device mode, or within 1ms while in host mode.
- *  The task may be serviced at all times, or (for minimum CPU consumption):
- *
- *    - In device mode, it may be disabled at start-up, enabled on the firing of the \ref EVENT_USB_Device_Connect()
- *      event and disabled again on the firing of the \ref EVENT_USB_Device_Disconnect() event.
- *
- *    - In host mode, it may be disabled at start-up, enabled on the firing of the \ref EVENT_USB_Host_DeviceAttached()
- *      event and disabled again on the firing of the \ref EVENT_USB_Host_DeviceEnumerationComplete() or
- *      \ref EVENT_USB_Host_DeviceEnumerationFailed() events.
+ *  The USB task must be serviced within 30ms while in device mode. The task may be serviced at all times, or
+ *  (for minimum CPU consumption) it may be disabled at start-up, enabled on the firing of the EVENT_USB_Device_Connect()
+ *  event and disabled again on the firing of the EVENT_USB_Device_Disconnect() event.
  *
  *  If in device mode (only), the control endpoint can instead be managed via interrupts entirely by the library
  *  by defining the INTERRUPT_CONTROL_ENDPOINT token and passing it to the compiler via the -D switch.
- *
- *  \see \ref Group_Events for more information on the USB events.
- *
- *  \ingroup Group_USBManagement
  */
 void USB_USBTask(void);
-
-#if defined(__INCLUDE_FROM_USBTASK_C)
-    static void USB_DeviceTask(void);
-#endif
 
 #define HOST_TASK_NONBLOCK_WAIT(Duration, NextState) MACROS{ USB_HostState   = HOST_STATE_WaitForDevice; \
                                                              WaitMSRemaining = (Duration);               \

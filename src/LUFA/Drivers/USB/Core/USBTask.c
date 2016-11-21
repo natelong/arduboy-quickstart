@@ -35,55 +35,11 @@
 volatile bool        USB_IsInitialized;
 USB_Request_Header_t USB_ControlRequest;
 
-#if defined(USB_CAN_BE_HOST) && !defined(HOST_STATE_AS_GPIOR)
-volatile uint8_t     USB_HostState;
-#endif
-
-#if defined(USB_CAN_BE_DEVICE) && !defined(DEVICE_STATE_AS_GPIOR)
-volatile uint8_t     USB_DeviceState;
-#endif
-
-void USB_USBTask(void)
-{
-	#if defined(USB_HOST_ONLY)
-		USB_HostTask();
-	#elif defined(USB_DEVICE_ONLY)
-		USB_DeviceTask();
-	#else
-		if (USB_CurrentMode == USB_MODE_Device)
-		  USB_DeviceTask();
-		else if (USB_CurrentMode == USB_MODE_Host)
-		  USB_HostTask();
-	#endif
+void USB_USBTask(void) {
+	if (USB_DeviceState != DEVICE_STATE_Unattached) {
+        uint8_t PrevEndpoint = Endpoint_GetCurrentEndpoint();
+        Endpoint_SelectEndpoint(ENDPOINT_CONTROLEP);
+        if (Endpoint_IsSETUPReceived()) USB_Device_ProcessControlRequest();
+        Endpoint_SelectEndpoint(PrevEndpoint);
+    }
 }
-
-#if defined(USB_CAN_BE_DEVICE)
-static void USB_DeviceTask(void)
-{
-	if (USB_DeviceState != DEVICE_STATE_Unattached)
-	{
-		uint8_t PrevEndpoint = Endpoint_GetCurrentEndpoint();
-
-		Endpoint_SelectEndpoint(ENDPOINT_CONTROLEP);
-
-		if (Endpoint_IsSETUPReceived())
-		  USB_Device_ProcessControlRequest();
-
-		Endpoint_SelectEndpoint(PrevEndpoint);
-	}
-}
-#endif
-
-#if defined(USB_CAN_BE_HOST)
-static void USB_HostTask(void)
-{
-	uint8_t PrevPipe = Pipe_GetCurrentPipe();
-
-	Pipe_SelectPipe(PIPE_CONTROLPIPE);
-
-	USB_Host_ProcessNextHostState();
-
-	Pipe_SelectPipe(PrevPipe);
-}
-#endif
-
