@@ -32,6 +32,9 @@
  */
 #define ATTR_ALWAYS_INLINE          __attribute__ ((always_inline))
 
+// Forces the compiler to inline the specified function under all circumstances.
+#define ALWAYS_INLINE inline __attribute__ ((always_inline))
+
 /** Indicates that the specified function is constant, in that it has no side effects other than
  *  parameter access.
  */

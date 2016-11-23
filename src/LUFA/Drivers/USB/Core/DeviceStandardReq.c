@@ -124,7 +124,7 @@ static void USB_Device_SetAddress(void)
 	uint8_t    DeviceAddress    = (USB_ControlRequest.wValue & 0x7F);
 	uint_reg_t CurrentGlobalInt = GetGlobalInterruptMask();
 	GlobalInterruptDisable();
-				
+
 	Endpoint_ClearSETUP();
 
 	Endpoint_ClearStatusStage();
@@ -133,7 +133,7 @@ static void USB_Device_SetAddress(void)
 
 	USB_Device_SetDeviceAddress(DeviceAddress);
 	USB_DeviceState = (DeviceAddress) ? DEVICE_STATE_Addressed : DEVICE_STATE_Default;
-	
+
 	SetGlobalInterruptMask(CurrentGlobalInt);
 }
 
@@ -156,7 +156,7 @@ static void USB_Device_SetConfiguration(void)
 			uint8_t MemoryAddressSpace;
 		#endif
 	#endif
-	
+
 	if (CALLBACK_USB_GetDescriptor((DTYPE_Device << 8), 0, (void*)&DevDescriptorPtr
 	#if defined(ARCH_HAS_MULTI_ADDRESS_SPACE) && \
 	    !(defined(USE_FLASH_DESCRIPTORS) || defined(USE_EEPROM_DESCRIPTORS) || defined(USE_RAM_DESCRIPTORS))
@@ -185,7 +185,7 @@ static void USB_Device_SetConfiguration(void)
 	}
 	#else
 	if ((uint8_t)USB_ControlRequest.wValue > DevDescriptorPtr->NumberOfConfigurations)
-	  return;	
+	  return;
 	#endif
 	#endif
 
@@ -224,7 +224,7 @@ static void USB_Device_GetInternalSerialDescriptor(void)
 
 	SignatureDescriptor.Header.Type = DTYPE_String;
 	SignatureDescriptor.Header.Size = USB_STRING_LEN(INTERNAL_SERIAL_LENGTH_BITS / 4);
-	
+
 	USB_Device_GetSerialString(SignatureDescriptor.UnicodeString);
 
 	Endpoint_ClearSETUP();
@@ -265,20 +265,7 @@ static void USB_Device_GetDescriptor(void)
 
 	Endpoint_ClearSETUP();
 
-	#if defined(USE_RAM_DESCRIPTORS) || !defined(ARCH_HAS_MULTI_ADDRESS_SPACE)
 	Endpoint_Write_Control_Stream_LE(DescriptorPointer, DescriptorSize);
-	#elif defined(USE_EEPROM_DESCRIPTORS)
-	Endpoint_Write_Control_EStream_LE(DescriptorPointer, DescriptorSize);
-	#elif defined(USE_FLASH_DESCRIPTORS)
-	Endpoint_Write_Control_PStream_LE(DescriptorPointer, DescriptorSize);
-	#else
-	if (DescriptorAddressSpace == MEMSPACE_FLASH)
-	  Endpoint_Write_Control_PStream_LE(DescriptorPointer, DescriptorSize);
-	else if (DescriptorAddressSpace == MEMSPACE_EEPROM)
-	  Endpoint_Write_Control_EStream_LE(DescriptorPointer, DescriptorSize);
-	else
-	  Endpoint_Write_Control_Stream_LE(DescriptorPointer, DescriptorSize);
-	#endif
 
 	Endpoint_ClearOUT();
 }

@@ -1,3 +1,4 @@
+// nate
 /*
              LUFA Library
      Copyright (C) Dean Camera, 2011.
@@ -28,53 +29,14 @@
   this software.
 */
 
-/** \file
- *  \brief Master include file for the library USB CDC-ACM Class driver.
- *
- *  Master include file for the library USB CDC Class driver, for both host and device modes, where available.
- *
- *  This file should be included in all user projects making use of this optional class driver, instead of
- *  including any headers in the USB/ClassDriver/Device, USB/ClassDriver/Host or USB/ClassDriver/Common subdirectories.
+/**
+ *  Master include file for the library USB CDC-ACM Class driver.
  */
 
-/** \ingroup Group_USBClassDrivers
- *  \defgroup Group_USBClassCDC CDC-ACM (Virtual Serial) Class Driver
- *
- *  \section Sec_Dependencies Module Source Dependencies
- *  The following files must be built with any user project that uses this module:
- *    - LUFA/Drivers/USB/Class/Device/CDC.c <i>(Makefile source module name: LUFA_SRC_USBCLASS)</i>
- *    - LUFA/Drivers/USB/Class/Host/CDC.c <i>(Makefile source module name: LUFA_SRC_USBCLASS)</i>
- *
- *  \section Sec_ModDescription Module Description
- *  CDC Class Driver module. This module contains an internal implementation of the USB CDC-ACM class Virtual Serial
- *  Ports, for both Device and Host USB modes. User applications can use this class driver instead of implementing the
- *  CDC class manually via the low-level LUFA APIs.
- *
- *  This module is designed to simplify the user code by exposing only the required interface needed to interface with
- *  Hosts or Devices using the USB CDC Class.
- *
- *  @{
- */
+#pragma once
 
-#ifndef _CDC_CLASS_H_
-#define _CDC_CLASS_H_
+#define __INCLUDE_FROM_USB_DRIVER
+#define __INCLUDE_FROM_CDC_DRIVER
 
-	/* Macros: */
-		#define __INCLUDE_FROM_USB_DRIVER
-		#define __INCLUDE_FROM_CDC_DRIVER
-
-	/* Includes: */
-		#include "../Core/USBMode.h"
-
-		#if defined(USB_CAN_BE_DEVICE)
-			#include "Device/CDC.h"
-		#endif
-
-		#if defined(USB_CAN_BE_HOST)
-			#include "Host/CDC.h"
-		#endif
-
-#endif
-
-/** @} */
-
+#include "../Core/USBMode.h"
+#include "Device/CDC.h"
