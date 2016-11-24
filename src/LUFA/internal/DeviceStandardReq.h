@@ -1,3 +1,4 @@
+// nate
 /*
              LUFA Library
      Copyright (C) Dean Camera, 2011.
@@ -35,7 +36,6 @@
 #pragma once
 
 #include "Common.h"
-#include "USBMode.h"
 #include "StdDescriptors.h"
 #include "Events.h"
 #include "StdRequestType.h"

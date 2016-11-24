@@ -29,9 +29,6 @@
   this software.
 */
 
-#define  __INCLUDE_FROM_USB_DRIVER
-#include "USBMode.h"
-
 #include "EndpointStream.h"
 
 /* The following abuses the C preprocessor in order to copy-paste common code with slight alterations,

@@ -1,3 +1,4 @@
+// nate
 /*
              LUFA Library
      Copyright (C) Dean Camera, 2011.
@@ -35,7 +36,6 @@
 #pragma once
 
 #include "Common.h"
-#include "USBMode.h"
 
 /** Mask for the request type parameter, to indicate the direction of the request data (Host to Device
  *  or Device to Host). The result of this mask should then be compared to the request direction masks.

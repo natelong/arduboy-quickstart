@@ -36,7 +36,6 @@
 #pragma once
 
 #include "Common.h"
-#include "USBMode.h"
 #include "USBTask.h"
 #include "USBInterrupt.h"
 

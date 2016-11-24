@@ -36,7 +36,6 @@
 #pragma once
 
 #include "Common.h"
-#include "USBMode.h"
 
 /**
  * Endpoint address direction masks for a Host to Device endpoint.

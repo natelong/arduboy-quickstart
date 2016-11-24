@@ -35,7 +35,6 @@
 
 #pragma once
 
-#include "USBMode.h"
 #include "../USB.h"
 
 // Enum for possible Class, Subclass and Protocol values of device and interface descriptors

@@ -9,7 +9,6 @@
 #pragma once
 
 #include "internal/Common.h"
-#include "internal/USBMode.h"
 
 #include "internal/USBTask.h"
 #include "internal/Events.h"

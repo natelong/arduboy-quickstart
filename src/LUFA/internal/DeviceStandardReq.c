@@ -28,11 +28,6 @@
   this software.
 */
 
-#define  __INCLUDE_FROM_USB_DRIVER
-#include "USBMode.h"
-
-#if defined(USB_CAN_BE_DEVICE)
-
 #define  __INCLUDE_FROM_DEVICESTDREQ_C
 #include "DeviceStandardReq.h"
 
@@ -241,5 +236,4 @@ static void USB_Device_ClearSetFeature(void)
     Endpoint_ClearStatusStage();
 }
 
-#endif
 

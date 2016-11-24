@@ -1,3 +1,4 @@
+// nate
 /*
              LUFA Library
      Copyright (C) Dean Camera, 2011.
@@ -35,7 +36,6 @@
 #pragma once
 
 #include "Common.h"
-#include "USBMode.h"
 
 #if !defined(__INCLUDE_FROM_EVENTS_C)
     /** Event for USB device connection. This event fires when the microcontroller is in USB Device mode

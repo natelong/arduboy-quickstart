@@ -52,7 +52,6 @@
 
 	/* Includes: */
 		#include "Common.h"
-		#include "USBMode.h"
 		#include "StdDescriptors.h"
 
 	/* Enable C linkage for C++ Compilers: */
