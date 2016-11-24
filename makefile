@@ -107,7 +107,7 @@ DFLAGS  += \
 
 # Define module source file lists
 CFILES += \
-    $(LUFA_PATH)/Drivers/USB/Core/AVR8/Endpoint_AVR8.c \
+    $(LUFA_PATH)/Drivers/USB/Core/AVR8/Endpoint.c \
     $(LUFA_PATH)/Drivers/USB/Core/AVR8/Host_AVR8.c \
     $(LUFA_PATH)/Drivers/USB/Core/AVR8/Pipe_AVR8.c \
     $(LUFA_PATH)/Drivers/USB/Core/AVR8/USBController_AVR8.c \

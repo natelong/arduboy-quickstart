@@ -49,11 +49,6 @@
 			extern "C" {
 		#endif
 
-	/* Preprocessor Checks: */
-		#if !defined(__INCLUDE_FROM_USB_DRIVER)
-			#error Do not include this file directly. Include LUFA/Drivers/USB/USB.h instead.
-		#endif
-
 	/* Private Interface - For use in library only: */
 	#if !defined(__DOXYGEN__)
 		/* Enums: */
@@ -136,7 +131,7 @@
 						OTGIEN |= (1 << VBERRE);
 						break;
 					case USB_INT_SRPI:
-						OTGIEN |= (1 << SRPE);						
+						OTGIEN |= (1 << SRPE);
 						break;
 					#endif
 				}
@@ -194,12 +189,12 @@
 						OTGIEN &= ~(1 << VBERRE);
 						break;
 					case USB_INT_SRPI:
-						OTGIEN &= ~(1 << SRPE);						
+						OTGIEN &= ~(1 << SRPE);
 						break;
 					#endif
 				}
 			}
-			
+
 			static inline void USB_INT_Clear(const uint8_t Interrupt) ATTR_ALWAYS_INLINE;
 			static inline void USB_INT_Clear(const uint8_t Interrupt)
 			{
@@ -257,7 +252,7 @@
 					#endif
 				}
 			}
-			
+
 			static inline bool USB_INT_IsEnabled(const uint8_t Interrupt) ATTR_ALWAYS_INLINE ATTR_WARN_UNUSED_RESULT;
 			static inline bool USB_INT_IsEnabled(const uint8_t Interrupt)
 			{
@@ -300,10 +295,10 @@
 						return (OTGIEN & (1 << SRPE));
 					#endif
 				}
-				
+
 				return false;
 			}
-		
+
 			static inline bool USB_INT_HasOccurred(const uint8_t Interrupt) ATTR_ALWAYS_INLINE ATTR_WARN_UNUSED_RESULT;
 			static inline bool USB_INT_HasOccurred(const uint8_t Interrupt)
 			{

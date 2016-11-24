@@ -1,17 +1,18 @@
+// nate
 #include "ab.h"
 
 #include "Descriptors.h"
 #include <LUFA/Drivers/USB/USB.h>
 #include <avr/wdt.h>
 
-#define LED_SETUP()     DDRC |= (1<<7); DDRB |= (1<<0); DDRD |= (1<<5);
-#define L_LED_OFF()     PORTC &= ~(1<<7)
-#define L_LED_ON()      PORTC |= (1<<7)
-#define L_LED_TOGGLE()  PORTC ^= (1<<7)
-#define TX_LED_OFF()    PORTD |= (1<<5)
-#define TX_LED_ON()     PORTD &= ~(1<<5)
-#define RX_LED_OFF()    PORTB |= (1<<0)
-#define RX_LED_ON()     PORTB &= ~(1<<0)
+#define LED_SETUP()    DDRC |= (1<<7); DDRB |= (1<<0); DDRD |= (1<<5);
+#define L_LED_OFF()    PORTC &= ~(1<<7)
+#define L_LED_ON()     PORTC |= (1<<7)
+#define L_LED_TOGGLE() PORTC ^= (1<<7)
+#define TX_LED_OFF()   PORTD |= (1<<5)
+#define TX_LED_ON()    PORTD &= ~(1<<5)
+#define RX_LED_OFF()   PORTB |= (1<<0)
+#define RX_LED_ON()    PORTB &= ~(1<<0)
 
 uint32_t pulseTimer = 0;
 #define PULSE_FRAMES 15;
@@ -30,44 +31,31 @@ static uint8_t lineState = 0;
 /** Event handler for the USB_ConfigurationChanged event. This configures the device's endpoints ready
  *  to relay data to and from the attached USB host.
  */
-void EVENT_USB_Device_ConfigurationChanged(void)
-{
+void EVENT_USB_Device_ConfigurationChanged(void) {
     /* Setup CDC Notification, Rx and Tx Endpoints */
-    Endpoint_ConfigureEndpoint(CDC_NOTIFICATION_EPNUM, EP_TYPE_INTERRUPT,
-                               ENDPOINT_DIR_IN, CDC_NOTIFICATION_EPSIZE,
-                               ENDPOINT_BANK_SINGLE);
-
-    Endpoint_ConfigureEndpoint(CDC_TX_EPNUM, EP_TYPE_BULK,
-                               ENDPOINT_DIR_IN, CDC_TXRX_EPSIZE,
-                               ENDPOINT_BANK_SINGLE);
-
-    Endpoint_ConfigureEndpoint(CDC_RX_EPNUM, EP_TYPE_BULK,
-                               ENDPOINT_DIR_OUT, CDC_TXRX_EPSIZE,
-                               ENDPOINT_BANK_SINGLE);
+    Endpoint_ConfigureEndpoint(CDC_NOTIFICATION_EPNUM, EP_TYPE_INTERRUPT, ENDPOINT_DIR_IN, CDC_NOTIFICATION_EPSIZE, ENDPOINT_BANK_SINGLE);
+    Endpoint_ConfigureEndpoint(CDC_TX_EPNUM, EP_TYPE_BULK, ENDPOINT_DIR_IN, CDC_TXRX_EPSIZE, ENDPOINT_BANK_SINGLE);
+    Endpoint_ConfigureEndpoint(CDC_RX_EPNUM, EP_TYPE_BULK, ENDPOINT_DIR_OUT, CDC_TXRX_EPSIZE, ENDPOINT_BANK_SINGLE);
 }
 
 /** Event handler for the USB_ControlRequest event. This is used to catch and process control requests sent to
  *  the device from the USB host before passing along unhandled control requests to the library for processing
  *  internally.
  */
-void EVENT_USB_Device_ControlRequest(void)
-{
+void EVENT_USB_Device_ControlRequest(void) {
     /* Ignore any requests that aren't directed to the CDC interface */
     if ((USB_ControlRequest.bmRequestType & (CONTROL_REQTYPE_TYPE | CONTROL_REQTYPE_RECIPIENT)) !=
-        (REQTYPE_CLASS | REQREC_INTERFACE))
-    {
+            (REQTYPE_CLASS | REQREC_INTERFACE)) {
         return;
     }
 
     /* Process CDC specific control requests */
-    switch (USB_ControlRequest.bRequest)
-    {
+    switch (USB_ControlRequest.bRequest) {
         case CDC_REQ_SetControlLineState:
             lineState = USB_ControlRequest.wValue;
             break;
         case CDC_REQ_GetLineEncoding:
-            if (USB_ControlRequest.bmRequestType == (REQDIR_DEVICETOHOST | REQTYPE_CLASS | REQREC_INTERFACE))
-            {
+            if (USB_ControlRequest.bmRequestType == (REQDIR_DEVICETOHOST | REQTYPE_CLASS | REQREC_INTERFACE)) {
                 Endpoint_ClearSETUP();
 
                 /* Write the line coding data to the control endpoint */
@@ -77,8 +65,7 @@ void EVENT_USB_Device_ControlRequest(void)
 
             break;
         case CDC_REQ_SetLineEncoding:
-            if (USB_ControlRequest.bmRequestType == (REQDIR_HOSTTODEVICE | REQTYPE_CLASS | REQREC_INTERFACE))
-            {
+            if (USB_ControlRequest.bmRequestType == (REQDIR_HOSTTODEVICE | REQTYPE_CLASS | REQREC_INTERFACE)) {
                 Endpoint_ClearSETUP();
 
                 /* Read the line coding data in from the host into the global struct */
@@ -89,9 +76,7 @@ void EVENT_USB_Device_ControlRequest(void)
             break;
     }
 
-    if (USB_ControlRequest.bRequest == CDC_REQ_SetLineEncoding ||
-        USB_ControlRequest.bRequest == CDC_REQ_SetControlLineState)
-    {
+    if (USB_ControlRequest.bRequest == CDC_REQ_SetLineEncoding || USB_ControlRequest.bRequest == CDC_REQ_SetControlLineState) {
         if (LineEncoding.BaudRateBPS == 1200 && (lineState & 0x01) == 0) {
             USB_Detach();
             ab_reset();
