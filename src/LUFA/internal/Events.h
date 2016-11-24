@@ -184,12 +184,12 @@
 #else
     void USB_Event_Stub(void);
 
-    void EVENT_USB_Device_Connect(void) ATTR_WEAK ATTR_ALIAS(USB_Event_Stub);
-    void EVENT_USB_Device_Disconnect(void) ATTR_WEAK ATTR_ALIAS(USB_Event_Stub);
-    void EVENT_USB_Device_ControlRequest(void) ATTR_WEAK ATTR_ALIAS(USB_Event_Stub);
-    void EVENT_USB_Device_ConfigurationChanged(void) ATTR_WEAK ATTR_ALIAS(USB_Event_Stub);
-    void EVENT_USB_Device_Suspend(void) ATTR_WEAK ATTR_ALIAS(USB_Event_Stub);
-    void EVENT_USB_Device_WakeUp(void) ATTR_WEAK ATTR_ALIAS(USB_Event_Stub);
-    void EVENT_USB_Device_Reset(void) ATTR_WEAK ATTR_ALIAS(USB_Event_Stub);
-    void EVENT_USB_Device_StartOfFrame(void) ATTR_WEAK ATTR_ALIAS(USB_Event_Stub);
+    void EVENT_USB_Device_Connect(void)              __attribute__ ((weak)) __attribute__ ((alias( "USB_Event_Stub" )));
+    void EVENT_USB_Device_Disconnect(void)           __attribute__ ((weak)) __attribute__ ((alias( "USB_Event_Stub" )));
+    void EVENT_USB_Device_ControlRequest(void)       __attribute__ ((weak)) __attribute__ ((alias( "USB_Event_Stub" )));
+    void EVENT_USB_Device_ConfigurationChanged(void) __attribute__ ((weak)) __attribute__ ((alias( "USB_Event_Stub" )));
+    void EVENT_USB_Device_Suspend(void)              __attribute__ ((weak)) __attribute__ ((alias( "USB_Event_Stub" )));
+    void EVENT_USB_Device_WakeUp(void)               __attribute__ ((weak)) __attribute__ ((alias( "USB_Event_Stub" )));
+    void EVENT_USB_Device_Reset(void)                __attribute__ ((weak)) __attribute__ ((alias( "USB_Event_Stub" )));
+    void EVENT_USB_Device_StartOfFrame(void)         __attribute__ ((weak)) __attribute__ ((alias( "USB_Event_Stub" )));
 #endif

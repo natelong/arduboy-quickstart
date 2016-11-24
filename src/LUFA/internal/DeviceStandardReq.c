@@ -87,7 +87,11 @@ static void USB_Device_SetAddress(void) {
     Endpoint_ClearSETUP();
     Endpoint_ClearStatusStage();
     while (!(Endpoint_IsINReady()));
-    USB_Device_SetDeviceAddress(DeviceAddress);
+    { // USB_Device_SetDeviceAddress(DeviceAddress);
+        uint8_t Temp = (UDADDR & (1 << ADDEN)) | (DeviceAddress & 0x7F);
+        UDADDR = Temp;
+        UDADDR = Temp | (1 << ADDEN);
+    }
     USB_DeviceState = (DeviceAddress) ? DEVICE_STATE_Addressed : DEVICE_STATE_Default;
     SREG = CurrentGlobalInt;
 }

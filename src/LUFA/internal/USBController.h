@@ -159,19 +159,6 @@ void USB_Disable(void);
  */
 void USB_ResetInterface(void);
 
-/** Enum for the possible USB controller modes, for initialization via \ref USB_Init() and indication back to the
- *  user application via \ref USB_CurrentMode.
- */
-enum USB_Modes_t {
-    USB_MODE_None   = 0, // Indicates that the controller is currently not initialized in any specific USB mode.
-    USB_MODE_Device = 1, // Indicates that the controller is currently initialized in USB Device mode.
-    USB_MODE_Host   = 2, // Indicates that the controller is currently initialized in USB Host mode.
-    USB_MODE_UID    = 3, // Indicates that the controller should determine the USB mode from the UID pin of the USB connector.
-};
-
-#define USB_CurrentMode USB_MODE_Device  // TODO: see if we can remove this
-#define USB_Options     (USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL) // TODO: see if we can remove this
-
 static ALWAYS_INLINE void USB_PLL_On(void) {
     PLLCSR = USB_PLL_PSC;
     PLLCSR = (USB_PLL_PSC | (1 << PLLE));

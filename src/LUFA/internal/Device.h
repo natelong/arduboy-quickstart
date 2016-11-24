@@ -41,15 +41,9 @@
 #include "USBInterrupt.h"
 #include "Endpoint.h"
 
-#define USB_DEVICE_OPT_LOWSPEED       (1 << 0) // USB interface should be initialized in low speed (1.5Mb/s) mode.
-#define USB_DEVICE_OPT_FULLSPEED      (0 << 0) // USB interface should be initialized in full speed (12Mb/s) mode.
-#define USE_INTERNAL_SERIAL           NO_DESCRIPTOR
-#define INTERNAL_SERIAL_LENGTH_BITS   0
-#define INTERNAL_SERIAL_START_ADDRESS 0
-
-/** Enum for the various states of the USB Device state machine. Only some states are
- *  implemented in the LUFA library - other states are left to the user to implement.
- *
+/**
+ * Enum for the various states of the USB Device state machine. Only some states are
+ * implemented in the LUFA library - other states are left to the user to implement.
  */
 enum USB_Device_States_t {
     // Internally implemented
@@ -83,17 +77,6 @@ enum USB_Device_States_t {
  *  \return Size in bytes of the descriptor if it exists, zero or \ref NO_DESCRIPTOR otherwise.
  */
 uint16_t CALLBACK_USB_GetDescriptor(const uint16_t wValue, const uint8_t wIndex, const void** const DescriptorAddress);
-
-static ALWAYS_INLINE void USB_Device_SetFullSpeed(void) {
-    UDCON &= ~(1 << LSM);
-}
-
-static ALWAYS_INLINE void USB_Device_SetDeviceAddress(const uint8_t Address) {
-    uint8_t Temp = (UDADDR & (1 << ADDEN)) | (Address & 0x7F);
-
-    UDADDR = Temp;
-    UDADDR = Temp | (1 << ADDEN);
-}
 
 static ALWAYS_INLINE bool USB_Device_IsAddressSet(void) {
     return (UDADDR & (1 << ADDEN));

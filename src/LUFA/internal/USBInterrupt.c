@@ -46,16 +46,12 @@ ISR(USB_GEN_vect, ISR_BLOCK) {
         USB_INT_Clear(USB_INT_VBUSTI);
 
         if (USB_VBUS_GetStatus()) {
-            if (!(USB_Options & USB_OPT_MANUAL_PLL)) {
-                USB_PLL_On();
-                while (!(USB_PLL_IsReady()));
-            }
-
+            USB_PLL_On();
+            while (!(USB_PLL_IsReady()));
             USB_DeviceState = DEVICE_STATE_Powered;
             EVENT_USB_Device_Connect();
         } else {
-            if (!(USB_Options & USB_OPT_MANUAL_PLL)) USB_PLL_Off();
-
+            USB_PLL_Off();
             USB_DeviceState = DEVICE_STATE_Unattached;
             EVENT_USB_Device_Disconnect();
         }
@@ -64,34 +60,24 @@ ISR(USB_GEN_vect, ISR_BLOCK) {
     if (USB_INT_HasOccurred(USB_INT_SUSPI) && USB_INT_IsEnabled(USB_INT_SUSPI)) {
         USB_INT_Disable(USB_INT_SUSPI);
         USB_INT_Enable(USB_INT_WAKEUPI);
-
         USB_CLK_Freeze();
-
-        if (!(USB_Options & USB_OPT_MANUAL_PLL)) USB_PLL_Off();
-
+        USB_PLL_Off();
         USB_DeviceState = DEVICE_STATE_Suspended;
         EVENT_USB_Device_Suspend();
     }
 
     if (USB_INT_HasOccurred(USB_INT_WAKEUPI) && USB_INT_IsEnabled(USB_INT_WAKEUPI)) {
-        if (!(USB_Options & USB_OPT_MANUAL_PLL)) {
-            USB_PLL_On();
-            while (!(USB_PLL_IsReady()));
-        }
-
+        USB_PLL_On();
+        while (!(USB_PLL_IsReady()));
         USB_CLK_Unfreeze();
-
         USB_INT_Clear(USB_INT_WAKEUPI);
-
         USB_INT_Disable(USB_INT_WAKEUPI);
         USB_INT_Enable(USB_INT_SUSPI);
-
         if (USB_Device_ConfigurationNumber) {
             USB_DeviceState = DEVICE_STATE_Configured;
         } else {
             USB_DeviceState = (USB_Device_IsAddressSet()) ? DEVICE_STATE_Configured : DEVICE_STATE_Powered;
         }
-
         EVENT_USB_Device_WakeUp();
     }
 
