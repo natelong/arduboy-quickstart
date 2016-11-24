@@ -37,7 +37,7 @@
 #define _DESCRIPTORS_H_
 
     /* Includes: */
-        #include <LUFA/Drivers/USB/USB.h>
+        #include <LUFA/USB.h>
 
     /* Macros: */
         #if defined(__AVR_AT90USB1287__)

@@ -2,7 +2,7 @@
 #include "ab.h"
 
 #include "Descriptors.h"
-#include <LUFA/Drivers/USB/USB.h>
+#include <LUFA/USB.h>
 #include <avr/wdt.h>
 
 #define LED_SETUP()    DDRC |= (1<<7); DDRB |= (1<<0); DDRD |= (1<<5);

@@ -34,7 +34,7 @@
 
 #pragma once
 
-#include "../../../Common/Common.h"
+#include "Common.h"
 #include "USBMode.h"
 #include "StdDescriptors.h"
 #include "Events.h"

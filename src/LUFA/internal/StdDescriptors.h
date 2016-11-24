@@ -34,7 +34,7 @@
 
 #pragma once
 
-#include "../../../Common/Common.h"
+#include "Common.h"
 #include "USBMode.h"
 #include "Events.h"
 
@@ -67,8 +67,8 @@
  *
  *  \param[in]  x  Version number to encode as a 16-bit little-endian number, as a floating point number.
  */
-#define VERSION_BCD(x) CPU_TO_LE16((((VERSION_TENS(x) << 4) | VERSION_ONES(x)) << 8) | \
-                       ((VERSION_TENTHS(x) << 4) | VERSION_HUNDREDTHS(x)))
+#define VERSION_BCD(x) (((VERSION_TENS(x) << 4) | VERSION_ONES(x)) << 8) | \
+                       ((VERSION_TENTHS(x) << 4) | VERSION_HUNDREDTHS(x))
 
 /** String language ID for the English language. Should be used in \ref USB_Descriptor_String_t descriptors
  *  to indicate that the English language is supported by the device in its string descriptors.

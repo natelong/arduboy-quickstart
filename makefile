@@ -95,14 +95,14 @@ DFLAGS  += \
 
 # Define module source file lists
 CFILES += \
-    $(LUFA_PATH)/Drivers/USB/Core/Endpoint.c \
-    $(LUFA_PATH)/Drivers/USB/Core/USBController.c \
-    $(LUFA_PATH)/Drivers/USB/Core/USBInterrupt.c \
-    $(LUFA_PATH)/Drivers/USB/Core/EndpointStream.c \
-    $(LUFA_PATH)/Drivers/USB/Core/ConfigDescriptor.c \
-    $(LUFA_PATH)/Drivers/USB/Core/DeviceStandardReq.c \
-    $(LUFA_PATH)/Drivers/USB/Core/Events.c \
-    $(LUFA_PATH)/Drivers/USB/Core/USBTask.c
+    $(LUFA_PATH)/internal/Endpoint.c \
+    $(LUFA_PATH)/internal/USBController.c \
+    $(LUFA_PATH)/internal/USBInterrupt.c \
+    $(LUFA_PATH)/internal/EndpointStream.c \
+    $(LUFA_PATH)/internal/ConfigDescriptor.c \
+    $(LUFA_PATH)/internal/DeviceStandardReq.c \
+    $(LUFA_PATH)/internal/Events.c \
+    $(LUFA_PATH)/internal/USBTask.c
 
 INCDIR += $(SRCDIR)
 

@@ -38,7 +38,6 @@
 #include <stddef.h>
 
 #include "Macros.h"
-#include "Endianness.h"
 
 #include <avr/io.h>
 #include <avr/interrupt.h>

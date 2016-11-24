@@ -35,7 +35,7 @@
 
 #pragma once
 
-#include "../../../Common/Common.h"
+#include "Common.h"
 #include "USBMode.h"
 #include "USBTask.h"
 

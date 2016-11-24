@@ -34,7 +34,7 @@
 
 #pragma once
 
-#include "../../../Common/Common.h"
+#include "Common.h"
 #include "USBMode.h"
 
 /** Mask for the request type parameter, to indicate the direction of the request data (Host to Device

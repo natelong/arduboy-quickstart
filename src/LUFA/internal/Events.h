@@ -34,7 +34,7 @@
 
 #pragma once
 
-#include "../../../Common/Common.h"
+#include "Common.h"
 #include "USBMode.h"
 
 #if !defined(__INCLUDE_FROM_EVENTS_C)
