@@ -51,7 +51,7 @@ const USB_Descriptor_Device_t DeviceDescriptor =
     .SubClass               = CDC_CSCP_NoSpecificSubclass,
     .Protocol               = CDC_CSCP_NoSpecificProtocol,
 
-    .Endpoint0Size          = FIXED_CONTROL_ENDPOINT_SIZE,
+    .Endpoint0Size          = 8,
 
     .VendorID               = DEVICE_VID,
     .ProductID              = DEVICE_PID,
@@ -61,7 +61,7 @@ const USB_Descriptor_Device_t DeviceDescriptor =
     .ProductStrIndex        = 0x01,
     .SerialNumStrIndex      = NO_DESCRIPTOR,
 
-    .NumberOfConfigurations = FIXED_NUM_CONFIGURATIONS
+    .NumberOfConfigurations = 1
 };
 
 /** Configuration descriptor structure. This descriptor, located in SRAM memory, describes the usage

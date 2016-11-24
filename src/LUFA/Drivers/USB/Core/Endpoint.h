@@ -1,4 +1,4 @@
-// name
+// nate
 /*
              LUFA Library
      Copyright (C) Dean Camera, 2011.
@@ -68,21 +68,9 @@
 #define ENDPOINT_DETAILS_EP6   64,  2
 
 /** Global indicating the maximum packet size of the default control endpoint located at address
- *  0 in the device. This value is set to the value indicated in the device descriptor in the user
- *  project once the USB interface is initialized into device mode.
- *
- *  If space is an issue, it is possible to fix this to a static value by defining the control
- *  endpoint size in the \c FIXED_CONTROL_ENDPOINT_SIZE token passed to the compiler in the makefile
- *  via the -D switch. When a fixed control endpoint size is used, the size is no longer dynamically
- *  read from the descriptors at runtime and instead fixed to the given value. When used, it is
- *  important that the descriptor control endpoint size value matches the size given as the
- *  \c FIXED_CONTROL_ENDPOINT_SIZE token - it is recommended that the \c FIXED_CONTROL_ENDPOINT_SIZE token
- *  be used in the device descriptors to ensure this.
- *
- *  \note This variable should be treated as read-only in the user application, and never manually
- *        changed in value.
+ *  0 in the device. Used to be controlled by FIXED_CONTROL_ENDPOINT_SIZE
  */
-#define USB_Device_ControlEndpointSize FIXED_CONTROL_ENDPOINT_SIZE
+#define USB_Device_ControlEndpointSize 8
 
 /** Completes the status stage of a control transfer on a CONTROL type endpoint automatically,
  *  with respect to the data direction. This is a convenience function which can be used to
@@ -156,10 +144,6 @@ enum Endpoint_WaitUntilReady_ErrorCodes_t {
  *  \param[in] Banks      Number of banks to use for the endpoint being configured, an \c ENDPOINT_BANK_* mask.
  *                        More banks uses more USB DPRAM, but offers better performance. Isochronous type
  *                        endpoints <b>must</b> have at least two banks.
- *
- *  \note When the \c ORDERED_EP_CONFIG compile time option is used, Endpoints <b>must</b> be configured in
- *        ascending order, or bank corruption will occur.
- *        \n\n
  *
  *  \note Different endpoints may have different maximum packet sizes based on the endpoint's index - refer to
  *        the chosen microcontroller model's datasheet to determine the maximum bank size for each endpoint.

@@ -66,7 +66,7 @@ extern USB_Request_Header_t USB_ControlRequest;
 
 #define _GET_DEVICE_GPIOR_NAME2(y) GPIOR ## y
 #define _GET_DEVICE_GPIOR_NAME(x)  _GET_DEVICE_GPIOR_NAME2(x)
-#define USB_DeviceState            _GET_DEVICE_GPIOR_NAME(DEVICE_STATE_AS_GPIOR)
+#define USB_DeviceState            _GET_DEVICE_GPIOR_NAME(0) // TODO: figure out what this does
 
 /** This is the main USB management task. The USB driver requires this task to be executed
  *  continuously when the USB system is active (device attached in host mode, or attached to a host

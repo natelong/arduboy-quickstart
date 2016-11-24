@@ -81,12 +81,6 @@ enum USB_Device_States_t {
  *                                  of the \c USE_*_DESCRIPTORS compile time options is used, or on architectures which
  *                                  use a unified address space.
  *
- *  \note By default, the library expects all descriptors to be located in flash memory via the \c PROGMEM attribute.
- *        If descriptors should be located in RAM or EEPROM instead (to speed up access in the case of RAM, or to
- *        allow the descriptors to be changed dynamically at runtime) either the \c USE_RAM_DESCRIPTORS or the
- *        \c USE_EEPROM_DESCRIPTORS tokens may be defined in the project makefile and passed to the compiler by the -D
- *        switch.
- *
  *  \return Size in bytes of the descriptor if it exists, zero or \ref NO_DESCRIPTOR otherwise.
  */
 uint16_t CALLBACK_USB_GetDescriptor(const uint16_t wValue, const uint8_t wIndex,

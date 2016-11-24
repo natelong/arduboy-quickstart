@@ -26,8 +26,3 @@
 #include "Core/EndpointStream.h"
 
 #include "Class/CDC.h"
-// #include "Class/HID.h"
-// #include "Class/MassStorage.h"
-// #include "Class/Printer.h"
-// #include "Class/RNDIS.h"
-// #include "Class/StillImage.h"

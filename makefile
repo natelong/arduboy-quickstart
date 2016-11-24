@@ -91,24 +91,12 @@ DFLAGS  += \
     -D F_USB=$(F_USB) \
     -D BOARD=BOARD_$(BOARD) \
     -D DEVICE_VID=$(VID) \
-	-D DEVICE_PID=$(PID) \
-    -D USB_DEVICE_ONLY \
-    -D DEVICE_STATE_AS_GPIOR=0 \
-    -D ORDERED_EP_CONFIG \
-    -D FIXED_CONTROL_ENDPOINT_SIZE=8 \
-    -D FIXED_NUM_CONFIGURATIONS=1 \
-    -D USE_RAM_DESCRIPTORS \
-    -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" \
-    -D NO_INTERNAL_SERIAL \
-    -D NO_DEVICE_SELF_POWER \
-    -D NO_DEVICE_REMOTE_WAKEUP \
-    -D NO_SOF_EVENTS \
-    -D NO_LOCK_BYTE_WRITE_SUPPORT
+	-D DEVICE_PID=$(PID)
 
 # Define module source file lists
 CFILES += \
     $(LUFA_PATH)/Drivers/USB/Core/AVR8/Endpoint.c \
-    $(LUFA_PATH)/Drivers/USB/Core/AVR8/USBController_AVR8.c \
+    $(LUFA_PATH)/Drivers/USB/Core/AVR8/USBController.c \
     $(LUFA_PATH)/Drivers/USB/Core/AVR8/USBInterrupt.c \
     $(LUFA_PATH)/Drivers/USB/Core/AVR8/EndpointStream.c \
     $(LUFA_PATH)/Drivers/USB/Core/ConfigDescriptor.c \
