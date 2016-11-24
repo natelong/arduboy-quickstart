@@ -70,7 +70,7 @@ void Endpoint_ClearStatusStage(void) {
 
 uint8_t Endpoint_WaitUntilReady(void) {
 	uint8_t  TimeoutMSRem = USB_STREAM_TIMEOUT_MS;
-	uint16_t PreviousFrameNumber = USB_Device_GetFrameNumber();
+	uint16_t PreviousFrameNumber = UDFNUM;
 
 	for (;;) {
 		if (Endpoint_GetEndpointDirection() == ENDPOINT_DIR_IN) {
@@ -89,7 +89,7 @@ uint8_t Endpoint_WaitUntilReady(void) {
 			return ENDPOINT_READYWAIT_EndpointStalled;
 		}
 
-		uint16_t CurrentFrameNumber = USB_Device_GetFrameNumber();
+		uint16_t CurrentFrameNumber = UDFNUM;
 
 		if (CurrentFrameNumber != PreviousFrameNumber) {
 			PreviousFrameNumber = CurrentFrameNumber;

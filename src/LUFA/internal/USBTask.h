@@ -81,7 +81,3 @@ extern USB_Request_Header_t USB_ControlRequest;
  *  by defining the INTERRUPT_CONTROL_ENDPOINT token and passing it to the compiler via the -D switch.
  */
 void USB_USBTask(void);
-
-#define HOST_TASK_NONBLOCK_WAIT(Duration, NextState) MACROS{ USB_HostState   = HOST_STATE_WaitForDevice; \
-                                                             WaitMSRemaining = (Duration);               \
-                                                             PostWaitState   = (NextState);              }MACROE

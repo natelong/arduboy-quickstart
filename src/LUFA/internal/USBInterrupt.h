@@ -81,7 +81,7 @@ static ALWAYS_INLINE void USB_INT_Clear(const uint8_t Interrupt) {
     }
 }
 
-static ALWAYS_INLINE ATTR_WARN_UNUSED_RESULT bool USB_INT_IsEnabled(const uint8_t Interrupt) {
+static ALWAYS_INLINE bool USB_INT_IsEnabled(const uint8_t Interrupt) {
     switch (Interrupt) {
         case USB_INT_VBUSTI:  return (USBCON & (1 << VBUSTE));
         case USB_INT_WAKEUPI: return (UDIEN  & (1 << WAKEUPE));
@@ -94,7 +94,7 @@ static ALWAYS_INLINE ATTR_WARN_UNUSED_RESULT bool USB_INT_IsEnabled(const uint8_
     return false;
 }
 
-static ALWAYS_INLINE ATTR_WARN_UNUSED_RESULT bool USB_INT_HasOccurred(const uint8_t Interrupt) {
+static ALWAYS_INLINE bool USB_INT_HasOccurred(const uint8_t Interrupt) {
     switch (Interrupt) {
         case USB_INT_VBUSTI:  return (USBINT & (1 << VBUSTI));
         case USB_INT_WAKEUPI: return (UDINT  & (1 << WAKEUPI));

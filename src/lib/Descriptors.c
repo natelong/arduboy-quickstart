@@ -138,8 +138,8 @@ const USB_Descriptor_Configuration_t ConfigurationDescriptor = {
  *  via the language ID table available at USB.org what languages the device supports for its string descriptors.
  */
 const USB_Descriptor_String_t LanguageString = {
-    .Header                 = {.Size = USB_STRING_LEN(1), .Type = DTYPE_String},
-    .UnicodeString          = {LANGUAGE_ID_ENG}
+    .Header        = {.Size = USB_STRING_LEN(1), .Type = DTYPE_String},
+    .UnicodeString = {LANGUAGE_ID_ENG}
 };
 
 /** Product descriptor string. This is a Unicode string containing the product's details in human readable form,

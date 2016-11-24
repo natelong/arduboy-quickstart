@@ -157,8 +157,7 @@ enum Endpoint_WaitUntilReady_ErrorCodes_t {
  *
  *  \return Boolean \c true if the configuration succeeded, \c false otherwise.
  */
-static ALWAYS_INLINE bool Endpoint_ConfigureEndpoint(
-        const uint8_t Number, const uint8_t Type, const uint8_t Direction, const uint16_t Size, const uint8_t Banks) {
+static ALWAYS_INLINE bool Endpoint_ConfigureEndpoint(const uint8_t Number, const uint8_t Type, const uint8_t Direction, const uint16_t Size, const uint8_t Banks) {
 
     uint8_t epSizeMask;
     {
@@ -192,7 +191,7 @@ static ALWAYS_INLINE uint16_t Endpoint_BytesInEndpoint(void) {
  *
  *  \return Index of the currently selected endpoint.
  */
-static ALWAYS_INLINE ATTR_WARN_UNUSED_RESULT uint8_t Endpoint_GetCurrentEndpoint(void) {
+static ALWAYS_INLINE uint8_t Endpoint_GetCurrentEndpoint(void) {
     return (UENUM & ENDPOINT_EPNUM_MASK);
 }
 
@@ -239,7 +238,7 @@ static ALWAYS_INLINE void Endpoint_DisableEndpoint(void) {
  *
  * \return Boolean \c true if the currently selected endpoint is enabled, \c false otherwise.
  */
-static ALWAYS_INLINE ATTR_WARN_UNUSED_RESULT bool Endpoint_IsEnabled(void) {
+static ALWAYS_INLINE bool Endpoint_IsEnabled(void) {
     return ((UECONX & (1 << EPEN)) ? true : false);
 }
 
@@ -252,7 +251,7 @@ static ALWAYS_INLINE ATTR_WARN_UNUSED_RESULT bool Endpoint_IsEnabled(void) {
  *  \return Boolean \c true if the currently selected endpoint may be read from or written to, depending
  *          on its direction.
  */
-static ALWAYS_INLINE ATTR_WARN_UNUSED_RESULT bool Endpoint_IsReadWriteAllowed(void) {
+static ALWAYS_INLINE bool Endpoint_IsReadWriteAllowed(void) {
     return ((UEINTX & (1 << RWAL)) ? true : false);
 }
 
@@ -260,7 +259,7 @@ static ALWAYS_INLINE ATTR_WARN_UNUSED_RESULT bool Endpoint_IsReadWriteAllowed(vo
  *
  *  \return Boolean \c true if the currently selected endpoint has been configured, \c false otherwise.
  */
-static ALWAYS_INLINE ATTR_WARN_UNUSED_RESULT bool Endpoint_IsConfigured(void) {
+static ALWAYS_INLINE bool Endpoint_IsConfigured(void) {
     return ((UESTA0X & (1 << CFGOK)) ? true : false);
 }
 
@@ -268,7 +267,7 @@ static ALWAYS_INLINE ATTR_WARN_UNUSED_RESULT bool Endpoint_IsConfigured(void) {
  *
  *  \return Boolean \c true if the current endpoint is ready for an IN packet, \c false otherwise.
  */
-static ALWAYS_INLINE ATTR_WARN_UNUSED_RESULT bool Endpoint_IsINReady(void) {
+static ALWAYS_INLINE bool Endpoint_IsINReady(void) {
     return ((UEINTX & (1 << TXINI)) ? true : false);
 }
 
@@ -276,7 +275,7 @@ static ALWAYS_INLINE ATTR_WARN_UNUSED_RESULT bool Endpoint_IsINReady(void) {
  *
  *  \return Boolean \c true if current endpoint is has received an OUT packet, \c false otherwise.
  */
-static ALWAYS_INLINE ATTR_WARN_UNUSED_RESULT bool Endpoint_IsOUTReceived(void) {
+static ALWAYS_INLINE bool Endpoint_IsOUTReceived(void) {
     return ((UEINTX & (1 << RXOUTI)) ? true : false);
 }
 
@@ -284,7 +283,7 @@ static ALWAYS_INLINE ATTR_WARN_UNUSED_RESULT bool Endpoint_IsOUTReceived(void) {
  *
  *  \return Boolean \c true if the selected endpoint has received a SETUP packet, \c false otherwise.
  */
-static ALWAYS_INLINE ATTR_WARN_UNUSED_RESULT bool Endpoint_IsSETUPReceived(void) {
+static ALWAYS_INLINE bool Endpoint_IsSETUPReceived(void) {
     return ((UEINTX & (1 << RXSTPI)) ? true : false);
 }
 
@@ -334,7 +333,7 @@ static ALWAYS_INLINE void Endpoint_ClearStall(void) {
  *
  *  \return Boolean \c true if the currently selected endpoint is stalled, \c false otherwise.
  */
-static ALWAYS_INLINE ATTR_WARN_UNUSED_RESULT bool Endpoint_IsStalled(void) {
+static ALWAYS_INLINE bool Endpoint_IsStalled(void) {
     return ((UECONX & (1 << STALLRQ)) ? true : false);
 }
 
@@ -347,7 +346,7 @@ static ALWAYS_INLINE void Endpoint_ResetDataToggle(void) {
  *
  *  \return The currently selected endpoint's direction, as a \c ENDPOINT_DIR_* mask.
  */
-static ALWAYS_INLINE ATTR_WARN_UNUSED_RESULT uint8_t Endpoint_GetEndpointDirection(void) {
+static ALWAYS_INLINE uint8_t Endpoint_GetEndpointDirection(void) {
     return (UECFG0X & (1 << EPDIR)) ? ENDPOINT_DIR_IN : ENDPOINT_DIR_OUT;
 }
 
@@ -363,7 +362,7 @@ static ALWAYS_INLINE void Endpoint_SetEndpointDirection(const uint8_t DirectionM
  *
  *  \return Next byte in the currently selected endpoint's FIFO buffer.
  */
-static ALWAYS_INLINE ATTR_WARN_UNUSED_RESULT uint8_t Endpoint_Read_8(void) {
+static ALWAYS_INLINE uint8_t Endpoint_Read_8(void) {
     return UEDATX;
 }
 
@@ -380,7 +379,7 @@ static ALWAYS_INLINE void Endpoint_Write_8(const uint8_t Data) {
  *
  *  \return Next two bytes in the currently selected endpoint's FIFO buffer.
  */
-static ALWAYS_INLINE ATTR_WARN_UNUSED_RESULT uint16_t Endpoint_Read_16_LE(void) {
+static ALWAYS_INLINE uint16_t Endpoint_Read_16_LE(void) {
     union {
         uint16_t Value;
         uint8_t  Bytes[2];
@@ -407,7 +406,7 @@ static ALWAYS_INLINE void Endpoint_Write_16_LE(const uint16_t Data) {
  *
  *  \return Next four bytes in the currently selected endpoint's FIFO buffer.
  */
-static ALWAYS_INLINE ATTR_WARN_UNUSED_RESULT uint32_t Endpoint_Read_32_LE(void) {
+static ALWAYS_INLINE uint32_t Endpoint_Read_32_LE(void) {
     union {
         uint32_t Value;
         uint8_t  Bytes[4];

@@ -82,38 +82,19 @@ enum USB_Device_States_t {
  *
  *  \return Size in bytes of the descriptor if it exists, zero or \ref NO_DESCRIPTOR otherwise.
  */
-uint16_t CALLBACK_USB_GetDescriptor(const uint16_t wValue, const uint8_t wIndex,
-        const void** const DescriptorAddress) ATTR_WARN_UNUSED_RESULT ATTR_NON_NULL_PTR_ARG(3);
+uint16_t CALLBACK_USB_GetDescriptor(const uint16_t wValue, const uint8_t wIndex, const void** const DescriptorAddress);
 
-/** Returns the current USB frame number, when in device mode. Every millisecond the USB bus is active (i.e. enumerated to a host)
- *  the frame number is incremented by one.
- *
- *  \return Current USB frame number from the USB controller.
- */
-static inline uint16_t USB_Device_GetFrameNumber(void) ATTR_ALWAYS_INLINE ATTR_WARN_UNUSED_RESULT;
-static inline uint16_t USB_Device_GetFrameNumber(void) {
-    return UDFNUM;
-}
-
-static inline void USB_Device_SetLowSpeed(void) ATTR_ALWAYS_INLINE;
-static inline void USB_Device_SetLowSpeed(void) {
-    UDCON |=  (1 << LSM);
-}
-
-static inline void USB_Device_SetFullSpeed(void) ATTR_ALWAYS_INLINE;
-static inline void USB_Device_SetFullSpeed(void) {
+static ALWAYS_INLINE void USB_Device_SetFullSpeed(void) {
     UDCON &= ~(1 << LSM);
 }
 
-static inline void USB_Device_SetDeviceAddress(const uint8_t Address) ATTR_ALWAYS_INLINE;
-static inline void USB_Device_SetDeviceAddress(const uint8_t Address) {
+static ALWAYS_INLINE void USB_Device_SetDeviceAddress(const uint8_t Address) {
     uint8_t Temp = (UDADDR & (1 << ADDEN)) | (Address & 0x7F);
 
     UDADDR = Temp;
     UDADDR = Temp | (1 << ADDEN);
 }
 
-static inline bool USB_Device_IsAddressSet(void) ATTR_ALWAYS_INLINE ATTR_WARN_UNUSED_RESULT;
-static inline bool USB_Device_IsAddressSet(void) {
+static ALWAYS_INLINE bool USB_Device_IsAddressSet(void) {
     return (UDADDR & (1 << ADDEN));
 }

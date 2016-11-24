@@ -182,7 +182,7 @@
      */
     void EVENT_USB_Device_StartOfFrame(void);
 #else
-    void USB_Event_Stub(void) ATTR_CONST;
+    void USB_Event_Stub(void);
 
     void EVENT_USB_Device_Connect(void) ATTR_WEAK ATTR_ALIAS(USB_Event_Stub);
     void EVENT_USB_Device_Disconnect(void) ATTR_WEAK ATTR_ALIAS(USB_Event_Stub);

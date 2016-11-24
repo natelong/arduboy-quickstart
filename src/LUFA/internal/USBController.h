@@ -104,8 +104,7 @@
  *
  *  \return Boolean \c true if the VBUS line is currently detecting power from a host, \c false otherwise.
  */
-static inline bool USB_VBUS_GetStatus(void) ATTR_WARN_UNUSED_RESULT ATTR_ALWAYS_INLINE;
-static inline bool USB_VBUS_GetStatus(void) {
+static ALWAYS_INLINE bool USB_VBUS_GetStatus(void) {
     return ((USBSTA & (1 << VBUS)) ? true : false);
 }
 
@@ -171,7 +170,7 @@ enum USB_Modes_t {
 };
 
 #define USB_CurrentMode USB_MODE_Device  // TODO: see if we can remove this
-#define USB_Options     (USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL) // TODO: see if we can remove this
+#define USB_Options     (USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL) // TODO: see if we can remove this
 
 static ALWAYS_INLINE void USB_PLL_On(void) {
     PLLCSR = USB_PLL_PSC;
@@ -182,7 +181,7 @@ static ALWAYS_INLINE void USB_PLL_Off(void) {
     PLLCSR = 0;
 }
 
-static ALWAYS_INLINE ATTR_WARN_UNUSED_RESULT bool USB_PLL_IsReady(void) {
+static ALWAYS_INLINE bool USB_PLL_IsReady(void) {
     return ((PLLCSR & (1 << PLOCK)) ? true : false);
 }
 

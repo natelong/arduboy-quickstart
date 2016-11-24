@@ -108,9 +108,9 @@ void USB_Device_ProcessControlRequest(void)
 
 static void USB_Device_SetAddress(void)
 {
-    uint8_t    DeviceAddress    = (USB_ControlRequest.wValue & 0x7F);
-    uint_reg_t CurrentGlobalInt = GetGlobalInterruptMask();
-    GlobalInterruptDisable();
+    uint8_t DeviceAddress    = (USB_ControlRequest.wValue & 0x7F);
+    uint8_t CurrentGlobalInt = SREG;
+    cli();
 
     Endpoint_ClearSETUP();
 
@@ -121,7 +121,7 @@ static void USB_Device_SetAddress(void)
     USB_Device_SetDeviceAddress(DeviceAddress);
     USB_DeviceState = (DeviceAddress) ? DEVICE_STATE_Addressed : DEVICE_STATE_Default;
 
-    SetGlobalInterruptMask(CurrentGlobalInt);
+    SREG = CurrentGlobalInt;
 }
 
 static void USB_Device_SetConfiguration(void)

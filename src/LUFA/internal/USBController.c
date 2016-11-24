@@ -59,7 +59,7 @@ void USB_ResetInterface(void) {
     // USB_Init_Device
     USB_DeviceState = DEVICE_STATE_Unattached;
     USB_Device_ConfigurationNumber = 0;
-    USB_Device_SetFullSpeed();
+    UDCON &= ~(1 << LSM); // USB_Device_SetFullSpeed();
     USB_INT_Enable(USB_INT_VBUSTI);
     Endpoint_ConfigureEndpoint(ENDPOINT_CONTROLEP, EP_TYPE_CONTROL, ENDPOINT_DIR_OUT, USB_Device_ControlEndpointSize, ENDPOINT_BANK_SINGLE);
     USB_INT_Clear(USB_INT_SUSPI);

@@ -112,9 +112,7 @@ enum Endpoint_ControlStream_RW_ErrorCodes_t {
  *
  *  \return A value from the \ref Endpoint_Stream_RW_ErrorCodes_t enum.
  */
-uint8_t Endpoint_Write_Stream_LE(const void* const Buffer,
-                                 uint16_t Length,
-                                 uint16_t* const BytesProcessed) ATTR_NON_NULL_PTR_ARG(1);
+uint8_t Endpoint_Write_Stream_LE(const void* const Buffer, uint16_t Length, uint16_t* const BytesProcessed);
 
 /** Writes the given number of bytes to the CONTROL type endpoint from the given buffer in little endian,
  *  sending full packets to the host as needed. The host OUT acknowledgement is not automatically cleared
@@ -135,8 +133,7 @@ uint8_t Endpoint_Write_Stream_LE(const void* const Buffer,
  *
  *  \return A value from the \ref Endpoint_ControlStream_RW_ErrorCodes_t enum.
  */
-uint8_t Endpoint_Write_Control_Stream_LE(const void* const Buffer,
-                                         uint16_t Length) ATTR_NON_NULL_PTR_ARG(1);
+uint8_t Endpoint_Write_Control_Stream_LE(const void* const Buffer, uint16_t Length);
 
 /** Reads the given number of bytes from the CONTROL endpoint from the given buffer in little endian,
  *  discarding fully read packets from the host as needed. The device IN acknowledgement is not
@@ -157,5 +154,4 @@ uint8_t Endpoint_Write_Control_Stream_LE(const void* const Buffer,
  *
  *  \return A value from the \ref Endpoint_ControlStream_RW_ErrorCodes_t enum.
  */
-uint8_t Endpoint_Read_Control_Stream_LE(void* const Buffer,
-                                        uint16_t Length) ATTR_NON_NULL_PTR_ARG(1);
+uint8_t Endpoint_Read_Control_Stream_LE(void* const Buffer, uint16_t Length);
