@@ -374,60 +374,12 @@ static ALWAYS_INLINE void Endpoint_Write_8(const uint8_t Data) {
     UEDATX = Data;
 }
 
-/** Reads two bytes from the currently selected endpoint's bank in little endian format, for OUT
- *  direction endpoints.
- *
- *  \return Next two bytes in the currently selected endpoint's FIFO buffer.
- */
-static ALWAYS_INLINE uint16_t Endpoint_Read_16_LE(void) {
-    union {
-        uint16_t Value;
-        uint8_t  Bytes[2];
-    } Data;
-
-    Data.Bytes[0] = UEDATX;
-    Data.Bytes[1] = UEDATX;
-
-    return Data.Value;
-}
-
 /** Writes two bytes to the currently selected endpoint's bank in little endian format, for IN
  *  direction endpoints.
  *
  *  \param[in] Data  Data to write to the currently selected endpoint's FIFO buffer.
  */
-static ALWAYS_INLINE void Endpoint_Write_16_LE(const uint16_t Data) {
+static ALWAYS_INLINE void Endpoint_Write_16(const uint16_t Data) {
     UEDATX = (Data & 0xFF);
     UEDATX = (Data >> 8);
-}
-
-/** Reads four bytes from the currently selected endpoint's bank in little endian format, for OUT
- *  direction endpoints.
- *
- *  \return Next four bytes in the currently selected endpoint's FIFO buffer.
- */
-static ALWAYS_INLINE uint32_t Endpoint_Read_32_LE(void) {
-    union {
-        uint32_t Value;
-        uint8_t  Bytes[4];
-    } Data;
-
-    Data.Bytes[0] = UEDATX;
-    Data.Bytes[1] = UEDATX;
-    Data.Bytes[2] = UEDATX;
-    Data.Bytes[3] = UEDATX;
-
-    return Data.Value;
-}
-
-/** Writes four bytes to the currently selected endpoint's bank in little endian format, for IN
- *  direction endpoints.
- *
- *  \param[in] Data  Data to write to the currently selected endpoint's FIFO buffer.
- */
-static ALWAYS_INLINE void Endpoint_Write_32_LE(const uint32_t Data) {
-    UEDATX = (Data &  0xFF);
-    UEDATX = (Data >> 8);
-    UEDATX = (Data >> 16);
-    UEDATX = (Data >> 24);
 }

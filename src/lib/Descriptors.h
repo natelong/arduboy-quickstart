@@ -61,10 +61,3 @@ typedef struct {
         USB_Descriptor_Endpoint_t                CDC_DataOutEndpoint;
         USB_Descriptor_Endpoint_t                CDC_DataInEndpoint;
 } USB_Descriptor_Configuration_t;
-
-/* Function Prototypes: */
-uint16_t CALLBACK_USB_GetDescriptor(
-    const uint16_t wValue,
-    const uint8_t wIndex,
-    const void** const DescriptorAddress
-);

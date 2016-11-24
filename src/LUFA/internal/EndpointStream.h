@@ -57,63 +57,6 @@ enum Endpoint_ControlStream_RW_ErrorCodes_t {
     ENDPOINT_RWCSTREAM_BusSuspended       = 3, // USB bus has been suspended by host and no traffic can occur until bus has resumed.
 };
 
-/** Writes the given number of bytes to the endpoint from the given buffer in little endian,
- *  sending full packets to the host as needed. The last packet filled is not automatically sent;
- *  the user is responsible for manually sending the last written packet to the host via the
- *  \ref Endpoint_ClearIN() macro.
- *
- *  If the BytesProcessed parameter is \c NULL, the entire stream transfer is attempted at once,
- *  failing or succeeding as a single unit. If the BytesProcessed parameter points to a valid
- *  storage location, the transfer will instead be performed as a series of chunks. Each time
- *  the endpoint bank becomes full while there is still data to process (and after the current
- *  packet transmission has been initiated) the BytesProcessed location will be updated with the
- *  total number of bytes processed in the stream, and the function will exit with an error code of
- *  \ref ENDPOINT_RWSTREAM_IncompleteTransfer. This allows for any abort checking to be performed
- *  in the user code - to continue the transfer, call the function again with identical parameters
- *  and it will resume until the BytesProcessed value reaches the total transfer length.
- *
- *  <b>Single Stream Transfer Example:</b>
- *  \code
- *  uint8_t DataStream[512];
- *  uint8_t ErrorCode;
- *
- *  if ((ErrorCode = Endpoint_Write_Stream_LE(DataStream, sizeof(DataStream),
- *                                            NULL)) != ENDPOINT_RWSTREAM_NoError)
- *  {
- *       // Stream failed to complete - check ErrorCode here
- *  }
- *  \endcode
- *
- *  <b>Partial Stream Transfers Example:</b>
- *  \code
- *  uint8_t  DataStream[512];
- *  uint8_t  ErrorCode;
- *  uint16_t BytesProcessed;
- *
- *  BytesProcessed = 0;
- *  while ((ErrorCode = Endpoint_Write_Stream_LE(DataStream, sizeof(DataStream),
- *                                               &BytesProcessed)) == ENDPOINT_RWSTREAM_IncompleteTransfer)
- *  {
- *      // Stream not yet complete - do other actions here, abort if required
- *  }
- *
- *  if (ErrorCode != ENDPOINT_RWSTREAM_NoError)
- *  {
- *      // Stream failed to complete - check ErrorCode here
- *  }
- *  \endcode
- *
- *  \note This routine should not be used on CONTROL type endpoints.
- *
- *  \param[in] Buffer          Pointer to the source data buffer to read from.
- *  \param[in] Length          Number of bytes to read for the currently selected endpoint into the buffer.
- *  \param[in] BytesProcessed  Pointer to a location where the total number of bytes processed in the current
- *                             transaction should be updated, \c NULL if the entire stream should be written at once.
- *
- *  \return A value from the \ref Endpoint_Stream_RW_ErrorCodes_t enum.
- */
-uint8_t Endpoint_Write_Stream_LE(const void* const Buffer, uint16_t Length, uint16_t* const BytesProcessed);
-
 /** Writes the given number of bytes to the CONTROL type endpoint from the given buffer in little endian,
  *  sending full packets to the host as needed. The host OUT acknowledgement is not automatically cleared
  *  in both failure and success states; the user is responsible for manually clearing the setup OUT to
@@ -133,7 +76,7 @@ uint8_t Endpoint_Write_Stream_LE(const void* const Buffer, uint16_t Length, uint
  *
  *  \return A value from the \ref Endpoint_ControlStream_RW_ErrorCodes_t enum.
  */
-uint8_t Endpoint_Write_Control_Stream_LE(const void* const Buffer, uint16_t Length);
+uint8_t Endpoint_Write_Control_Stream(const void* const Buffer, uint16_t Length);
 
 /** Reads the given number of bytes from the CONTROL endpoint from the given buffer in little endian,
  *  discarding fully read packets from the host as needed. The device IN acknowledgement is not
@@ -154,4 +97,4 @@ uint8_t Endpoint_Write_Control_Stream_LE(const void* const Buffer, uint16_t Leng
  *
  *  \return A value from the \ref Endpoint_ControlStream_RW_ErrorCodes_t enum.
  */
-uint8_t Endpoint_Read_Control_Stream_LE(void* const Buffer, uint16_t Length);
+uint8_t Endpoint_Read_Control_Stream(void* const Buffer, uint16_t Length);

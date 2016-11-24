@@ -59,7 +59,7 @@ void EVENT_USB_Device_ControlRequest(void) {
                 Endpoint_ClearSETUP();
 
                 /* Write the line coding data to the control endpoint */
-                Endpoint_Write_Control_Stream_LE(&LineEncoding, sizeof(CDC_LineEncoding_t));
+                Endpoint_Write_Control_Stream(&LineEncoding, sizeof(CDC_LineEncoding_t));
                 Endpoint_ClearOUT();
             }
 
@@ -69,7 +69,7 @@ void EVENT_USB_Device_ControlRequest(void) {
                 Endpoint_ClearSETUP();
 
                 /* Read the line coding data in from the host into the global struct */
-                Endpoint_Read_Control_Stream_LE(&LineEncoding, sizeof(CDC_LineEncoding_t));
+                Endpoint_Read_Control_Stream(&LineEncoding, sizeof(CDC_LineEncoding_t));
                 Endpoint_ClearIN();
             }
 

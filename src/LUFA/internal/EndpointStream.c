@@ -31,47 +31,7 @@
 
 #include "EndpointStream.h"
 
-/* The following abuses the C preprocessor in order to copy-paste common code with slight alterations,
- * so that the code needs to be written once. It is a crude form of templating to reduce code maintenance. */
-
-uint8_t Endpoint_Write_Stream_LE(const void* const Buffer, uint16_t Length, uint16_t* const BytesProcessed) {
-    uint8_t* DataStream      = ((uint8_t*)Buffer);
-    uint16_t BytesInTransfer = 0;
-    uint8_t  ErrorCode;
-
-    if ((ErrorCode = Endpoint_WaitUntilReady())) return ErrorCode;
-
-    if (BytesProcessed != NULL) {
-        Length -= *BytesProcessed;
-        DataStream += *BytesProcessed;
-    }
-
-    while (Length) {
-        if (!(Endpoint_IsReadWriteAllowed())) {
-            Endpoint_ClearIN();
-
-            #if !defined(INTERRUPT_CONTROL_ENDPOINT)
-            USB_USBTask();
-            #endif
-
-            if (BytesProcessed != NULL) {
-                *BytesProcessed += BytesInTransfer;
-                return ENDPOINT_RWSTREAM_IncompleteTransfer;
-            }
-
-            if ((ErrorCode = Endpoint_WaitUntilReady())) return ErrorCode;
-        } else {
-            Endpoint_Write_8(*DataStream);
-            DataStream += 1;
-            Length--;
-            BytesInTransfer++;
-        }
-    }
-
-    return ENDPOINT_RWSTREAM_NoError;
-}
-
-uint8_t Endpoint_Write_Control_Stream_LE(const void* const Buffer, uint16_t Length) {
+uint8_t Endpoint_Write_Control_Stream(const void* const Buffer, uint16_t Length) {
     uint8_t* DataStream     = ((uint8_t*)Buffer);
     bool     LastPacketFull = false;
 
@@ -122,7 +82,7 @@ uint8_t Endpoint_Write_Control_Stream_LE(const void* const Buffer, uint16_t Leng
     return ENDPOINT_RWCSTREAM_NoError;
 }
 
-uint8_t Endpoint_Read_Control_Stream_LE(void* const Buffer, uint16_t Length) {
+uint8_t Endpoint_Read_Control_Stream(void* const Buffer, uint16_t Length) {
     uint8_t* DataStream = ((uint8_t*)Buffer);
 
     if (!(Length)) Endpoint_ClearOUT();
