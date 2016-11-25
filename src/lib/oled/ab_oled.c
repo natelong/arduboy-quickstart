@@ -1,5 +1,36 @@
-#include "ab.h"
-#include "../res/font.h"
+#include "../ab.h"
+#include "../../res/font.h"
+
+#define SPI_CLOCK_DIV2   0x04
+#define SPI_CLOCK_MASK   0x03 // SPR1 = bit 1, SPR0 = bit 0 on SPCR
+#define SPI_2XCLOCK_MASK 0x01 // SPI2X = bit 0 on SPSR
+
+static void spi_init(void) {
+    uint8_t sreg = SREG;
+    cli(); // Protect from a scheduler and prevent transactionBegin
+
+    if (!(DDRB & (1 << 0))) {
+        PORTB |= (1 << 0); // set SS to high
+    }
+    DDRB |= (1 << 0); // set SS mode to output
+
+    SPCR |= _BV(MSTR);
+    SPCR |= _BV(SPE);
+
+    DDRB  |= (1 << 1); // set SCK mode to output
+    DDRB  |= (1 << 2); // set MOSI mode to output
+
+    SREG = sreg;
+
+    SPCR = (SPCR & ~SPI_CLOCK_MASK) | (SPI_CLOCK_DIV2 & SPI_CLOCK_MASK);
+    SPSR = (SPSR & ~SPI_2XCLOCK_MASK) | ((SPI_CLOCK_DIV2 >> 2) & SPI_2XCLOCK_MASK);
+}
+
+static inline void spi_transfer(uint8_t data) {
+    SPDR = data;
+    asm volatile("nop");
+    while (!(SPSR & _BV(SPIF))) ; // wait
+}
 
 // SSD1306 OLED
 
@@ -37,6 +68,7 @@ uint8_t numlen(uint32_t n) {
 }
 
 void ab_oled_init(void) {
+    spi_init();
     ab_oled_clear();
 
     uint8_t dcMask  = (1 << 4);
@@ -62,7 +94,7 @@ void ab_oled_init(void) {
 
     // Send boot Program
     for(uint8_t i = 0; i < sizeof(OledBootProgram); i++) {
-        ab_spi_transfer(__LPM(OledBootProgram + i));
+        spi_transfer(__LPM(OledBootProgram + i));
     }
 
     // Data Mode
@@ -76,7 +108,7 @@ void ab_oled_display(void) {
     uint16_t i;
 
     for(i=0; i<sizeof(oled); i++) {
-        ab_spi_transfer(oled[i]);
+        spi_transfer(oled[i]);
     }
 }
 

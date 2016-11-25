@@ -1,6 +1,6 @@
 #pragma once
 
-extern uint32_t ab_debug_counter;
+#include "../ab_common.h"
 
 void ab_debug_increment(uint8_t i);
 void ab_debug(void);

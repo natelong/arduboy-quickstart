@@ -1,4 +1,4 @@
-#include "ab.h"
+#include "../ab.h"
 
 #include <avr/wdt.h>
 
@@ -230,7 +230,6 @@ void ab_init() {
     power_usart1_disable();
 
     ab_key_init();
-    ab_spi_init();
     ab_oled_init();
     ab_sound_init();
 

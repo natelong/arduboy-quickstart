@@ -27,8 +27,7 @@ INCDIR  =
 #=============================================================================
 
 CFILES = \
-	$(wildcard $(SRCDIR)/*.c) \
-	$(wildcard $(SRCDIR)/**/*.c) \
+	$(shell find $(SRCDIR) -name "*.c")
 
 OBJDIR     = obj
 OUTDIR     = bin
@@ -92,17 +91,6 @@ DFLAGS  += \
     -D BOARD=BOARD_$(BOARD) \
     -D DEVICE_VID=$(VID) \
 	-D DEVICE_PID=$(PID)
-
-# Define module source file lists
-CFILES += \
-    $(LUFA_PATH)/internal/Endpoint.c \
-    $(LUFA_PATH)/internal/USBController.c \
-    $(LUFA_PATH)/internal/USBInterrupt.c \
-    $(LUFA_PATH)/internal/EndpointStream.c \
-    $(LUFA_PATH)/internal/ConfigDescriptor.c \
-    $(LUFA_PATH)/internal/DeviceStandardReq.c \
-    $(LUFA_PATH)/internal/Events.c \
-    $(LUFA_PATH)/internal/USBTask.c
 
 INCDIR += $(SRCDIR)
 

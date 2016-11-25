@@ -1,4 +1,4 @@
-#include "ab.h"
+#include "../ab.h"
 
 static const uint32_t AB_EEP_CHECK = 0xDEADBEEF;
 static const uint8_t* AB_EEP_START = 0;
