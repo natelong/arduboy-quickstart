@@ -1,8 +1,8 @@
 // nate
 #include "../ab.h"
 
-#include "Descriptors.h"
-#include <LUFA/USB.h>
+#include "internal/descriptors.h"
+#include "internal/usb.h"
 #include <avr/wdt.h>
 
 #define LED_SETUP()    DDRC |= (1<<7); DDRB |= (1<<0); DDRD |= (1<<5);
