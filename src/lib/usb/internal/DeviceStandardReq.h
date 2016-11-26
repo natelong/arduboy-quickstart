@@ -8,7 +8,6 @@
 #include "StdDescriptors.h"
 #include "Events.h"
 #include "StdRequestType.h"
-#include "USBTask.h"
 #include "usb.h"
 
 /** Enum for the possible descriptor memory spaces, for the MemoryAddressSpace parameter of the

@@ -5,8 +5,15 @@
 #pragma once
 
 #include "../../ab_common.h"
-#include "USBTask.h"
 #include "USBInterrupt.h"
+
+#define EP_DIR_OUT 0x00 // Mask for OUT direction
+#define EP_DIR_IN  0x80 // Mask for IN direction
+
+#define EP_TYPE_CONTROL     0x00 // Mask for a CONTROL type endpoint or pipe.
+#define EP_TYPE_ISOCHRONOUS 0x01 // Mask for an ISOCHRONOUS type endpoint or pipe.
+#define EP_TYPE_BULK        0x02 // Mask for a BULK type endpoint or pipe.
+#define EP_TYPE_INTERRUPT   0x03 // Mask for an INTERRUPT type endpoint or pipe.
 
 /** Endpoint number mask, for masking against endpoint addresses to retrieve the endpoint's
  *  numerical address in the device.
@@ -207,7 +214,7 @@ static INLINE void Endpoint_ResetDataToggle(void) {
  *  \return The currently selected endpoint's direction, as a \c ENDPOINT_DIR_* mask.
  */
 static INLINE uint8_t Endpoint_GetEndpointDirection(void) {
-    return (UECFG0X & (1 << EPDIR)) ? ENDPOINT_DIR_IN : ENDPOINT_DIR_OUT;
+    return (UECFG0X & (1 << EPDIR)) ? EP_DIR_IN : EP_DIR_OUT;
 }
 
 /** Sets the direction of the currently selected endpoint.
@@ -254,7 +261,7 @@ static INLINE void Endpoint_Write_16(const uint16_t Data) {
  *  \param[in] Type       Type of endpoint to configure, a \c EP_TYPE_* mask. Not all endpoint types
  *                        are available on Low Speed USB devices - refer to the USB 2.0 specification.
  *
- *  \param[in] Direction  Endpoint data direction, either \ref ENDPOINT_DIR_OUT or \ref ENDPOINT_DIR_IN.
+ *  \param[in] Direction  Endpoint data direction, either \ref EP_DIR_OUT or \ref EP_DIR_IN.
  *                        All endpoints (except Control type) are unidirectional - data may only be read
  *                        from or written to the endpoint bank based on its direction, not both.
  *

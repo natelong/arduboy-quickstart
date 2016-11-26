@@ -5,7 +5,6 @@
 #pragma once
 
 #include "../../ab_common.h"
-#include "Events.h"
 #include "usb.h"
 
 #define USB_INT_VBUSTI  0

@@ -60,7 +60,7 @@ ISR(USB_GEN_vect, ISR_BLOCK) {
         USB_INT_EnableWakeup();
 
         Endpoint_ConfigureEndpoint(ENDPOINT_CONTROLEP, EP_TYPE_CONTROL,
-                                   ENDPOINT_DIR_OUT, USB_Device_ControlEndpointSize,
+                                   EP_DIR_OUT, USB_Device_ControlEndpointSize,
                                    ENDPOINT_BANK_SINGLE);
     }
 }

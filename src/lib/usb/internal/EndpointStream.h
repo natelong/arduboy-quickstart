@@ -5,7 +5,7 @@
 #pragma once
 
 #include "../../ab_common.h"
-#include "USBTask.h"
+#include "usb.h"
 
 /** Enum for possible error return codes of Endpoint_*_Stream_* functions. */
 enum Endpoint_Stream_RW_ErrorCodes_t {

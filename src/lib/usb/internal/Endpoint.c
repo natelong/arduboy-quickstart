@@ -1,5 +1,7 @@
 #include "Endpoint.h"
 
+#define USB_STREAM_TIMEOUT_MS 100
+
 void Endpoint_ClearEndpoints(void) {
     UEINT = 0;
 
@@ -31,7 +33,7 @@ uint8_t Endpoint_WaitUntilReady(void) {
     uint16_t PreviousFrameNumber = UDFNUM;
 
     for (;;) {
-        if (Endpoint_GetEndpointDirection() == ENDPOINT_DIR_IN) {
+        if (Endpoint_GetEndpointDirection() == EP_DIR_IN) {
             if (Endpoint_IsINReady()) return ENDPOINT_READYWAIT_NoError;
         } else {
             if (Endpoint_IsOUTReceived()) return ENDPOINT_READYWAIT_NoError;
