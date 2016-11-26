@@ -88,8 +88,6 @@ uint8_t Endpoint_WaitUntilReady(void);
 
 void Endpoint_ClearEndpoints(void);
 
-bool Endpoint_ConfigureEndpoint_Prv(const uint8_t Number, const uint8_t UECFG0XData, const uint8_t UECFG1XData);
-
 /** Mask for the bank mode selection for the \ref Endpoint_ConfigureEndpoint() macro. This indicates
  *  that the endpoint should have one single bank, which requires less USB FIFO memory but results
  *  in slower transfers as only one USB device (the AVR or the host) can access the endpoint's
@@ -121,63 +119,26 @@ enum Endpoint_WaitUntilReady_ErrorCodes_t {
     ENDPOINT_READYWAIT_Timeout            = 4, // Host failed to accept or send next packet within timeout set by USB_STREAM_TIMEOUT_MS macro
 };
 
-/** Configures the specified endpoint number with the given endpoint type, direction, bank size
- *  and banking mode. Once configured, the endpoint may be read from or written to, depending
- *  on its direction.
+/** Selects the given endpoint number. If the address from the device descriptors is used, the
+ *  value should be masked with the \ref ENDPOINT_EPNUM_MASK constant to extract only the endpoint
+ *  number (and discarding the endpoint direction bit).
  *
- *  \param[in] Number     Endpoint number to configure. This must be more than 0 and less than
- *                        \ref ENDPOINT_TOTAL_ENDPOINTS.
+ *  Any endpoint operations which do not require the endpoint number to be indicated will operate on
+ *  the currently selected endpoint.
  *
- *  \param[in] Type       Type of endpoint to configure, a \c EP_TYPE_* mask. Not all endpoint types
- *                        are available on Low Speed USB devices - refer to the USB 2.0 specification.
- *
- *  \param[in] Direction  Endpoint data direction, either \ref ENDPOINT_DIR_OUT or \ref ENDPOINT_DIR_IN.
- *                        All endpoints (except Control type) are unidirectional - data may only be read
- *                        from or written to the endpoint bank based on its direction, not both.
- *
- *  \param[in] Size       Size of the endpoint's bank, where packets are stored before they are transmitted
- *                        to the USB host, or after they have been received from the USB host (depending on
- *                        the endpoint's data direction). The bank size must indicate the maximum packet size
- *                        that the endpoint can handle.
- *
- *  \param[in] Banks      Number of banks to use for the endpoint being configured, an \c ENDPOINT_BANK_* mask.
- *                        More banks uses more USB DPRAM, but offers better performance. Isochronous type
- *                        endpoints <b>must</b> have at least two banks.
- *
- *  \note Different endpoints may have different maximum packet sizes based on the endpoint's index - refer to
- *        the chosen microcontroller model's datasheet to determine the maximum bank size for each endpoint.
- *        \n\n
- *
- *  \note The default control endpoint should not be manually configured by the user application, as
- *        it is automatically configured by the library internally.
- *        \n\n
- *
- *  \note This routine will automatically select the specified endpoint upon success. Upon failure, the endpoint
- *        which failed to reconfigure correctly will be selected.
- *
- *  \return Boolean \c true if the configuration succeeded, \c false otherwise.
+ *  \param[in] EndpointNumber Endpoint number to select.
  */
-static INLINE bool Endpoint_ConfigureEndpoint(const uint8_t Number, const uint8_t Type, const uint8_t Direction, const uint16_t Size, const uint8_t Banks) {
+static INLINE void Endpoint_SelectEndpoint(const uint8_t EndpointNumber) {
+    UENUM = EndpointNumber;
+}
 
-    uint8_t epSizeMask;
-    {
-        uint8_t  MaskVal    = 0;
-        uint16_t CheckBytes = 8;
-
-        while (CheckBytes < Size) {
-            MaskVal++;
-            CheckBytes <<= 1;
-        }
-
-        epSizeMask = (MaskVal << EPSIZE0);
-    }
-
-
-    return Endpoint_ConfigureEndpoint_Prv(
-        Number,
-        ((Type << EPTYPE0) | (Direction ? (1 << EPDIR) : 0)),
-        ((1 << ALLOC) | Banks | epSizeMask)
-    );
+/** Enables the currently selected endpoint so that data can be sent and received through it to
+ *  and from a host.
+ *
+ *  \note Endpoints must first be configured properly via \ref Endpoint_ConfigureEndpoint().
+ */
+static INLINE void Endpoint_EnableEndpoint(void) {
+    UECONX |= (1 << EPEN);
 }
 
 // Indicates the number of bytes currently stored in the current endpoint's selected bank.
@@ -195,19 +156,6 @@ static INLINE uint8_t Endpoint_GetCurrentEndpoint(void) {
     return (UENUM & ENDPOINT_EPNUM_MASK);
 }
 
-/** Selects the given endpoint number. If the address from the device descriptors is used, the
- *  value should be masked with the \ref ENDPOINT_EPNUM_MASK constant to extract only the endpoint
- *  number (and discarding the endpoint direction bit).
- *
- *  Any endpoint operations which do not require the endpoint number to be indicated will operate on
- *  the currently selected endpoint.
- *
- *  \param[in] EndpointNumber Endpoint number to select.
- */
-static INLINE void Endpoint_SelectEndpoint(const uint8_t EndpointNumber) {
-    UENUM = EndpointNumber;
-}
-
 /** Resets the endpoint bank FIFO. This clears all the endpoint banks and resets the USB controller's
  *  data In and Out pointers to the bank's contents.
  *
@@ -216,15 +164,6 @@ static INLINE void Endpoint_SelectEndpoint(const uint8_t EndpointNumber) {
 static INLINE void Endpoint_ResetEndpoint(const uint8_t EndpointNumber) {
     UERST = (1 << EndpointNumber);
     UERST = 0;
-}
-
-/** Enables the currently selected endpoint so that data can be sent and received through it to
- *  and from a host.
- *
- *  \note Endpoints must first be configured properly via \ref Endpoint_ConfigureEndpoint().
- */
-static INLINE void Endpoint_EnableEndpoint(void) {
-    UECONX |= (1 << EPEN);
 }
 
 /** Disables the currently selected endpoint so that data cannot be sent and received through it
@@ -382,4 +321,67 @@ static INLINE void Endpoint_Write_8(const uint8_t Data) {
 static INLINE void Endpoint_Write_16(const uint16_t Data) {
     UEDATX = (Data & 0xFF);
     UEDATX = (Data >> 8);
+}
+
+/** Configures the specified endpoint number with the given endpoint type, direction, bank size
+ *  and banking mode. Once configured, the endpoint may be read from or written to, depending
+ *  on its direction.
+ *
+ *  \param[in] Number     Endpoint number to configure. This must be more than 0 and less than
+ *                        \ref ENDPOINT_TOTAL_ENDPOINTS.
+ *
+ *  \param[in] Type       Type of endpoint to configure, a \c EP_TYPE_* mask. Not all endpoint types
+ *                        are available on Low Speed USB devices - refer to the USB 2.0 specification.
+ *
+ *  \param[in] Direction  Endpoint data direction, either \ref ENDPOINT_DIR_OUT or \ref ENDPOINT_DIR_IN.
+ *                        All endpoints (except Control type) are unidirectional - data may only be read
+ *                        from or written to the endpoint bank based on its direction, not both.
+ *
+ *  \param[in] Size       Size of the endpoint's bank, where packets are stored before they are transmitted
+ *                        to the USB host, or after they have been received from the USB host (depending on
+ *                        the endpoint's data direction). The bank size must indicate the maximum packet size
+ *                        that the endpoint can handle.
+ *
+ *  \param[in] Banks      Number of banks to use for the endpoint being configured, an \c ENDPOINT_BANK_* mask.
+ *                        More banks uses more USB DPRAM, but offers better performance. Isochronous type
+ *                        endpoints <b>must</b> have at least two banks.
+ *
+ *  \note Different endpoints may have different maximum packet sizes based on the endpoint's index - refer to
+ *        the chosen microcontroller model's datasheet to determine the maximum bank size for each endpoint.
+ *        \n\n
+ *
+ *  \note The default control endpoint should not be manually configured by the user application, as
+ *        it is automatically configured by the library internally.
+ *        \n\n
+ *
+ *  \note This routine will automatically select the specified endpoint upon success. Upon failure, the endpoint
+ *        which failed to reconfigure correctly will be selected.
+ *
+ *  \return Boolean \c true if the configuration succeeded, \c false otherwise.
+ */
+static INLINE bool Endpoint_ConfigureEndpoint(const uint8_t Number, const uint8_t Type, const uint8_t Direction, const uint16_t Size, const uint8_t Banks) {
+
+    uint8_t epSizeMask;
+    {
+        uint8_t  MaskVal    = 0;
+        uint16_t CheckBytes = 8;
+
+        while (CheckBytes < Size) {
+            MaskVal++;
+            CheckBytes <<= 1;
+        }
+
+        epSizeMask = (MaskVal << EPSIZE0);
+    }
+
+    { // Endpoint_ConfigureEndpoint_Prv (const uint8_t Number, const uint8_t UECFG0XData, const uint8_t UECFG1XData)
+        Endpoint_SelectEndpoint(Number);
+        Endpoint_EnableEndpoint();
+
+        UECFG1X = 0;
+        UECFG0X = ((Type << EPTYPE0) | (Direction ? (1 << EPDIR) : 0));
+        UECFG1X = ((1 << ALLOC) | Banks | epSizeMask);
+
+        return Endpoint_IsConfigured();
+    }
 }

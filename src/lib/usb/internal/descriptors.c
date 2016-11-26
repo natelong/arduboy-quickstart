@@ -165,7 +165,6 @@ const USB_Descriptor_String_t ManufNameString = {
  */
 uint16_t CALLBACK_USB_GetDescriptor(
         const uint16_t wValue,
-        const uint8_t __attribute__((unused)) wIndex,
         const void** const DescriptorAddress) {
     const uint8_t  DescriptorType   = (wValue >> 8);
     const uint8_t  DescriptorNumber = (wValue & 0xFF);

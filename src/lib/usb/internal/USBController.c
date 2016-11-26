@@ -34,7 +34,6 @@
 void USB_Init() {
     USB_REG_On();
     PLLFRQ = ((1 << PLLUSB) | (1 << PDIV3) | (1 << PDIV1));
-    USB_IsInitialized = true;
     USB_ResetInterface();
 }
 
@@ -46,7 +45,6 @@ void USB_Disable(void) {
     USB_PLL_Off();
     USB_REG_Off();
     USB_OTGPAD_Off();
-    USB_IsInitialized = false;
 }
 
 void USB_ResetInterface(void) {

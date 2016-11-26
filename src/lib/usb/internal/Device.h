@@ -64,9 +64,6 @@ enum USB_Device_States_t {
  *                                  lower byte (when more than one descriptor of the given type exists, such as the
  *                                  case of string descriptors). The type may be one of the standard types defined
  *                                  in the DescriptorTypes_t enum, or may be a class-specific descriptor type value.
- *  \param[in] wIndex               The language ID of the string to return if the \c wValue type indicates
- *                                  \ref DTYPE_String, otherwise zero for standard descriptors, or as defined in a
- *                                  class-specific standards.
  *  \param[out] DescriptorAddress   Pointer to the descriptor in memory. This should be set by the routine to
  *                                  the address of the descriptor.
  *  \param[out] MemoryAddressSpace  A value from the \ref USB_DescriptorMemorySpaces_t enum to indicate the memory
@@ -76,7 +73,7 @@ enum USB_Device_States_t {
  *
  *  \return Size in bytes of the descriptor if it exists, zero or \ref NO_DESCRIPTOR otherwise.
  */
-uint16_t CALLBACK_USB_GetDescriptor(const uint16_t wValue, const uint8_t wIndex, const void** const DescriptorAddress);
+uint16_t CALLBACK_USB_GetDescriptor(const uint16_t wValue, const void** const DescriptorAddress);
 
 static INLINE bool USB_Device_IsAddressSet(void) {
     return (UDADDR & (1 << ADDEN));

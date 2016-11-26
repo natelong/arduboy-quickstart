@@ -48,15 +48,6 @@
 #include "StdDescriptors.h"
 #include "DeviceStandardReq.h"
 
-/** Indicates if the USB interface is currently initialized but not necessarily connected to a host
- *  or device (i.e. if USB_Init() has been run). If this is false, all other library globals related
- *  to the USB driver are invalid.
- *
- *  Note: This variable should be treated as read-only in the user application, and never manually
- *        changed in value.
- */
-extern volatile bool USB_IsInitialized;
-
 /** Structure containing the last received Control request when in Device mode (for use in user-applications
  *  inside of the EVENT_USB_Device_ControlRequest() event.
  *

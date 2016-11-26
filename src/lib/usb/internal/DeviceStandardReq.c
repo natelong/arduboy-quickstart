@@ -120,7 +120,7 @@ static void USB_Device_GetConfiguration(void) {
 static void USB_Device_GetDescriptor(void) {
     const void* DescriptorPointer;
     uint16_t    DescriptorSize;
-    DescriptorSize = CALLBACK_USB_GetDescriptor(USB_ControlRequest.wValue, USB_ControlRequest.wIndex, &DescriptorPointer);
+    DescriptorSize = CALLBACK_USB_GetDescriptor(USB_ControlRequest.wValue, &DescriptorPointer);
     if (DescriptorSize == NO_DESCRIPTOR) return;
 
     Endpoint_ClearSETUP();
