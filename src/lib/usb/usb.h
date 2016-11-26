@@ -24,3 +24,6 @@ typedef struct {
 extern USB_Request_Header_t USB_ControlRequest;
 
 #define USB_DeviceState GPIOR0
+
+void EVENT_USB_Device_ControlRequest(void)       __attribute__ ((weak));
+void EVENT_USB_Device_ConfigurationChanged(void) __attribute__ ((weak));
