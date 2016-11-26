@@ -4,8 +4,8 @@ uint8_t Endpoint_Write_Control_Stream(const void* const Buffer, uint16_t Length)
     uint8_t* DataStream     = ((uint8_t*)Buffer);
     bool     LastPacketFull = false;
 
-    if (Length > USB_ControlRequest.wLength) {
-        Length = USB_ControlRequest.wLength;
+    if (Length > USB_ControlRequest.length) {
+        Length = USB_ControlRequest.length;
     } else if (!(Length)) {
         Endpoint_ClearIN();
     }

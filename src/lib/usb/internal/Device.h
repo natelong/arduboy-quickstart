@@ -29,20 +29,16 @@ enum USB_Device_States_t {
  *  index and language ID. This function MUST be overridden in the user application (added with full, identical
  *  prototype and name so that the library can call it to retrieve descriptor data.
  *
- *  \param[in] wValue               The type of the descriptor to retrieve in the upper byte, and the index in the
+ *  \param[in] value                The type of the descriptor to retrieve in the upper byte, and the index in the
  *                                  lower byte (when more than one descriptor of the given type exists, such as the
  *                                  case of string descriptors). The type may be one of the standard types defined
  *                                  in the DescriptorTypes_t enum, or may be a class-specific descriptor type value.
- *  \param[out] DescriptorAddress   Pointer to the descriptor in memory. This should be set by the routine to
+ *  \param[out] address             Pointer to the descriptor in memory. This should be set by the routine to
  *                                  the address of the descriptor.
- *  \param[out] MemoryAddressSpace  A value from the \ref USB_DescriptorMemorySpaces_t enum to indicate the memory
- *                                  space in which the descriptor is stored. This parameter does not exist when one
- *                                  of the \c USE_*_DESCRIPTORS compile time options is used, or on architectures which
- *                                  use a unified address space.
  *
- *  \return Size in bytes of the descriptor if it exists, zero or \ref NO_DESCRIPTOR otherwise.
+ *  \return Size in bytes of the descriptor if it exists, zero or NO_DESCRIPTOR otherwise.
  */
-uint16_t CALLBACK_USB_GetDescriptor(const uint16_t wValue, const void** const DescriptorAddress);
+uint16_t CALLBACK_USB_GetDescriptor(const uint16_t value, const void** const address);
 
 static INLINE bool USB_Device_IsAddressSet(void) {
     return (UDADDR & (1 << ADDEN));

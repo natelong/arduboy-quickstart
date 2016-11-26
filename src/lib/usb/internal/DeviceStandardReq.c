@@ -19,27 +19,27 @@ void USB_Device_ProcessControlRequest(void) {
     EVENT_USB_Device_ControlRequest();
 
     if (Endpoint_IsSETUPReceived()) {
-        uint8_t bmRequestType = USB_ControlRequest.bmRequestType;
+        uint8_t type = USB_ControlRequest.type;
 
-        switch (USB_ControlRequest.bRequest) {
+        switch (USB_ControlRequest.request) {
             case REQ_GetStatus:
-                if ((bmRequestType == DTH_STD_DEV) || (bmRequestType == DTH_STD_EP))  USB_Device_GetStatus();
+                if ((type == DTH_STD_DEV) || (type == DTH_STD_EP))  USB_Device_GetStatus();
                 break;
             case REQ_ClearFeature:
             case REQ_SetFeature:
-                if ((bmRequestType == HTD_STD_DEV) || (bmRequestType == HTD_STD_EP)) USB_Device_ClearSetFeature();
+                if ((type == HTD_STD_DEV) || (type == HTD_STD_EP)) USB_Device_ClearSetFeature();
                 break;
             case REQ_SetAddress:
-                if (bmRequestType == HTD_STD_DEV) USB_Device_SetAddress();
+                if (type == HTD_STD_DEV) USB_Device_SetAddress();
                 break;
             case REQ_GetDescriptor:
-                if ((bmRequestType == DTH_STD_DEV) || (bmRequestType == DTH_STD_IF)) USB_Device_GetDescriptor();
+                if ((type == DTH_STD_DEV) || (type == DTH_STD_IF)) USB_Device_GetDescriptor();
                 break;
             case REQ_GetConfiguration:
-                if (bmRequestType == DTH_STD_DEV) USB_Device_GetConfiguration();
+                if (type == DTH_STD_DEV) USB_Device_GetConfiguration();
                 break;
             case REQ_SetConfiguration:
-                if (bmRequestType == HTD_STD_DEV) USB_Device_SetConfiguration();
+                if (type == HTD_STD_DEV) USB_Device_SetConfiguration();
                 break;
         }
     }
@@ -51,7 +51,7 @@ void USB_Device_ProcessControlRequest(void) {
 }
 
 static void USB_Device_SetAddress(void) {
-    uint8_t DeviceAddress    = (USB_ControlRequest.wValue & 0x7F);
+    uint8_t DeviceAddress    = (USB_ControlRequest.value & 0x7F);
     uint8_t CurrentGlobalInt = SREG;
     cli();
     Endpoint_ClearSETUP();
@@ -68,9 +68,9 @@ static void USB_Device_SetAddress(void) {
 
 static void USB_Device_SetConfiguration(void) {
     // was controlled by FIXED_NUM_CONFIGURATIONS
-    if ((uint8_t)USB_ControlRequest.wValue > 1) return;
+    if ((uint8_t)USB_ControlRequest.value > 1) return;
     Endpoint_ClearSETUP();
-    USB_Device_ConfigurationNumber = (uint8_t)USB_ControlRequest.wValue;
+    USB_Device_ConfigurationNumber = (uint8_t)USB_ControlRequest.value;
     Endpoint_ClearStatusStage();
     if (USB_Device_ConfigurationNumber) {
         USB_DeviceState = DEVICE_STATE_Configured;
@@ -90,7 +90,7 @@ static void USB_Device_GetConfiguration(void) {
 static void USB_Device_GetDescriptor(void) {
     const void* DescriptorPointer;
     uint16_t    DescriptorSize;
-    DescriptorSize = CALLBACK_USB_GetDescriptor(USB_ControlRequest.wValue, &DescriptorPointer);
+    DescriptorSize = CALLBACK_USB_GetDescriptor(USB_ControlRequest.value, &DescriptorPointer);
     if (DescriptorSize == NO_DESCRIPTOR) return;
 
     Endpoint_ClearSETUP();
@@ -100,9 +100,9 @@ static void USB_Device_GetDescriptor(void) {
 
 static void USB_Device_GetStatus(void) {
     uint8_t CurrentStatus = 0;
-    switch (USB_ControlRequest.bmRequestType) {
+    switch (USB_ControlRequest.type) {
         case DTH_STD_EP:
-            Endpoint_SelectEndpoint((uint8_t)USB_ControlRequest.wIndex & ENDPOINT_EPNUM_MASK);
+            Endpoint_SelectEndpoint((uint8_t)USB_ControlRequest.index & ENDPOINT_EPNUM_MASK);
             CurrentStatus = Endpoint_IsStalled();
             Endpoint_SelectEndpoint(ENDPOINT_CONTROLEP);
             break;
@@ -117,17 +117,17 @@ static void USB_Device_GetStatus(void) {
 }
 
 static void USB_Device_ClearSetFeature(void) {
-    switch (USB_ControlRequest.bmRequestType & CONTROL_REQTYPE_RECIPIENT) {
+    switch (USB_ControlRequest.type & CONTROL_REQTYPE_RECIPIENT) {
         case REQREC_ENDPOINT:
-            if ((uint8_t)USB_ControlRequest.wValue == FEATURE_SEL_EndpointHalt) {
-                uint8_t EndpointIndex = ((uint8_t)USB_ControlRequest.wIndex & ENDPOINT_EPNUM_MASK);
+            if ((uint8_t)USB_ControlRequest.value == FEATURE_SEL_EndpointHalt) {
+                uint8_t EndpointIndex = ((uint8_t)USB_ControlRequest.index & ENDPOINT_EPNUM_MASK);
 
                 if (EndpointIndex == ENDPOINT_CONTROLEP) return;
 
                 Endpoint_SelectEndpoint(EndpointIndex);
 
                 if (Endpoint_IsEnabled()) {
-                    if (USB_ControlRequest.bRequest == REQ_SetFeature) {
+                    if (USB_ControlRequest.request == REQ_SetFeature) {
                         Endpoint_StallTransaction();
                     } else {
                         Endpoint_ClearStall();

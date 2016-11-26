@@ -132,40 +132,38 @@ const USB_Descriptor_String_t ManufNameString = {
  *  is called so that the descriptor details can be passed back and the appropriate descriptor sent back to the
  *  USB host.
  */
-uint16_t CALLBACK_USB_GetDescriptor(
-        const uint16_t wValue,
-        const void** const DescriptorAddress) {
-    const uint8_t  DescriptorType   = (wValue >> 8);
-    const uint8_t  DescriptorNumber = (wValue & 0xFF);
+uint16_t CALLBACK_USB_GetDescriptor(const uint16_t value, const void** const address) {
+    const uint8_t DescriptorType   = (value >> 8);
+    const uint8_t DescriptorNumber = (value & 0xFF);
 
-    const void* Address = NULL;
-    uint16_t    Size    = NO_DESCRIPTOR;
+    const void* target = NULL;
+    uint16_t    size   = NO_DESCRIPTOR;
 
     switch (DescriptorType) {
         case DTYPE_Device:
-            Address = &DeviceDescriptor;
-            Size    = sizeof(USB_Descriptor_Device_t);
+            target = &DeviceDescriptor;
+            size   = sizeof(USB_Descriptor_Device_t);
             break;
         case DTYPE_Configuration:
-            Address = &ConfigurationDescriptor;
-            Size    = sizeof(USB_Descriptor_Configuration_t);
+            target = &ConfigurationDescriptor;
+            size   = sizeof(USB_Descriptor_Configuration_t);
             break;
         case DTYPE_String:
-            if (!(DescriptorNumber)) {
-                Address = &LanguageString;
-                Size    = LanguageString.Header.Size;
+            if (!DescriptorNumber) {
+                target = &LanguageString;
+                size   = LanguageString.Header.Size;
             } else if (DescriptorNumber == DeviceDescriptor.ProductStrIndex) {
-                Address = &ProductString;
-                Size    = ProductString.Header.Size;
+                target = &ProductString;
+                size   = ProductString.Header.Size;
             } else if (DescriptorNumber == DeviceDescriptor.ManufacturerStrIndex) {
-                Address = &ManufNameString;
-                Size    = ManufNameString.Header.Size;
+                target = &ManufNameString;
+                size   = ManufNameString.Header.Size;
             }
 
             break;
     }
 
-    *DescriptorAddress = Address;
-    return Size;
+    *address = target;
+    return size;
 }
 

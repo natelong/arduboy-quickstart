@@ -46,18 +46,18 @@ void EVENT_USB_Device_ConfigurationChanged(void) {
  */
 void EVENT_USB_Device_ControlRequest(void) {
     /* Ignore any requests that aren't directed to the CDC interface */
-    if ((USB_ControlRequest.bmRequestType & (CONTROL_REQTYPE_TYPE | CONTROL_REQTYPE_RECIPIENT)) !=
+    if ((USB_ControlRequest.type & (CONTROL_REQTYPE_TYPE | CONTROL_REQTYPE_RECIPIENT)) !=
             (REQTYPE_CLASS | REQREC_INTERFACE)) {
         return;
     }
 
     /* Process CDC specific control requests */
-    switch (USB_ControlRequest.bRequest) {
+    switch (USB_ControlRequest.request) {
         case CDC_REQ_SetControlLineState:
-            lineState = USB_ControlRequest.wValue;
+            lineState = USB_ControlRequest.value;
             break;
         case CDC_REQ_SetLineEncoding:
-            if (USB_ControlRequest.bmRequestType == (REQDIR_HOSTTODEVICE | REQTYPE_CLASS | REQREC_INTERFACE)) {
+            if (USB_ControlRequest.type == (REQDIR_HOSTTODEVICE | REQTYPE_CLASS | REQREC_INTERFACE)) {
                 Endpoint_ClearSETUP();
 
                 /* Read the line coding data in from the host into the global struct */
@@ -67,7 +67,7 @@ void EVENT_USB_Device_ControlRequest(void) {
             break;
     }
 
-    if (USB_ControlRequest.bRequest == CDC_REQ_SetLineEncoding || USB_ControlRequest.bRequest == CDC_REQ_SetControlLineState) {
+    if (USB_ControlRequest.request == CDC_REQ_SetLineEncoding || USB_ControlRequest.request == CDC_REQ_SetControlLineState) {
         if (LineEncoding.BaudRateBPS == 1200 && (lineState & 0x01) == 0) {
             USB_Disable();
             ab_reset();
