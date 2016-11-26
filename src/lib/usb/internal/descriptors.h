@@ -30,7 +30,7 @@
 
 #pragma once
 
-#include "usb.h"
+#include "CDC.h"
 
 #define AVR_SIGNATURE_1 0x1E
 #define AVR_SIGNATURE_2 0x95

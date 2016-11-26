@@ -35,7 +35,7 @@
 
 #pragma once
 
-#include "Common.h"
+#include "../../ab_common.h"
 #include "Events.h"
 #include "USBController.h"
 
@@ -48,7 +48,7 @@ enum USB_Interrupts_t {
     USB_INT_RXSTPI  = 6,
 };
 
-static ALWAYS_INLINE void USB_INT_Enable(const uint8_t Interrupt) {
+static INLINE void USB_INT_Enable(const uint8_t Interrupt) {
     switch (Interrupt) {
         case USB_INT_VBUSTI:  USBCON |= (1 << VBUSTE);  break;
         case USB_INT_WAKEUPI: UDIEN  |= (1 << WAKEUPE); break;
@@ -59,7 +59,7 @@ static ALWAYS_INLINE void USB_INT_Enable(const uint8_t Interrupt) {
     }
 }
 
-static ALWAYS_INLINE void USB_INT_Disable(const uint8_t Interrupt) {
+static INLINE void USB_INT_Disable(const uint8_t Interrupt) {
     switch (Interrupt) {
         case USB_INT_VBUSTI:  USBCON &= ~(1 << VBUSTE);  break;
         case USB_INT_WAKEUPI: UDIEN  &= ~(1 << WAKEUPE); break;
@@ -70,7 +70,7 @@ static ALWAYS_INLINE void USB_INT_Disable(const uint8_t Interrupt) {
     }
 }
 
-static ALWAYS_INLINE void USB_INT_Clear(const uint8_t Interrupt) {
+static INLINE void USB_INT_Clear(const uint8_t Interrupt) {
     switch (Interrupt) {
         case USB_INT_VBUSTI:  USBINT &= ~(1 << VBUSTI);  break;
         case USB_INT_WAKEUPI: UDINT  &= ~(1 << WAKEUPI); break;
@@ -81,7 +81,7 @@ static ALWAYS_INLINE void USB_INT_Clear(const uint8_t Interrupt) {
     }
 }
 
-static ALWAYS_INLINE bool USB_INT_IsEnabled(const uint8_t Interrupt) {
+static INLINE bool USB_INT_IsEnabled(const uint8_t Interrupt) {
     switch (Interrupt) {
         case USB_INT_VBUSTI:  return (USBCON & (1 << VBUSTE));
         case USB_INT_WAKEUPI: return (UDIEN  & (1 << WAKEUPE));
@@ -94,7 +94,7 @@ static ALWAYS_INLINE bool USB_INT_IsEnabled(const uint8_t Interrupt) {
     return false;
 }
 
-static ALWAYS_INLINE bool USB_INT_HasOccurred(const uint8_t Interrupt) {
+static INLINE bool USB_INT_HasOccurred(const uint8_t Interrupt) {
     switch (Interrupt) {
         case USB_INT_VBUSTI:  return (USBINT & (1 << VBUSTI));
         case USB_INT_WAKEUPI: return (UDINT  & (1 << WAKEUPI));

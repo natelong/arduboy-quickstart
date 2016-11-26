@@ -35,7 +35,7 @@
 
 #pragma once
 
-#include "Common.h"
+#include "../../ab_common.h"
 #include "USBController.h"
 #include "StdDescriptors.h"
 #include "USBInterrupt.h"
@@ -78,6 +78,6 @@ enum USB_Device_States_t {
  */
 uint16_t CALLBACK_USB_GetDescriptor(const uint16_t wValue, const uint8_t wIndex, const void** const DescriptorAddress);
 
-static ALWAYS_INLINE bool USB_Device_IsAddressSet(void) {
+static INLINE bool USB_Device_IsAddressSet(void) {
     return (UDADDR & (1 << ADDEN));
 }

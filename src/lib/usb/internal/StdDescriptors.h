@@ -35,7 +35,7 @@
 
 #pragma once
 
-#include "Common.h"
+#include "../../ab_common.h"
 #include "Events.h"
 
 
@@ -134,7 +134,7 @@ enum USB_Descriptor_ClassSubclassProtocol_t {
 typedef struct {
     uint8_t Size; // Size of the descriptor, in bytes.
     uint8_t Type; // Type of the descriptor, either in USB_DescriptorTypes_t or given by the specific class.
-} ATTR_PACKED USB_Descriptor_Header_t;
+} PACKED USB_Descriptor_Header_t;
 
 /**
  *  Type define for a standard Device Descriptor. This structure uses LUFA-specific element names to make each
@@ -155,7 +155,7 @@ typedef struct {
     uint8_t  ProductStrIndex;        // String index for product name/details.
     uint8_t  SerialNumStrIndex;      // String index for product's globally unique hex serial number in uppercase Unicode ASCII.
     uint8_t  NumberOfConfigurations; // Total number of configurations supported by the device.
-} ATTR_PACKED USB_Descriptor_Device_t;
+} PACKED USB_Descriptor_Device_t;
 
 /**
  *  Type define for a standard Device Qualifier Descriptor. This structure uses LUFA-specific element names
@@ -170,7 +170,7 @@ typedef struct {
     uint8_t  Endpoint0Size;          // Size of the control (address 0) endpoint's bank in bytes.
     uint8_t  NumberOfConfigurations; // Total number of configurations supported by the device.
     uint8_t  Reserved;               // Reserved for future use, must be 0.
-} ATTR_PACKED USB_Descriptor_DeviceQualifier_t;
+} PACKED USB_Descriptor_DeviceQualifier_t;
 
 /**
  *  Type define for a standard Configuration Descriptor header. This structure uses LUFA-specific element names
@@ -184,7 +184,7 @@ typedef struct {
     uint8_t  ConfigurationStrIndex;  // Index of a string descriptor describing the configuration.
     uint8_t  ConfigAttributes;       // Configuration attributes, comprised of a mask of zero or more USB_CONFIG_ATTR_* masks.
     uint8_t  MaxPowerConsumption;    // Max power consumption of in the current configuration, calculated by USB_CONFIG_POWER_MA() macro.
-} ATTR_PACKED USB_Descriptor_Configuration_Header_t;
+} PACKED USB_Descriptor_Configuration_Header_t;
 
 /**
  *  Type define for a standard Interface Descriptor. This structure uses LUFA-specific element names
@@ -200,7 +200,7 @@ typedef struct {
     uint8_t SubClass;               // Interface subclass ID.
     uint8_t Protocol;               // Interface protocol ID.
     uint8_t InterfaceStrIndex;      // Index of the string descriptor describing the interface.
-} ATTR_PACKED USB_Descriptor_Interface_t;
+} PACKED USB_Descriptor_Interface_t;
 
 /**
  *  Type define for a standard Interface Association Descriptor. This structure uses LUFA-specific element names
@@ -220,7 +220,7 @@ typedef struct {
     uint8_t SubClass;               // Interface subclass ID.
     uint8_t Protocol;               // Interface protocol ID.
     uint8_t IADStrIndex;            // Index of the string descriptor describing the interface association.
-} ATTR_PACKED USB_Descriptor_Interface_Association_t;
+} PACKED USB_Descriptor_Interface_Association_t;
 
 /**
  *  Type define for a standard Endpoint Descriptor. This structure uses LUFA-specific element names
@@ -232,7 +232,7 @@ typedef struct {
     uint8_t  Attributes;            // Endpoint attributes: mask of endpoint type (EP_TYPE_*) and attributes (ENDPOINT_ATTR_*) masks.
     uint16_t EndpointSize;          // Size of the endpoint bank in bytes: max packet size that the endpoint can receive at a time.
     uint8_t  PollingIntervalMS;     // Polling interval in milliseconds for the endpoint if it is an INTERRUPT or ISOCHRONOUS type.
-} ATTR_PACKED USB_Descriptor_Endpoint_t;
+} PACKED USB_Descriptor_Endpoint_t;
 
 /**
  *  Type define for a standard string descriptor. Unlike other standard descriptors, the length
@@ -245,7 +245,7 @@ typedef struct {
 typedef struct {
     USB_Descriptor_Header_t Header; // Descriptor header, including type and size.
     wchar_t  UnicodeString[];       // String data as unicode characters.
-} ATTR_PACKED USB_Descriptor_String_t;
+} PACKED USB_Descriptor_String_t;
 
 #define VERSION_TENS(x)       (int)((x) / 10)
 #define VERSION_ONES(x)       (int)((x) - (10 * VERSION_TENS(x)))

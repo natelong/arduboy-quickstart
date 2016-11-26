@@ -35,7 +35,7 @@
 
 #pragma once
 
-#include "Common.h"
+#include "../../ab_common.h"
 #include "USBTask.h"
 
 /** Enum for possible error return codes of Endpoint_*_Stream_* functions. */

@@ -35,7 +35,7 @@
 
 #pragma once
 
-#include "Common.h"
+#include "../../ab_common.h"
 #include "USBTask.h"
 #include "USBInterrupt.h"
 
@@ -157,7 +157,7 @@ enum Endpoint_WaitUntilReady_ErrorCodes_t {
  *
  *  \return Boolean \c true if the configuration succeeded, \c false otherwise.
  */
-static ALWAYS_INLINE bool Endpoint_ConfigureEndpoint(const uint8_t Number, const uint8_t Type, const uint8_t Direction, const uint16_t Size, const uint8_t Banks) {
+static INLINE bool Endpoint_ConfigureEndpoint(const uint8_t Number, const uint8_t Type, const uint8_t Direction, const uint16_t Size, const uint8_t Banks) {
 
     uint8_t epSizeMask;
     {
@@ -181,7 +181,7 @@ static ALWAYS_INLINE bool Endpoint_ConfigureEndpoint(const uint8_t Number, const
 }
 
 // Indicates the number of bytes currently stored in the current endpoint's selected bank.
-static ALWAYS_INLINE uint16_t Endpoint_BytesInEndpoint(void) {
+static INLINE uint16_t Endpoint_BytesInEndpoint(void) {
     return (((uint16_t)UEBCHX << 8) | UEBCLX);
 }
 
@@ -191,7 +191,7 @@ static ALWAYS_INLINE uint16_t Endpoint_BytesInEndpoint(void) {
  *
  *  \return Index of the currently selected endpoint.
  */
-static ALWAYS_INLINE uint8_t Endpoint_GetCurrentEndpoint(void) {
+static INLINE uint8_t Endpoint_GetCurrentEndpoint(void) {
     return (UENUM & ENDPOINT_EPNUM_MASK);
 }
 
@@ -204,7 +204,7 @@ static ALWAYS_INLINE uint8_t Endpoint_GetCurrentEndpoint(void) {
  *
  *  \param[in] EndpointNumber Endpoint number to select.
  */
-static ALWAYS_INLINE void Endpoint_SelectEndpoint(const uint8_t EndpointNumber) {
+static INLINE void Endpoint_SelectEndpoint(const uint8_t EndpointNumber) {
     UENUM = EndpointNumber;
 }
 
@@ -213,7 +213,7 @@ static ALWAYS_INLINE void Endpoint_SelectEndpoint(const uint8_t EndpointNumber) 
  *
  *  \param[in] EndpointNumber Endpoint number whose FIFO buffers are to be reset.
  */
-static ALWAYS_INLINE void Endpoint_ResetEndpoint(const uint8_t EndpointNumber) {
+static INLINE void Endpoint_ResetEndpoint(const uint8_t EndpointNumber) {
     UERST = (1 << EndpointNumber);
     UERST = 0;
 }
@@ -223,14 +223,14 @@ static ALWAYS_INLINE void Endpoint_ResetEndpoint(const uint8_t EndpointNumber) {
  *
  *  \note Endpoints must first be configured properly via \ref Endpoint_ConfigureEndpoint().
  */
-static ALWAYS_INLINE void Endpoint_EnableEndpoint(void) {
+static INLINE void Endpoint_EnableEndpoint(void) {
     UECONX |= (1 << EPEN);
 }
 
 /** Disables the currently selected endpoint so that data cannot be sent and received through it
  *  to and from a host.
  */
-static ALWAYS_INLINE void Endpoint_DisableEndpoint(void) {
+static INLINE void Endpoint_DisableEndpoint(void) {
     UECONX &= ~(1 << EPEN);
 }
 
@@ -238,7 +238,7 @@ static ALWAYS_INLINE void Endpoint_DisableEndpoint(void) {
  *
  * \return Boolean \c true if the currently selected endpoint is enabled, \c false otherwise.
  */
-static ALWAYS_INLINE bool Endpoint_IsEnabled(void) {
+static INLINE bool Endpoint_IsEnabled(void) {
     return ((UECONX & (1 << EPEN)) ? true : false);
 }
 
@@ -251,7 +251,7 @@ static ALWAYS_INLINE bool Endpoint_IsEnabled(void) {
  *  \return Boolean \c true if the currently selected endpoint may be read from or written to, depending
  *          on its direction.
  */
-static ALWAYS_INLINE bool Endpoint_IsReadWriteAllowed(void) {
+static INLINE bool Endpoint_IsReadWriteAllowed(void) {
     return ((UEINTX & (1 << RWAL)) ? true : false);
 }
 
@@ -259,7 +259,7 @@ static ALWAYS_INLINE bool Endpoint_IsReadWriteAllowed(void) {
  *
  *  \return Boolean \c true if the currently selected endpoint has been configured, \c false otherwise.
  */
-static ALWAYS_INLINE bool Endpoint_IsConfigured(void) {
+static INLINE bool Endpoint_IsConfigured(void) {
     return ((UESTA0X & (1 << CFGOK)) ? true : false);
 }
 
@@ -267,7 +267,7 @@ static ALWAYS_INLINE bool Endpoint_IsConfigured(void) {
  *
  *  \return Boolean \c true if the current endpoint is ready for an IN packet, \c false otherwise.
  */
-static ALWAYS_INLINE bool Endpoint_IsINReady(void) {
+static INLINE bool Endpoint_IsINReady(void) {
     return ((UEINTX & (1 << TXINI)) ? true : false);
 }
 
@@ -275,7 +275,7 @@ static ALWAYS_INLINE bool Endpoint_IsINReady(void) {
  *
  *  \return Boolean \c true if current endpoint is has received an OUT packet, \c false otherwise.
  */
-static ALWAYS_INLINE bool Endpoint_IsOUTReceived(void) {
+static INLINE bool Endpoint_IsOUTReceived(void) {
     return ((UEINTX & (1 << RXOUTI)) ? true : false);
 }
 
@@ -283,7 +283,7 @@ static ALWAYS_INLINE bool Endpoint_IsOUTReceived(void) {
  *
  *  \return Boolean \c true if the selected endpoint has received a SETUP packet, \c false otherwise.
  */
-static ALWAYS_INLINE bool Endpoint_IsSETUPReceived(void) {
+static INLINE bool Endpoint_IsSETUPReceived(void) {
     return ((UEINTX & (1 << RXSTPI)) ? true : false);
 }
 
@@ -292,21 +292,21 @@ static ALWAYS_INLINE bool Endpoint_IsSETUPReceived(void) {
  *
  *  \note This is not applicable for non CONTROL type endpoints.
  */
-static ALWAYS_INLINE void Endpoint_ClearSETUP(void) {
+static INLINE void Endpoint_ClearSETUP(void) {
     UEINTX &= ~(1 << RXSTPI);
 }
 
 /** Sends an IN packet to the host on the currently selected endpoint, freeing up the endpoint for the
  *  next packet and switching to the alternative endpoint bank if double banked.
  */
-static ALWAYS_INLINE void Endpoint_ClearIN(void) {
+static INLINE void Endpoint_ClearIN(void) {
     UEINTX &= ~((1 << TXINI) | (1 << FIFOCON));
 }
 
 /** Acknowledges an OUT packet to the host on the currently selected endpoint, freeing up the endpoint
  *  for the next packet and switching to the alternative endpoint bank if double banked.
  */
-static ALWAYS_INLINE void Endpoint_ClearOUT(void) {
+static INLINE void Endpoint_ClearOUT(void) {
     UEINTX &= ~((1 << RXOUTI) | (1 << FIFOCON));
 }
 
@@ -319,13 +319,13 @@ static ALWAYS_INLINE void Endpoint_ClearOUT(void) {
  *  is called, or the host issues a CLEAR FEATURE request to the device for the currently selected
  *  endpoint.
  */
-static ALWAYS_INLINE void Endpoint_StallTransaction(void) {
+static INLINE void Endpoint_StallTransaction(void) {
     UECONX |= (1 << STALLRQ);
 }
 
 /** Clears the STALL condition on the currently selected endpoint.
  */
-static ALWAYS_INLINE void Endpoint_ClearStall(void) {
+static INLINE void Endpoint_ClearStall(void) {
     UECONX |= (1 << STALLRQC);
 }
 
@@ -333,12 +333,12 @@ static ALWAYS_INLINE void Endpoint_ClearStall(void) {
  *
  *  \return Boolean \c true if the currently selected endpoint is stalled, \c false otherwise.
  */
-static ALWAYS_INLINE bool Endpoint_IsStalled(void) {
+static INLINE bool Endpoint_IsStalled(void) {
     return ((UECONX & (1 << STALLRQ)) ? true : false);
 }
 
 /** Resets the data toggle of the currently selected endpoint. */
-static ALWAYS_INLINE void Endpoint_ResetDataToggle(void) {
+static INLINE void Endpoint_ResetDataToggle(void) {
     UECONX |= (1 << RSTDT);
 }
 
@@ -346,7 +346,7 @@ static ALWAYS_INLINE void Endpoint_ResetDataToggle(void) {
  *
  *  \return The currently selected endpoint's direction, as a \c ENDPOINT_DIR_* mask.
  */
-static ALWAYS_INLINE uint8_t Endpoint_GetEndpointDirection(void) {
+static INLINE uint8_t Endpoint_GetEndpointDirection(void) {
     return (UECFG0X & (1 << EPDIR)) ? ENDPOINT_DIR_IN : ENDPOINT_DIR_OUT;
 }
 
@@ -354,7 +354,7 @@ static ALWAYS_INLINE uint8_t Endpoint_GetEndpointDirection(void) {
  *
  *  \param[in] DirectionMask  New endpoint direction, as a \c ENDPOINT_DIR_* mask.
  */
-static ALWAYS_INLINE void Endpoint_SetEndpointDirection(const uint8_t DirectionMask) {
+static INLINE void Endpoint_SetEndpointDirection(const uint8_t DirectionMask) {
     UECFG0X = ((UECFG0X & ~(1 << EPDIR)) | (DirectionMask ? (1 << EPDIR) : 0));
 }
 
@@ -362,7 +362,7 @@ static ALWAYS_INLINE void Endpoint_SetEndpointDirection(const uint8_t DirectionM
  *
  *  \return Next byte in the currently selected endpoint's FIFO buffer.
  */
-static ALWAYS_INLINE uint8_t Endpoint_Read_8(void) {
+static INLINE uint8_t Endpoint_Read_8(void) {
     return UEDATX;
 }
 
@@ -370,7 +370,7 @@ static ALWAYS_INLINE uint8_t Endpoint_Read_8(void) {
  *
  *  \param[in] Data  Data to write into the the currently selected endpoint's FIFO buffer.
  */
-static ALWAYS_INLINE void Endpoint_Write_8(const uint8_t Data) {
+static INLINE void Endpoint_Write_8(const uint8_t Data) {
     UEDATX = Data;
 }
 
@@ -379,7 +379,7 @@ static ALWAYS_INLINE void Endpoint_Write_8(const uint8_t Data) {
  *
  *  \param[in] Data  Data to write to the currently selected endpoint's FIFO buffer.
  */
-static ALWAYS_INLINE void Endpoint_Write_16(const uint16_t Data) {
+static INLINE void Endpoint_Write_16(const uint16_t Data) {
     UEDATX = (Data & 0xFF);
     UEDATX = (Data >> 8);
 }

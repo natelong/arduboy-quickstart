@@ -35,7 +35,7 @@
 
 #pragma once
 
-#include "Common.h"
+#include "../../ab_common.h"
 
 /** Mask for the request type parameter, to indicate the direction of the request data (Host to Device
  *  or Device to Host). The result of this mask should then be compared to the request direction masks.
@@ -95,7 +95,7 @@ typedef struct {
     uint16_t wValue;        // wValue parameter of the request.
     uint16_t wIndex;        // wIndex parameter of the request.
     uint16_t wLength;       // Length of the data to transfer in bytes.
-} ATTR_PACKED USB_Request_Header_t;
+} PACKED USB_Request_Header_t;
 
 /** Enumeration for the various standard request commands. These commands are applicable when the
  *  request type is \ref REQTYPE_STANDARD (with the exception of \ref REQ_GetDescriptor, which is always

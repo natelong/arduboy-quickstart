@@ -35,7 +35,7 @@
 
 #pragma once
 
-#include "Common.h"
+#include "../../ab_common.h"
 
 /**
  * Endpoint address direction masks for a Host to Device endpoint.
@@ -104,7 +104,7 @@
  *
  *  \return Boolean \c true if the VBUS line is currently detecting power from a host, \c false otherwise.
  */
-static ALWAYS_INLINE bool USB_VBUS_GetStatus(void) {
+static INLINE bool USB_VBUS_GetStatus(void) {
     return ((USBSTA & (1 << VBUS)) ? true : false);
 }
 
@@ -113,7 +113,7 @@ static ALWAYS_INLINE bool USB_VBUS_GetStatus(void) {
  *  attached host, ceasing USB communications. If no host is present, this prevents any host from
  *  enumerating the device once attached until \ref USB_Attach() is called.
  */
-static ALWAYS_INLINE void USB_Detach(void) {
+static INLINE void USB_Detach(void) {
     UDCON  |=  (1 << DETACH);
 }
 
@@ -125,7 +125,7 @@ static ALWAYS_INLINE void USB_Detach(void) {
  *  attachment of a device to the host. This is despite the bit being located in the device-mode
  *  register and despite the datasheet making no mention of its requirement in host mode.
  */
-static ALWAYS_INLINE void USB_Attach(void) {
+static INLINE void USB_Attach(void) {
     UDCON  &= ~(1 << DETACH);
 }
 
@@ -159,52 +159,52 @@ void USB_Disable(void);
  */
 void USB_ResetInterface(void);
 
-static ALWAYS_INLINE void USB_PLL_On(void) {
+static INLINE void USB_PLL_On(void) {
     PLLCSR = USB_PLL_PSC;
     PLLCSR = (USB_PLL_PSC | (1 << PLLE));
 }
 
-static ALWAYS_INLINE void USB_PLL_Off(void) {
+static INLINE void USB_PLL_Off(void) {
     PLLCSR = 0;
 }
 
-static ALWAYS_INLINE bool USB_PLL_IsReady(void) {
+static INLINE bool USB_PLL_IsReady(void) {
     return ((PLLCSR & (1 << PLOCK)) ? true : false);
 }
 
-static ALWAYS_INLINE void USB_REG_On(void) {
+static INLINE void USB_REG_On(void) {
     UHWCON  |=  (1 << UVREGE);
 }
 
-static ALWAYS_INLINE void USB_REG_Off(void) {
+static INLINE void USB_REG_Off(void) {
     UHWCON  &= ~(1 << UVREGE);
 }
 
-static ALWAYS_INLINE void USB_OTGPAD_On(void) {
+static INLINE void USB_OTGPAD_On(void) {
     USBCON  |=  (1 << OTGPADE);
 }
 
-static ALWAYS_INLINE void USB_OTGPAD_Off(void) {
+static INLINE void USB_OTGPAD_Off(void) {
     USBCON  &= ~(1 << OTGPADE);
 }
 
-static ALWAYS_INLINE void USB_CLK_Freeze(void) {
+static INLINE void USB_CLK_Freeze(void) {
     USBCON  |=  (1 << FRZCLK);
 }
 
-static ALWAYS_INLINE void USB_CLK_Unfreeze(void) {
+static INLINE void USB_CLK_Unfreeze(void) {
     USBCON  &= ~(1 << FRZCLK);
 }
 
-static ALWAYS_INLINE void USB_Controller_Enable(void) {
+static INLINE void USB_Controller_Enable(void) {
     USBCON  |=  (1 << USBE);
 }
 
-static ALWAYS_INLINE void USB_Controller_Disable(void) {
+static INLINE void USB_Controller_Disable(void) {
     USBCON  &= ~(1 << USBE);
 }
 
-static ALWAYS_INLINE void USB_Controller_Reset(void) {
+static INLINE void USB_Controller_Reset(void) {
     USBCON &= ~(1 << USBE);
     USBCON |=  (1 << USBE);
 }

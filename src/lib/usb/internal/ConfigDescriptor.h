@@ -51,7 +51,7 @@
 #define __CONFIGDESCRIPTOR_H__
 
 	/* Includes: */
-		#include "Common.h"
+		#include "../../ab_common.h"
 		#include "StdDescriptors.h"
 
 	/* Enable C linkage for C++ Compilers: */

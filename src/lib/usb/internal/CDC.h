@@ -35,7 +35,7 @@
 
 #pragma once
 
-#include "usb.h"
+#include "StdDescriptors.h"
 
 // Enum for possible Class, Subclass and Protocol values of device and interface descriptors
 enum CDC_Descriptor_ClassSubclassProtocol_t {
@@ -87,7 +87,7 @@ typedef struct {
                                               // must be CDC_DSUBTYPE_CSInterface_Header.
     uint16_t                CDCSpecification; // Version number of the CDC specification implemented by the device, encoded
                                               //   in BCD format.
-} ATTR_PACKED USB_CDC_Descriptor_FunctionalHeader_t;
+} PACKED USB_CDC_Descriptor_FunctionalHeader_t;
 
 
 /**
@@ -101,7 +101,7 @@ typedef struct {
     uint8_t                 Capabilities; // Capabilities of the ACM interface, given as a bit mask. For most devices,
                                           //   this should be set to a fixed value of 0x06 - for other capabilities, refer
                                           //   to the CDC ACM specification.
-} ATTR_PACKED USB_CDC_Descriptor_FunctionalACM_t;
+} PACKED USB_CDC_Descriptor_FunctionalACM_t;
 
 /**
  *  Type define for a CDC class-specific functional Union descriptor. This indicates to the host that specific
@@ -113,7 +113,7 @@ typedef struct {
                                                    //   must be \ref CDC_DSUBTYPE_CSInterface_Union.
     uint8_t                 MasterInterfaceNumber; // Interface number of the CDC Control interface.
     uint8_t                 SlaveInterfaceNumber;  // Interface number of the CDC Data interface.
-} ATTR_PACKED USB_CDC_Descriptor_FunctionalUnion_t;
+} PACKED USB_CDC_Descriptor_FunctionalUnion_t;
 
 /**
  *  Type define for a CDC Line Encoding structure, used to hold the various encoding parameters for a virtual
@@ -124,4 +124,4 @@ typedef struct {
     uint8_t  CharFormat;  // Character format of the virtual serial port, a value from the CDC_LineEncodingFormats_t enum.
     uint8_t  ParityType;  // Parity setting of the virtual serial port, a value from the CDC_LineEncodingParity_t enum.
     uint8_t  DataBits;    // Bits of data per character of the virtual serial port.
-} ATTR_PACKED CDC_LineEncoding_t;
+} PACKED CDC_LineEncoding_t;
