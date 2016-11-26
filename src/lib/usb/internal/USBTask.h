@@ -1,63 +1,23 @@
-// nate
-/*
-             LUFA Library
-     Copyright (C) Dean Camera, 2011.
-
-  dean [at] fourwalledcubicle [dot] com
-           www.lufa-lib.org
-*/
-
-/*
-  Copyright 2011  Dean Camera (dean [at] fourwalledcubicle [dot] com)
-
-  Permission to use, copy, modify, distribute, and sell this
-  software and its documentation for any purpose is hereby granted
-  without fee, provided that the above copyright notice appear in
-  all copies and that both that the copyright notice and this
-  permission notice and warranty disclaimer appear in supporting
-  documentation, and that the name of the author not be used in
-  advertising or publicity pertaining to distribution of the
-  software without specific, written prior permission.
-
-  The author disclaim all warranties with regard to this
-  software, including all implied warranties of merchantability
-  and fitness.  In no event shall the author be liable for any
-  special, indirect or consequential damages or any damages
-  whatsoever resulting from loss of use, data or profits, whether
-  in an action of contract, negligence or other tortious action,
-  arising out of or in connection with the use or performance of
-  this software.
-*/
-
-/** \file
- *  \brief Main USB service task management.
- *
- *  This file contains the function definitions required for the main USB service task, which must be called
- *  from the user application to ensure that the USB connection to or from a connected USB device is maintained.
- *
- *  \note This file should not be included directly. It is automatically included as needed by the USB driver
- *        dispatch header located in LUFA/Drivers/USB/USB.h.
+/**
+ *  Main USB service task management.
  */
 
 #pragma once
 
 #include "../../ab_common.h"
-#include "USBController.h"
+#include "usb.h"
 #include "Events.h"
 #include "StdRequestType.h"
 #include "StdDescriptors.h"
 #include "DeviceStandardReq.h"
 
-/** Structure containing the last received Control request when in Device mode (for use in user-applications
- *  inside of the EVENT_USB_Device_ControlRequest() event.
- *
- *  Note: The contents of this structure is automatically endian-corrected for the current CPU architecture.
+/**
+ * Structure containing the last received Control request when in Device mode (for use in user-applications
+ * inside of the EVENT_USB_Device_ControlRequest() event.
  */
 extern USB_Request_Header_t USB_ControlRequest;
 
-#define _GET_DEVICE_GPIOR_NAME2(y) GPIOR ## y
-#define _GET_DEVICE_GPIOR_NAME(x)  _GET_DEVICE_GPIOR_NAME2(x)
-#define USB_DeviceState            _GET_DEVICE_GPIOR_NAME(0) // TODO: figure out what this does
+#define USB_DeviceState GPIOR0
 
 /** This is the main USB management task. The USB driver requires this task to be executed
  *  continuously when the USB system is active (device attached in host mode, or attached to a host

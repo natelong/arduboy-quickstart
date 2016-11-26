@@ -20,10 +20,12 @@ uint32_t pulseTimer = 0;
 /** Contains the current baud rate and other settings of the first virtual serial port. This must be retained as some
  *  operating systems will not open the port unless the settings can be set successfully.
  */
-static CDC_LineEncoding_t LineEncoding = { .BaudRateBPS = 0,
-                                           .CharFormat  = CDC_LINEENCODING_OneStopBit,
-                                           .ParityType  = CDC_PARITY_None,
-                                           .DataBits    = 8 };
+static CDC_LineEncoding_t LineEncoding = {
+    .BaudRateBPS = 0,
+    .CharFormat  = CDC_LINEENCODING_OneStopBit,
+    .ParityType  = CDC_PARITY_None,
+    .DataBits    = 8
+};
 
 static uint8_t lineState = 0;
 

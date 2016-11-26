@@ -1,34 +1,3 @@
-// nate
-/*
-             LUFA Library
-     Copyright (C) Dean Camera, 2011.
-
-  dean [at] fourwalledcubicle [dot] com
-           www.lufa-lib.org
-*/
-
-/*
-  Copyright 2011  Dean Camera (dean [at] fourwalledcubicle [dot] com)
-
-  Permission to use, copy, modify, distribute, and sell this
-  software and its documentation for any purpose is hereby granted
-  without fee, provided that the above copyright notice appear in
-  all copies and that both that the copyright notice and this
-  permission notice and warranty disclaimer appear in supporting
-  documentation, and that the name of the author not be used in
-  advertising or publicity pertaining to distribution of the
-  software without specific, written prior permission.
-
-  The author disclaim all warranties with regard to this
-  software, including all implied warranties of merchantability
-  and fitness.  In no event shall the author be liable for any
-  special, indirect or consequential damages or any damages
-  whatsoever resulting from loss of use, data or profits, whether
-  in an action of contract, negligence or other tortious action,
-  arising out of or in connection with the use or performance of
-  this software.
-*/
-
 /**
  * Common USB Controller definitions for all architectures.
  */
@@ -61,8 +30,6 @@
 #include "Endpoint.h"
 #include "DeviceStandardReq.h"
 #include "EndpointStream.h"
-
-#define USB_PLL_PSC (1 << PINDIV)
 
 /** Constant for the maximum software timeout period of the USB data stream transfer functions
  *  (both control and standard) when in either device or host mode. If the next packet of a stream
@@ -109,8 +76,8 @@ void USB_Init();
 void USB_Disable(void);
 
 static INLINE void USB_PLL_On(void) {
-    PLLCSR = USB_PLL_PSC;
-    PLLCSR = (USB_PLL_PSC | (1 << PLLE));
+    PLLCSR = (1 << PINDIV);
+    PLLCSR = ((1 << PINDIV) | (1 << PLLE));
 }
 
 static INLINE void USB_PLL_Off(void) {
