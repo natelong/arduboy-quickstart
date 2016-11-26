@@ -23,7 +23,7 @@ uint32_t pulseTimer = 0;
 static CDC_LineEncoding_t LineEncoding = { .BaudRateBPS = 0,
                                            .CharFormat  = CDC_LINEENCODING_OneStopBit,
                                            .ParityType  = CDC_PARITY_None,
-                                           .DataBits    = 8                            };
+                                           .DataBits    = 8 };
 
 static uint8_t lineState = 0;
 
@@ -54,16 +54,6 @@ void EVENT_USB_Device_ControlRequest(void) {
         case CDC_REQ_SetControlLineState:
             lineState = USB_ControlRequest.wValue;
             break;
-        case CDC_REQ_GetLineEncoding:
-            if (USB_ControlRequest.bmRequestType == (REQDIR_DEVICETOHOST | REQTYPE_CLASS | REQREC_INTERFACE)) {
-                Endpoint_ClearSETUP();
-
-                /* Write the line coding data to the control endpoint */
-                Endpoint_Write_Control_Stream(&LineEncoding, sizeof(CDC_LineEncoding_t));
-                Endpoint_ClearOUT();
-            }
-
-            break;
         case CDC_REQ_SetLineEncoding:
             if (USB_ControlRequest.bmRequestType == (REQDIR_HOSTTODEVICE | REQTYPE_CLASS | REQREC_INTERFACE)) {
                 Endpoint_ClearSETUP();
@@ -72,13 +62,12 @@ void EVENT_USB_Device_ControlRequest(void) {
                 Endpoint_Read_Control_Stream(&LineEncoding, sizeof(CDC_LineEncoding_t));
                 Endpoint_ClearIN();
             }
-
             break;
     }
 
     if (USB_ControlRequest.bRequest == CDC_REQ_SetLineEncoding || USB_ControlRequest.bRequest == CDC_REQ_SetControlLineState) {
         if (LineEncoding.BaudRateBPS == 1200 && (lineState & 0x01) == 0) {
-            USB_Detach();
+            USB_Disable();
             ab_reset();
         }
     }

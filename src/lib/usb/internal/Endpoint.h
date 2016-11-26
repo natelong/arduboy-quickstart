@@ -95,13 +95,6 @@ void Endpoint_ClearEndpoints(void);
  */
 #define ENDPOINT_BANK_SINGLE (0 << EPBK0)
 
-/** Mask for the bank mode selection for the \ref Endpoint_ConfigureEndpoint() macro. This indicates
- *  that the endpoint should have two banks, which requires more USB FIFO memory but results
- *  in faster transfers as one USB device (the AVR or the host) can access one bank while the other
- *  accesses the second bank.
- */
-#define ENDPOINT_BANK_DOUBLE (1 << EPBK0)
-
 // Retrieves the maximum bank size in bytes of a given endpoint.
 #define ENDPOINT_MAX_SIZE(EPIndex) _ENDPOINT_GET_MAXSIZE(EPIndex)
 

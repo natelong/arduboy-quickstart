@@ -64,31 +64,6 @@
 
 #define USB_PLL_PSC (1 << PINDIV)
 
-/** Regulator disable option mask for \ref USB_Init(). This indicates that the internal 3.3V USB data pad
- *  regulator should be disabled and the AVR's VCC level used for the data pads.
- */
-#define USB_OPT_REG_DISABLED (1 << 1)
-
-/** Regulator enable option mask for \ref USB_Init(). This indicates that the internal 3.3V USB data pad
- *  regulator should be enabled to regulate the data pin voltages from the VBUS level down to a level within
- *  the range allowable by the USB standard.
- *
- *  \note See USB AVR data sheet for more information on the internal pad regulator.
- */
-#define USB_OPT_REG_ENABLED (0 << 1)
-
-/** Manual PLL control option mask for \ref USB_Init(). This indicates to the library that the user application
- *  will take full responsibility for controlling the AVR's PLL (used to generate the high frequency clock
- *  that the USB controller requires) and ensuring that it is locked at the correct frequency for USB operations.
- */
-#define USB_OPT_MANUAL_PLL (1 << 2)
-
-/** Automatic PLL control option mask for \ref USB_Init(). This indicates to the library that the library should
- *  take full responsibility for controlling the AVR's PLL (used to generate the high frequency clock
- *  that the USB controller requires) and ensuring that it is locked at the correct frequency for USB operations.
- */
-#define USB_OPT_AUTO_PLL (0 << 2)
-
 /** Constant for the maximum software timeout period of the USB data stream transfer functions
  *  (both control and standard) when in either device or host mode. If the next packet of a stream
  *  is not received or acknowledged within this time period, the stream function will fail.
@@ -106,27 +81,6 @@
  */
 static INLINE bool USB_VBUS_GetStatus(void) {
     return ((USBSTA & (1 << VBUS)) ? true : false);
-}
-
-
-/** Detaches the device from the USB bus. This has the effect of removing the device from any
- *  attached host, ceasing USB communications. If no host is present, this prevents any host from
- *  enumerating the device once attached until \ref USB_Attach() is called.
- */
-static INLINE void USB_Detach(void) {
-    UDCON  |=  (1 << DETACH);
-}
-
-/** Attaches the device to the USB bus. This announces the device's presence to any attached
- *  USB host, starting the enumeration process. If no host is present, attaching the device
- *  will allow for enumeration once a host is connected to the device.
- *
- *  This is inexplicably also required for proper operation while in host mode, to enable the
- *  attachment of a device to the host. This is despite the bit being located in the device-mode
- *  register and despite the datasheet making no mention of its requirement in host mode.
- */
-static INLINE void USB_Attach(void) {
-    UDCON  &= ~(1 << DETACH);
 }
 
 /** Main function to initialize and start the USB interface. Once active, the USB interface will
@@ -154,11 +108,6 @@ void USB_Init();
  */
 void USB_Disable(void);
 
-/** Resets the interface, when already initialized. This will re-enumerate the device if already connected
- *  to a host, or re-enumerate an already attached device when in host mode.
- */
-void USB_ResetInterface(void);
-
 static INLINE void USB_PLL_On(void) {
     PLLCSR = USB_PLL_PSC;
     PLLCSR = (USB_PLL_PSC | (1 << PLLE));
@@ -172,39 +121,10 @@ static INLINE bool USB_PLL_IsReady(void) {
     return ((PLLCSR & (1 << PLOCK)) ? true : false);
 }
 
-static INLINE void USB_REG_On(void) {
-    UHWCON  |=  (1 << UVREGE);
-}
-
-static INLINE void USB_REG_Off(void) {
-    UHWCON  &= ~(1 << UVREGE);
-}
-
-static INLINE void USB_OTGPAD_On(void) {
-    USBCON  |=  (1 << OTGPADE);
-}
-
-static INLINE void USB_OTGPAD_Off(void) {
-    USBCON  &= ~(1 << OTGPADE);
-}
-
 static INLINE void USB_CLK_Freeze(void) {
     USBCON  |=  (1 << FRZCLK);
 }
 
 static INLINE void USB_CLK_Unfreeze(void) {
     USBCON  &= ~(1 << FRZCLK);
-}
-
-static INLINE void USB_Controller_Enable(void) {
-    USBCON  |=  (1 << USBE);
-}
-
-static INLINE void USB_Controller_Disable(void) {
-    USBCON  &= ~(1 << USBE);
-}
-
-static INLINE void USB_Controller_Reset(void) {
-    USBCON &= ~(1 << USBE);
-    USBCON |=  (1 << USBE);
 }
