@@ -1,4 +1,7 @@
 #include "EndpointStream.h"
+#include "Endpoint.h"
+#include "Device.h"
+#include "usb.h"
 
 uint8_t Endpoint_Write_Control_Stream(const void* const Buffer, uint16_t Length) {
     uint8_t* DataStream     = ((uint8_t*)Buffer);

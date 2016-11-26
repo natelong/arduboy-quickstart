@@ -10,34 +10,23 @@
     #error F_USB is not defined. You must define F_USB to the frequency of the unprescaled USB controller clock in your project makefile.
 #endif
 
-// #include "Events.h"
-// #include "USBInterrupt.h"
+#include "StdRequestType.h"
 
-#include "Device.h"
-// #include "Endpoint.h"
-#include "DeviceStandardReq.h"
-// #include "EndpointStream.h"
+/** Indicates the currently set configuration number of the device. USB devices may have several
+ *  different configurations which the host can select between; this indicates the currently selected
+ *  value, or 0 if no configuration has been selected.
+ */
+extern uint8_t              USB_Device_ConfigurationNumber;
+
+// Standard USB Control Request
+typedef struct {
+    uint8_t  type;    // Type of the request.
+    uint8_t  request; // Request command code.
+    uint16_t value;   // value parameter of the request.
+    uint16_t index;   // index parameter of the request.
+    uint16_t length;  // Length of the data to transfer in bytes.
+} PACKED USB_Request_Header_t;
 
 extern USB_Request_Header_t USB_ControlRequest;
+
 #define USB_DeviceState GPIOR0
-
-static INLINE void USB_PLL_On(void) {
-    PLLCSR = (1 << PINDIV);
-    PLLCSR = ((1 << PINDIV) | (1 << PLLE));
-}
-
-static INLINE void USB_PLL_Off(void) {
-    PLLCSR = 0;
-}
-
-static INLINE bool USB_PLL_IsReady(void) {
-    return ((PLLCSR & (1 << PLOCK)) ? true : false);
-}
-
-static INLINE void USB_CLK_Freeze(void) {
-    USBCON  |=  (1 << FRZCLK);
-}
-
-static INLINE void USB_CLK_Unfreeze(void) {
-    USBCON  &= ~(1 << FRZCLK);
-}

@@ -30,12 +30,3 @@
 #define REQ_SetConfiguration 9
 
 #define FEATURE_SEL_EndpointHalt 0x00
-
-// Standard USB Control Request
-typedef struct {
-    uint8_t  type;    // Type of the request.
-    uint8_t  request; // Request command code.
-    uint16_t value;   // value parameter of the request.
-    uint16_t index;   // index parameter of the request.
-    uint16_t length;  // Length of the data to transfer in bytes.
-} PACKED USB_Request_Header_t;

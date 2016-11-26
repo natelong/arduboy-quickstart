@@ -6,6 +6,7 @@
 
 #include "descriptors.h"
 #include "usb.h"
+#include "Endpoint.h"
 
 /** Device descriptor structure. This descriptor, located in SRAM memory, describes the overall
  *  device characteristics, including the supported USB version, control endpoint size and the

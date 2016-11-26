@@ -40,6 +40,29 @@ enum USB_Device_States_t {
  */
 uint16_t CALLBACK_USB_GetDescriptor(const uint16_t value, const void** const address);
 
+void USB_Device_ProcessControlRequest(void);
+
 static INLINE bool USB_Device_IsAddressSet(void) {
     return (UDADDR & (1 << ADDEN));
+}
+
+static INLINE void USB_PLL_On(void) {
+    PLLCSR = (1 << PINDIV);
+    PLLCSR = ((1 << PINDIV) | (1 << PLLE));
+}
+
+static INLINE void USB_PLL_Off(void) {
+    PLLCSR = 0;
+}
+
+static INLINE bool USB_PLL_IsReady(void) {
+    return ((PLLCSR & (1 << PLOCK)) ? true : false);
+}
+
+static INLINE void USB_CLK_Freeze(void) {
+    USBCON  |=  (1 << FRZCLK);
+}
+
+static INLINE void USB_CLK_Unfreeze(void) {
+    USBCON  &= ~(1 << FRZCLK);
 }

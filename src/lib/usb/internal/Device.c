@@ -1,5 +1,4 @@
-#define  __INCLUDE_FROM_DEVICESTDREQ_C
-#include "DeviceStandardReq.h"
+#include "Device.h"
 #include "EndpointStream.h"
 
 #define DTH_STD_DEV (REQDIR_DEVICETOHOST | REQTYPE_STANDARD | REQREC_DEVICE)
@@ -8,7 +7,12 @@
 #define HTD_STD_DEV (REQDIR_HOSTTODEVICE | REQTYPE_STANDARD | REQREC_DEVICE)
 #define HTD_STD_EP  (REQDIR_HOSTTODEVICE | REQTYPE_STANDARD | REQREC_ENDPOINT)
 
-uint8_t USB_Device_ConfigurationNumber;
+static void USB_Device_SetAddress(void);
+static void USB_Device_SetConfiguration(void);
+static void USB_Device_GetConfiguration(void);
+static void USB_Device_GetDescriptor(void);
+static void USB_Device_GetStatus(void);
+static void USB_Device_ClearSetFeature(void);
 
 void USB_Device_ProcessControlRequest(void) {
     uint8_t* RequestHeader = (uint8_t*)&USB_ControlRequest;
@@ -146,5 +150,3 @@ static void USB_Device_ClearSetFeature(void) {
     Endpoint_ClearSETUP();
     Endpoint_ClearStatusStage();
 }
-
-

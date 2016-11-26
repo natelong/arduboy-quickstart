@@ -4,6 +4,7 @@
 #include "internal/descriptors.h"
 #include "internal/Endpoint.h"
 #include "internal/EndpointStream.h"
+#include "internal/Device.h"
 #include <avr/wdt.h>
 
 #define LED_SETUP()    DDRC |= (1<<7); DDRB |= (1<<0); DDRD |= (1<<5);
