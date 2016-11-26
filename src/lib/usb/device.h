@@ -4,12 +4,12 @@
 
 #pragma once
 
-#include "../../ab_common.h"
+#include "../ab_common.h"
 #include "usb.h"
-#include "Descriptors.h"
-#include "USBInterrupt.h"
-#include "Endpoint.h"
-#include "Events.h"
+#include "descriptors.h"
+#include "interrupt.h"
+#include "endpoint.h"
+#include "events.h"
 
 #define CONTROL_REQTYPE_DIRECTION 0x80
 #define CONTROL_REQTYPE_TYPE      0x60

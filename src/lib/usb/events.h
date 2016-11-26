@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../../ab_common.h"
+#include "../ab_common.h"
 
 #if !defined(__INCLUDE_FROM_EVENTS_C)
     /** Event for control requests. This event fires when a the USB host issues a control request

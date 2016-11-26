@@ -1,4 +1,4 @@
-#include "../ab.h"
+#include "ab_sound.h"
 
 // 0x03: put timer into waveform generation mode 4: CTC w/ TOP = OCRnA
 // 0x01: clock select bit to "no prescaling"

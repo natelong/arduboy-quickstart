@@ -1,4 +1,4 @@
-#include "../ab.h"
+#include "ab_random.h"
 
 static uint8_t _seed = 1;
 

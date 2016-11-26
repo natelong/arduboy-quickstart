@@ -1,4 +1,8 @@
-#include "../ab.h"
+#include "ab_core.h"
+#include "../screen/ab_screen.h"
+#include "../usb/ab_usb.h"
+#include "../key/ab_key.h"
+#include "../sound/ab_sound.h"
 
 #include <avr/wdt.h>
 
@@ -95,8 +99,8 @@ void ab_delay(uint32_t ms) {
 }
 
 void ab_frame(void) {
-    ab_oled_display();
-    ab_oled_clear();
+    ab_screen_display();
+    ab_screen_clear();
     ab_usb_update();
 
     for (;;) {
@@ -230,7 +234,7 @@ void ab_init() {
     power_usart1_disable();
 
     ab_key_init();
-    ab_oled_init();
+    ab_screen_init();
     ab_sound_init();
 
     ab_usb_init();

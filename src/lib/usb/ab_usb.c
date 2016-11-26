@@ -1,9 +1,10 @@
 // nate
-#include "../ab.h"
+#include "ab_usb.h"
+#include "../core/ab_core.h"
 
-#include "internal/descriptors.h"
-#include "internal/Endpoint.h"
-#include "internal/Device.h"
+#include "descriptors.h"
+#include "endpoint.h"
+#include "device.h"
 #include <avr/wdt.h>
 
 #define LED_SETUP()    DDRC |= (1<<7); DDRB |= (1<<0); DDRD |= (1<<5);

@@ -1,5 +1,5 @@
-#include "Endpoint.h"
-#include "Device.h"
+#include "endpoint.h"
+#include "device.h"
 #include "usb.h"
 
 #define USB_STREAM_TIMEOUT_MS 100

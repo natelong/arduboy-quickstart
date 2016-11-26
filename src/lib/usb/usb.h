@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../../ab_common.h"
+#include "../ab_common.h"
 
 /** Indicates the currently set configuration number of the device. USB devices may have several
  *  different configurations which the host can select between; this indicates the currently selected

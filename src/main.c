@@ -33,7 +33,7 @@ int main(void) {
         }
     }
 
-    ab_eeprom_read(&save, sizeof(SaveData));
+    ab_storage_read(&save, sizeof(SaveData));
 
     uint8_t num = ab_random();
 
@@ -66,7 +66,7 @@ int main(void) {
         uint8_t released = ab_key_getReleased();
 
         if (pressed & AB_KEY_U) save.score++;
-        if (pressed & AB_KEY_D) ab_eeprom_write(&save, sizeof(SaveData));
+        if (pressed & AB_KEY_D) ab_storage_write(&save, sizeof(SaveData));
         if (pressed & AB_KEY_L) {
             // Color c = colors[colorIndex++ % (sizeof(colors) / sizeof(Color))];
             // ab_setLED(c.r, c.g, c.b);
@@ -93,15 +93,15 @@ int main(void) {
             ab_setLED(c.r, c.g, c.b);
         }
 
-        ab_oled_setCursor(0, 0);
-        ab_oled_drawString("Arduino Mini: ");
-        ab_oled_drawNumber(save.score);
-        ab_oled_setCursor(0, 1);
-        ab_oled_drawString("Random: ");
-        ab_oled_drawNumber(num);
-        ab_oled_setCursor(0, 2);
-        ab_oled_drawString("Frame: ");
-        ab_oled_drawNumber(rbuf_total / FRAME_COUNT);
+        ab_screen_setCursor(0, 0);
+        ab_screen_drawString("Arduino Mini: ");
+        ab_screen_drawNumber(save.score);
+        ab_screen_setCursor(0, 1);
+        ab_screen_drawString("Random: ");
+        ab_screen_drawNumber(num);
+        ab_screen_setCursor(0, 2);
+        ab_screen_drawString("Frame: ");
+        ab_screen_drawNumber(rbuf_total / FRAME_COUNT);
 
 
         ab_debug();

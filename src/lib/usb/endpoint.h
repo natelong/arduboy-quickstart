@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "../../ab_common.h"
-#include "USBInterrupt.h"
+#include "../ab_common.h"
+#include "interrupt.h"
 
 #define EP_DIR_OUT 0x00 // Mask for OUT direction
 #define EP_DIR_IN  0x80 // Mask for IN direction

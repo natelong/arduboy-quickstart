@@ -1,5 +1,5 @@
-#include "USBInterrupt.h"
-#include "Device.h"
+#include "interrupt.h"
+#include "device.h"
 
 void USB_INT_DisableAllInterrupts(void) {
     USBCON &= ~(1 << VBUSTE);

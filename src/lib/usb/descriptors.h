@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../ab_common.h"
+#include "../ab_common.h"
 
 #define CDC_NOTIFICATION_EPNUM   2 // Endpoint number for the CDC control interface event notification endpoint.
 #define CDC_TX_EPNUM             3 // Endpoint number for the CDC data interface TX (data IN) endpoint.

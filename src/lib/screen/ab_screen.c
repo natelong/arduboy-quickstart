@@ -1,4 +1,5 @@
-#include "../ab.h"
+#include "ab_screen.h"
+#include "../core/ab_core.h"
 #include "../../res/font.h"
 
 #define SPI_CLOCK_DIV2   0x04
@@ -67,9 +68,9 @@ uint8_t numlen(uint32_t n) {
     return 0;
 }
 
-void ab_oled_init(void) {
+void ab_screen_init(void) {
     spi_init();
-    ab_oled_clear();
+    ab_screen_clear();
 
     uint8_t dcMask  = (1 << 4);
     uint8_t csMask  = (1 << 6);
@@ -104,7 +105,7 @@ void ab_oled_init(void) {
     SREG = sreg;
 }
 
-void ab_oled_display(void) {
+void ab_screen_display(void) {
     uint16_t i;
 
     for(i=0; i<sizeof(oled); i++) {
@@ -112,25 +113,25 @@ void ab_oled_display(void) {
     }
 }
 
-void ab_oled_setCursor(uint8_t x, uint8_t y) {
+void ab_screen_setCursor(uint8_t x, uint8_t y) {
     cursor_x = x;
     cursor_y = y;
 }
 
-void ab_oled_drawString(const char* s) {
+void ab_screen_drawString(const char* s) {
     for(uint8_t i = 0; s[i] != '\0'; i++) {
-        ab_oled_drawChar(cursor_x++, cursor_y, s[i]);
+        ab_screen_drawChar(cursor_x++, cursor_y, s[i]);
     }
 }
 
-void ab_oled_drawNumber(uint32_t n) {
+void ab_screen_drawNumber(uint32_t n) {
     uint8_t l = numlen(n);
     char s[10];
     memset(&s, '\0', 10);
     uint8_t si = l - 1;
 
     if (n == 0) {
-        ab_oled_drawChar(cursor_x++, cursor_y, '0');
+        ab_screen_drawChar(cursor_x++, cursor_y, '0');
         return;
     }
 
@@ -141,11 +142,11 @@ void ab_oled_drawNumber(uint32_t n) {
     }
 
     for(uint8_t i = 0; s[i] != '\0'; i++) {
-        ab_oled_drawChar(cursor_x++, cursor_y, s[i]);
+        ab_screen_drawChar(cursor_x++, cursor_y, s[i]);
     }
 }
 
-void ab_oled_drawChar(uint8_t x, uint8_t y, char c) {
+void ab_screen_drawChar(uint8_t x, uint8_t y, char c) {
     if(x >= AB_OLED_CHARWIDTH || y >= AB_OLED_CHARHEIGHT) return;
 
     for(uint8_t i = 0; i < AB_FONT_SIZE; i++) {
@@ -153,18 +154,18 @@ void ab_oled_drawChar(uint8_t x, uint8_t y, char c) {
     }
 }
 
-void ab_oled_drawDot(uint8_t x, uint8_t y) {
+void ab_screen_drawDot(uint8_t x, uint8_t y) {
     oled[x + (y / 8) * AB_OLED_WIDTH] |= _BV(y % 8);
 }
 
-void ab_oled_clear(void) {
+void ab_screen_clear(void) {
     uint16_t i;
     for(i = 0; i < sizeof(oled); i++) {
         oled[i] = 0x00;
     }
 }
 
-void ab_oled_drawBmp(int8_t sx, int8_t sy, uint8_t* p) {
+void ab_screen_drawBmp(int8_t sx, int8_t sy, uint8_t* p) {
     uint8_t* d  = (uint8_t*)p;
     uint8_t  cx = __LPM(d++);
     uint8_t  cy = __LPM(d++);
