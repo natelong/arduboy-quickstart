@@ -76,23 +76,14 @@ LDFLAGS = \
 #=============================================================================
 # LUFA Stuff
 
-VID                  = 0x2341UL
-PID                  = 0x0036UL
-BOARD                = USER
-F_USB                = $(F_CPU)
-FLASH_SIZE_KB        = 32
-BOOT_SECTION_SIZE_KB = 4
-BOOT_START           = 0x$(shell echo "obase=16; ($(FLASH_SIZE_KB) - $(BOOT_SECTION_SIZE_KB)) * 1024" | bc)
-LUFA_PATH            = $(SRCDIR)/LUFA
+VID       = 0x2341UL
+PID       = 0x0036UL
+LUFA_PATH = $(SRCDIR)/LUFA
 
 # LUFA library compile-time options and predefined tokens
 DFLAGS  += \
-    -D F_USB=$(F_USB) \
-    -D BOARD=BOARD_$(BOARD) \
     -D DEVICE_VID=$(VID) \
 	-D DEVICE_PID=$(PID)
-
-INCDIR += $(SRCDIR)
 
 #=============================================================================
 

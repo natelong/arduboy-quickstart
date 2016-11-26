@@ -6,10 +6,6 @@
 
 #include "../../ab_common.h"
 
-#ifndef F_USB
-    #error F_USB is not defined. You must define F_USB to the frequency of the unprescaled USB controller clock in your project makefile.
-#endif
-
 /** Indicates the currently set configuration number of the device. USB devices may have several
  *  different configurations which the host can select between; this indicates the currently selected
  *  value, or 0 if no configuration has been selected.
