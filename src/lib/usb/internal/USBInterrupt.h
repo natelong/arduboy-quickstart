@@ -13,61 +13,25 @@
 #define USB_INT_SUSPI   3
 #define USB_INT_EORSTI  4
 
-static INLINE void USB_INT_EnableVBUS(void) {
-    USBCON |= (1 << VBUSTE);
-}
+static INLINE void USB_INT_EnableVBUS(void)    { USBCON |= (1 << VBUSTE);  }
+static INLINE void USB_INT_EnableWakeup(void)  { UDIEN  |= (1 << WAKEUPE); }
+static INLINE void USB_INT_EnableSuspend(void) { UDIEN  |= (1 << SUSPE);   }
+static INLINE void USB_INT_EnableReset(void)   { UDIEN  |= (1 << EORSTE);  }
 
-static INLINE void USB_INT_EnableWakeup(void) {
-    UDIEN |= (1 << WAKEUPE);
-}
+static INLINE void USB_INT_DisableVBUS(void)    { USBCON &= ~(1 << VBUSTE);  }
+static INLINE void USB_INT_DisableWakeup(void)  { UDIEN  &= ~(1 << WAKEUPE); }
+static INLINE void USB_INT_DisableSuspend(void) { UDIEN  &= ~(1 << SUSPE);   }
+static INLINE void USB_INT_DisableReset(void)   { UDIEN  &= ~(1 << EORSTE);  }
 
-static INLINE void USB_INT_EnableSuspend(void) {
-    UDIEN |= (1 << SUSPE);
-}
+static INLINE void USB_INT_ClearVBUS(void)    { USBINT &= ~(1 << VBUSTI);  }
+static INLINE void USB_INT_ClearWakeup(void)  { UDINT  &= ~(1 << WAKEUPI); }
+static INLINE void USB_INT_ClearSuspend(void) { UDINT  &= ~(1 << SUSPI);   }
+static INLINE void USB_INT_ClearReset(void)   { UDINT  &= ~(1 << EORSTI);  }
 
-static INLINE void USB_INT_EnableReset(void) {
-    UDIEN |= (1 << EORSTE);
-}
-
-static INLINE void USB_INT_Disable(const uint8_t Interrupt) {
-    switch (Interrupt) {
-        case USB_INT_VBUSTI:  USBCON &= ~(1 << VBUSTE);  break;
-        case USB_INT_WAKEUPI: UDIEN  &= ~(1 << WAKEUPE); break;
-        case USB_INT_SUSPI:   UDIEN  &= ~(1 << SUSPE);   break;
-        case USB_INT_EORSTI:  UDIEN  &= ~(1 << EORSTE);  break;
-    }
-}
-
-static INLINE void USB_INT_Clear(const uint8_t Interrupt) {
-    switch (Interrupt) {
-        case USB_INT_VBUSTI:  USBINT &= ~(1 << VBUSTI);  break;
-        case USB_INT_WAKEUPI: UDINT  &= ~(1 << WAKEUPI); break;
-        case USB_INT_SUSPI:   UDINT  &= ~(1 << SUSPI);   break;
-        case USB_INT_EORSTI:  UDINT  &= ~(1 << EORSTI);  break;
-    }
-}
-
-static INLINE bool USB_INT_IsEnabled(const uint8_t Interrupt) {
-    switch (Interrupt) {
-        case USB_INT_VBUSTI:  return (USBCON & (1 << VBUSTE));
-        case USB_INT_WAKEUPI: return (UDIEN  & (1 << WAKEUPE));
-        case USB_INT_SUSPI:   return (UDIEN  & (1 << SUSPE));
-        case USB_INT_EORSTI:  return (UDIEN  & (1 << EORSTE));
-    }
-
-    return false;
-}
-
-static INLINE bool USB_INT_HasOccurred(const uint8_t Interrupt) {
-    switch (Interrupt) {
-        case USB_INT_VBUSTI:  return (USBINT & (1 << VBUSTI));
-        case USB_INT_WAKEUPI: return (UDINT  & (1 << WAKEUPI));
-        case USB_INT_SUSPI:   return (UDINT  & (1 << SUSPI));
-        case USB_INT_EORSTI:  return (UDINT  & (1 << EORSTI));
-    }
-
-    return false;
-}
+static INLINE bool USB_INT_HasVBUSOccurred(void)    { return (USBINT & (1 << VBUSTI))  && (USBCON & (1 << VBUSTE));  }
+static INLINE bool USB_INT_HasWakeupOccurred(void)  { return (UDINT  & (1 << WAKEUPI)) && (UDIEN  & (1 << WAKEUPE)); }
+static INLINE bool USB_INT_HasSuspendOccurred(void) { return (UDINT  & (1 << SUSPI))   && (UDIEN  & (1 << SUSPE));   }
+static INLINE bool USB_INT_HasResetOccurred(void)   { return (UDINT  & (1 << EORSTI))  && (UDIEN  & (1 << EORSTE));  }
 
 void USB_INT_ClearAllInterrupts(void);
 void USB_INT_DisableAllInterrupts(void);

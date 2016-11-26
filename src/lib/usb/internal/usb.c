@@ -14,7 +14,7 @@ void USB_Init() {
     UDCON &= ~(1 << LSM); // USB_Device_SetFullSpeed();
     USB_INT_EnableVBUS();
     Endpoint_ConfigureEndpoint(ENDPOINT_CONTROLEP, EP_TYPE_CONTROL, ENDPOINT_DIR_OUT, USB_Device_ControlEndpointSize, ENDPOINT_BANK_SINGLE);
-    USB_INT_Clear(USB_INT_SUSPI);
+    USB_INT_ClearSuspend();
     USB_INT_EnableSuspend();
     USB_INT_EnableReset();
     UDCON  &= ~(1 << DETACH); // USB_Attach();

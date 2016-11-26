@@ -11,8 +11,8 @@ void USB_INT_ClearAllInterrupts(void) {
 }
 
 ISR(USB_GEN_vect, ISR_BLOCK) {
-    if (USB_INT_HasOccurred(USB_INT_VBUSTI) && USB_INT_IsEnabled(USB_INT_VBUSTI)) {
-        USB_INT_Clear(USB_INT_VBUSTI);
+    if (USB_INT_HasVBUSOccurred()) {
+        USB_INT_ClearVBUS();
 
         if (USB_VBUS_GetStatus()) {
             USB_PLL_On();
@@ -26,8 +26,8 @@ ISR(USB_GEN_vect, ISR_BLOCK) {
         }
     }
 
-    if (USB_INT_HasOccurred(USB_INT_SUSPI) && USB_INT_IsEnabled(USB_INT_SUSPI)) {
-        USB_INT_Disable(USB_INT_SUSPI);
+    if (USB_INT_HasSuspendOccurred()) {
+        USB_INT_DisableSuspend();
         USB_INT_EnableWakeup();
         USB_CLK_Freeze();
         USB_PLL_Off();
@@ -35,12 +35,12 @@ ISR(USB_GEN_vect, ISR_BLOCK) {
         EVENT_USB_Device_Suspend();
     }
 
-    if (USB_INT_HasOccurred(USB_INT_WAKEUPI) && USB_INT_IsEnabled(USB_INT_WAKEUPI)) {
+    if (USB_INT_HasWakeupOccurred()) {
         USB_PLL_On();
         while (!(USB_PLL_IsReady()));
         USB_CLK_Unfreeze();
-        USB_INT_Clear(USB_INT_WAKEUPI);
-        USB_INT_Disable(USB_INT_WAKEUPI);
+        USB_INT_ClearWakeup();
+        USB_INT_DisableWakeup();
         USB_INT_EnableSuspend();
         if (USB_Device_ConfigurationNumber) {
             USB_DeviceState = DEVICE_STATE_Configured;
@@ -50,14 +50,14 @@ ISR(USB_GEN_vect, ISR_BLOCK) {
         EVENT_USB_Device_WakeUp();
     }
 
-    if (USB_INT_HasOccurred(USB_INT_EORSTI) && USB_INT_IsEnabled(USB_INT_EORSTI)) {
-        USB_INT_Clear(USB_INT_EORSTI);
+    if (USB_INT_HasResetOccurred()) {
+        USB_INT_ClearReset();
 
         USB_DeviceState                = DEVICE_STATE_Default;
         USB_Device_ConfigurationNumber = 0;
 
-        USB_INT_Clear(USB_INT_SUSPI);
-        USB_INT_Disable(USB_INT_SUSPI);
+        USB_INT_ClearSuspend();
+        USB_INT_DisableSuspend();
         USB_INT_EnableWakeup();
 
         Endpoint_ConfigureEndpoint(ENDPOINT_CONTROLEP, EP_TYPE_CONTROL,
