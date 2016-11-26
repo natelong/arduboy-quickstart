@@ -17,15 +17,21 @@ enum USB_Interrupts_t {
     USB_INT_RXSTPI  = 6,
 };
 
-static INLINE void USB_INT_Enable(const uint8_t Interrupt) {
-    switch (Interrupt) {
-        case USB_INT_VBUSTI:  USBCON |= (1 << VBUSTE);  break;
-        case USB_INT_WAKEUPI: UDIEN  |= (1 << WAKEUPE); break;
-        case USB_INT_SUSPI:   UDIEN  |= (1 << SUSPE);   break;
-        case USB_INT_EORSTI:  UDIEN  |= (1 << EORSTE);  break;
-        case USB_INT_SOFI:    UDIEN  |= (1 << SOFE);    break;
-        case USB_INT_RXSTPI:  UEIENX |= (1 << RXSTPE);  break;
-    }
+
+static INLINE void USB_INT_EnableVBUS(void) {
+    USBCON |= (1 << VBUSTE);
+}
+
+static INLINE void USB_INT_EnableWakeup(void) {
+    UDIEN |= (1 << WAKEUPE);
+}
+
+static INLINE void USB_INT_EnableSuspend(void) {
+    UDIEN |= (1 << SUSPE);
+}
+
+static INLINE void USB_INT_EnableReset(void) {
+    UDIEN |= (1 << EORSTE);
 }
 
 static INLINE void USB_INT_Disable(const uint8_t Interrupt) {

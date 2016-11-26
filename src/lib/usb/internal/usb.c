@@ -12,11 +12,11 @@ void USB_Init() {
     USB_DeviceState = DEVICE_STATE_Unattached;
     USB_Device_ConfigurationNumber = 0;
     UDCON &= ~(1 << LSM); // USB_Device_SetFullSpeed();
-    USB_INT_Enable(USB_INT_VBUSTI);
+    USB_INT_EnableVBUS();
     Endpoint_ConfigureEndpoint(ENDPOINT_CONTROLEP, EP_TYPE_CONTROL, ENDPOINT_DIR_OUT, USB_Device_ControlEndpointSize, ENDPOINT_BANK_SINGLE);
     USB_INT_Clear(USB_INT_SUSPI);
-    USB_INT_Enable(USB_INT_SUSPI);
-    USB_INT_Enable(USB_INT_EORSTI);
+    USB_INT_EnableSuspend();
+    USB_INT_EnableReset();
     UDCON  &= ~(1 << DETACH); // USB_Attach();
     USBCON  |=  (1 << OTGPADE); // USB_OTGPAD_On();
 }

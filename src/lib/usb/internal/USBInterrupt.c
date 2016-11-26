@@ -28,7 +28,7 @@ ISR(USB_GEN_vect, ISR_BLOCK) {
 
     if (USB_INT_HasOccurred(USB_INT_SUSPI) && USB_INT_IsEnabled(USB_INT_SUSPI)) {
         USB_INT_Disable(USB_INT_SUSPI);
-        USB_INT_Enable(USB_INT_WAKEUPI);
+        USB_INT_EnableWakeup();
         USB_CLK_Freeze();
         USB_PLL_Off();
         USB_DeviceState = DEVICE_STATE_Suspended;
@@ -41,7 +41,7 @@ ISR(USB_GEN_vect, ISR_BLOCK) {
         USB_CLK_Unfreeze();
         USB_INT_Clear(USB_INT_WAKEUPI);
         USB_INT_Disable(USB_INT_WAKEUPI);
-        USB_INT_Enable(USB_INT_SUSPI);
+        USB_INT_EnableSuspend();
         if (USB_Device_ConfigurationNumber) {
             USB_DeviceState = DEVICE_STATE_Configured;
         } else {
@@ -58,7 +58,7 @@ ISR(USB_GEN_vect, ISR_BLOCK) {
 
         USB_INT_Clear(USB_INT_SUSPI);
         USB_INT_Disable(USB_INT_SUSPI);
-        USB_INT_Enable(USB_INT_WAKEUPI);
+        USB_INT_EnableWakeup();
 
         Endpoint_ConfigureEndpoint(ENDPOINT_CONTROLEP, EP_TYPE_CONTROL,
                                    ENDPOINT_DIR_OUT, USB_Device_ControlEndpointSize,
