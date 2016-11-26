@@ -3,7 +3,6 @@
 
 #include "internal/descriptors.h"
 #include "internal/Endpoint.h"
-#include "internal/EndpointStream.h"
 #include "internal/Device.h"
 #include <avr/wdt.h>
 

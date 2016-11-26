@@ -6,9 +6,35 @@
 
 #include "../../ab_common.h"
 #include "usb.h"
-#include "StdDescriptors.h"
+#include "Descriptors.h"
 #include "USBInterrupt.h"
 #include "Endpoint.h"
+#include "Events.h"
+
+#define CONTROL_REQTYPE_DIRECTION 0x80
+#define CONTROL_REQTYPE_TYPE      0x60
+#define CONTROL_REQTYPE_RECIPIENT 0x1F
+
+#define REQDIR_HOSTTODEVICE (0 << 7)
+#define REQDIR_DEVICETOHOST (1 << 7)
+
+#define REQTYPE_STANDARD (0 << 5)
+#define REQTYPE_CLASS    (1 << 5)
+
+#define REQREC_DEVICE    (0 << 0)
+#define REQREC_INTERFACE (1 << 0)
+#define REQREC_ENDPOINT  (2 << 0)
+#define REQREC_OTHER     (3 << 0)
+
+#define REQ_GetStatus        0
+#define REQ_ClearFeature     1
+#define REQ_SetFeature       3
+#define REQ_SetAddress       5
+#define REQ_GetDescriptor    6
+#define REQ_GetConfiguration 8
+#define REQ_SetConfiguration 9
+
+#define FEATURE_SEL_EndpointHalt 0x00
 
 /**
  * Enum for the various states of the USB Device state machine. Only some states are
@@ -24,21 +50,6 @@ enum USB_Device_States_t {
     DEVICE_STATE_Configured = 4, // Device enumerated by host and ready for USB communications to begin.
     DEVICE_STATE_Suspended  = 5, // USB bus suspended by host, and should power down to a minimal level until bus is resumed.
 };
-
-/** Function to retrieve a given descriptor's size and memory location from the given descriptor type value,
- *  index and language ID. This function MUST be overridden in the user application (added with full, identical
- *  prototype and name so that the library can call it to retrieve descriptor data.
- *
- *  \param[in] value                The type of the descriptor to retrieve in the upper byte, and the index in the
- *                                  lower byte (when more than one descriptor of the given type exists, such as the
- *                                  case of string descriptors). The type may be one of the standard types defined
- *                                  in the DescriptorTypes_t enum, or may be a class-specific descriptor type value.
- *  \param[out] address             Pointer to the descriptor in memory. This should be set by the routine to
- *                                  the address of the descriptor.
- *
- *  \return Size in bytes of the descriptor if it exists, zero or NO_DESCRIPTOR otherwise.
- */
-uint16_t CALLBACK_USB_GetDescriptor(const uint16_t value, const void** const address);
 
 void USB_Device_ProcessControlRequest(void);
 
