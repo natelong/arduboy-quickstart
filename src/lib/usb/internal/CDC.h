@@ -35,7 +35,7 @@
 
 #pragma once
 
-#include "../USB.h"
+#include "usb.h"
 
 // Enum for possible Class, Subclass and Protocol values of device and interface descriptors
 enum CDC_Descriptor_ClassSubclassProtocol_t {
