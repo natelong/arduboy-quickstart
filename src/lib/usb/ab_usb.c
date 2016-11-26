@@ -14,9 +14,6 @@
 #define RX_LED_OFF()   PORTB |= (1<<0)
 #define RX_LED_ON()    PORTB &= ~(1<<0)
 
-uint32_t pulseTimer = 0;
-#define PULSE_FRAMES 15;
-
 /** Contains the current baud rate and other settings of the first virtual serial port. This must be retained as some
  *  operating systems will not open the port unless the settings can be set successfully.
  */
@@ -75,19 +72,6 @@ void EVENT_USB_Device_ControlRequest(void) {
     }
 }
 
-void EVENT_USB_Device_Connect(void) {
-    ab_setLED(0, 0, 255);
-    pulseTimer = PULSE_FRAMES;
-}
-
-void EVENT_USB_Device_Disconnect(void) {
-    ab_setLED(255, 0, 0);
-    pulseTimer = PULSE_FRAMES;
-}
-
-
-
-
 void ab_usb_init(void) {
     // Disable watchdog if enabled by bootloader/fuses
     MCUSR &= ~(1 << WDRF);
@@ -105,8 +89,4 @@ void ab_usb_init(void) {
 
 void ab_usb_update(void) {
     USB_USBTask();
-
-    if (pulseTimer && pulseTimer-- == 1) {
-        ab_setLED(0, 0, 0);
-    }
 }

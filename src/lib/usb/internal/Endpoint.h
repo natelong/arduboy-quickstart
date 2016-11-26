@@ -18,23 +18,6 @@
  */
 #define ENDPOINT_CONTROLEP 0
 
-#define _ENDPOINT_GET_MAXSIZE(EPIndex)         _ENDPOINT_GET_MAXSIZE2(ENDPOINT_DETAILS_EP ## EPIndex)
-#define _ENDPOINT_GET_MAXSIZE2(EPDetails)      _ENDPOINT_GET_MAXSIZE3(EPDetails)
-#define _ENDPOINT_GET_MAXSIZE3(MaxSize, Banks) (MaxSize)
-
-#define _ENDPOINT_GET_BANKS(EPIndex)           _ENDPOINT_GET_BANKS2(ENDPOINT_DETAILS_EP ## EPIndex)
-#define _ENDPOINT_GET_BANKS2(EPDetails)        _ENDPOINT_GET_BANKS3(EPDetails)
-#define _ENDPOINT_GET_BANKS3(MaxSize, Banks)   (Banks)
-
-#define ENDPOINT_DETAILS_MAXEP 7
-#define ENDPOINT_DETAILS_EP0   64,  1
-#define ENDPOINT_DETAILS_EP1   256, 2
-#define ENDPOINT_DETAILS_EP2   64,  2
-#define ENDPOINT_DETAILS_EP3   64,  2
-#define ENDPOINT_DETAILS_EP4   64,  2
-#define ENDPOINT_DETAILS_EP5   64,  2
-#define ENDPOINT_DETAILS_EP6   64,  2
-
 /** Global indicating the maximum packet size of the default control endpoint located at address
  *  0 in the device. Used to be controlled by FIXED_CONTROL_ENDPOINT_SIZE
  */
@@ -48,9 +31,6 @@ void Endpoint_ClearStatusStage(void);
 
 /** Spin-loops until the currently selected non-control endpoint is ready for the next packet of data
  *  to be read or written to it.
- *
- *  \note This routine should not be called on CONTROL type endpoints.
- *
  *  \return A value from the \ref Endpoint_WaitUntilReady_ErrorCodes_t enum.
  */
 uint8_t Endpoint_WaitUntilReady(void);
@@ -64,13 +44,7 @@ void Endpoint_ClearEndpoints(void);
  */
 #define ENDPOINT_BANK_SINGLE (0 << EPBK0)
 
-// Retrieves the maximum bank size in bytes of a given endpoint.
-#define ENDPOINT_MAX_SIZE(EPIndex) _ENDPOINT_GET_MAXSIZE(EPIndex)
-
-// Retrieves the total number of banks supported by the given endpoint.
-#define ENDPOINT_BANKS_SUPPORTED(EPIndex) _ENDPOINT_GET_BANKS(EPIndex)
-
-#define ENDPOINT_TOTAL_ENDPOINTS ENDPOINT_DETAILS_MAXEP
+#define ENDPOINT_TOTAL_ENDPOINTS 7
 
 // Enum for the possible error return codes of the \ref Endpoint_WaitUntilReady() function.
 enum Endpoint_WaitUntilReady_ErrorCodes_t {
@@ -96,8 +70,6 @@ static INLINE void Endpoint_SelectEndpoint(const uint8_t EndpointNumber) {
 
 /** Enables the currently selected endpoint so that data can be sent and received through it to
  *  and from a host.
- *
- *  \note Endpoints must first be configured properly via \ref Endpoint_ConfigureEndpoint().
  */
 static INLINE void Endpoint_EnableEndpoint(void) {
     UECONX |= (1 << EPEN);
@@ -141,19 +113,6 @@ static INLINE void Endpoint_DisableEndpoint(void) {
  */
 static INLINE bool Endpoint_IsEnabled(void) {
     return ((UECONX & (1 << EPEN)) ? true : false);
-}
-
-/** Determines if the currently selected endpoint may be read from (if data is waiting in the endpoint
- *  bank and the endpoint is an OUT direction, or if the bank is not yet full if the endpoint is an IN
- *  direction). This function will return false if an error has occurred in the endpoint, if the endpoint
- *  is an OUT direction and no packet (or an empty packet) has been received, or if the endpoint is an IN
- *  direction and the endpoint bank is full.
- *
- *  \return Boolean \c true if the currently selected endpoint may be read from or written to, depending
- *          on its direction.
- */
-static INLINE bool Endpoint_IsReadWriteAllowed(void) {
-    return ((UEINTX & (1 << RWAL)) ? true : false);
 }
 
 /** Determines if the currently selected endpoint is configured.
