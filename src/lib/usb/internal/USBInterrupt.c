@@ -14,7 +14,7 @@ ISR(USB_GEN_vect, ISR_BLOCK) {
     if (USB_INT_HasVBUSOccurred()) {
         USB_INT_ClearVBUS();
 
-        if (USB_VBUS_GetStatus()) {
+        if (USBSTA & (1 << VBUS)) {
             USB_PLL_On();
             while (!(USB_PLL_IsReady()));
             USB_DeviceState = DEVICE_STATE_Powered;

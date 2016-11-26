@@ -40,16 +40,6 @@
  */
 #define USB_STREAM_TIMEOUT_MS 100
 
-/** Determines if the VBUS line is currently high (i.e. the USB host is supplying power).
- *
- *  \note This function is not available on some AVR models which do not support hardware VBUS monitoring.
- *
- *  \return Boolean \c true if the VBUS line is currently detecting power from a host, \c false otherwise.
- */
-static INLINE bool USB_VBUS_GetStatus(void) {
-    return ((USBSTA & (1 << VBUS)) ? true : false);
-}
-
 /** Main function to initialize and start the USB interface. Once active, the USB interface will
  *  allow for device connection to a host when in device mode, or for device enumeration while in
  *  host mode.
