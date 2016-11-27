@@ -2,14 +2,10 @@
 
 #include "../ab_common.h"
 
-typedef struct {
-    volatile uint8_t*  mask;
-    volatile uint16_t* source;
-} ab_Channel;
-
-extern const ab_Channel ab_Channel_1;
-extern const ab_Channel ab_Channel_2;
+extern const uint8_t AB_CHANNEL_1;
+extern const uint8_t AB_CHANNEL_2;
 
 void ab_sound_init(void);
-void ab_sound_playNote(const ab_Channel* channel, uint16_t frequency);
-void ab_sound_stopNote(const ab_Channel* channel);
+void ab_sound_playNote(uint8_t channel, uint8_t note);
+void ab_sound_playTone(uint8_t channel, uint16_t frequency);
+void ab_sound_stopChannel(uint8_t channel);
