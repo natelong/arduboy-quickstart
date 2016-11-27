@@ -6,7 +6,7 @@
 
 #include "descriptors.h"
 #include "usb.h"
-#include "Endpoint.h"
+#include "endpoint.h"
 
 /** Device descriptor structure. This descriptor, located in SRAM memory, describes the overall
  *  device characteristics, including the supported USB version, control endpoint size and the
@@ -160,7 +160,6 @@ uint16_t CALLBACK_USB_GetDescriptor(const uint16_t value, const void** const add
                 target = &ManufNameString;
                 size   = ManufNameString.Header.Size;
             }
-
             break;
     }
 
