@@ -29,11 +29,10 @@ void ab_sound_init(void) {
         SREG = oldSREG;
     }
 
-    TCCR3A = 0;
     TCCR1A = 0;
-
-    TCCR3B = INITIAL_PIN_MODE;
+    TCCR3A = 0;
     TCCR1B = INITIAL_PIN_MODE;
+    TCCR3B = INITIAL_PIN_MODE;
 
     power_timer3_enable();
     power_timer1_enable();
@@ -46,20 +45,12 @@ void ab_sound_playNote(uint8_t channel, uint8_t note) {
 
 void ab_sound_playTone(uint8_t channel, uint16_t frequency) {
     uint32_t ocr = F_CPU / frequency - 1;
-    uint8_t  pre = 1;
-
-    if (ocr > 0xffff) {
-        ocr = F_CPU / frequency / 64 - 1;
-        pre = 3;
-    }
 
     if (channel == AB_CHANNEL_1) {
-        TCCR1B = (TCCR1B & 0xf8) | pre;
-        OCR1A  = ocr;
+        OCR1A = ocr;
         TIMSK1 |= (1 << OCIE1A);
     } else if (channel == AB_CHANNEL_2) {
-        TCCR3B = (TCCR3B & 0xf8) | pre;
-        OCR3A  = ocr;
+        OCR3A = ocr;
         TIMSK3 |= (1 << OCIE3A);
     }
 }
