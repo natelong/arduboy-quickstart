@@ -150,7 +150,7 @@ void ab_screen_drawChar(uint8_t x, uint8_t y, char c) {
     if(x >= AB_OLED_CHARWIDTH || y >= AB_OLED_CHARHEIGHT) return;
 
     for(uint8_t i = 0; i < AB_FONT_SIZE; i++) {
-        oled[(x * AB_FONT_WIDTH + i) + (y * AB_OLED_WIDTH)] = __LPM(font + (c * AB_FONT_SIZE) + i);
+        oled[(x * AB_FONT_WIDTH + i) + (y * AB_OLED_WIDTH)] = pgm_read_byte(font + (c * AB_FONT_SIZE) + i);
     }
 }
 
@@ -165,30 +165,20 @@ void ab_screen_clear(void) {
     }
 }
 
-void ab_screen_drawBmp(int8_t sx, int8_t sy, uint8_t* p) {
-    uint8_t* d  = (uint8_t*)p;
-    uint8_t  cx = __LPM(d++);
-    uint8_t  cy = __LPM(d++);
+void ab_screen_drawBmp(int8_t cx, int8_t cy, const ab_Image* img) {
+    uint8_t x, y;
+    uint8_t w = pgm_read_byte(&img->width);
+    uint8_t h = pgm_read_byte(&img->height);
+    const uint8_t* data = pgm_read_byte(&img->data);
+    uint16_t offset = 0;
 
-    uint8_t chr, mask;
-    uint8_t x, y, b;
+    if (cx + w > AB_OLED_WIDTH) return;
+    if (cy + h > AB_OLED_HEIGHT) return;
 
-    for(y=0; y<cy; y++) {
-        for(x=0; x<cx; x+=8) {
-            if(sy + y < 0 || sy + y >= AB_OLED_HEIGHT) break;
-
-            chr  = __LPM(d++);
-            mask = 0x80;
-
-            for(b=0; b<8; b++) {
-                if(sx + x + b >= 0 && sx + x + b < AB_OLED_WIDTH) {
-                    if(chr & mask) {
-                        oled[(sx + x + b) + ((sy + y) / 8) * AB_OLED_WIDTH] |= _BV((sy + y) & 0x7);
-                    }
-                }
-
-                mask >>=1;
-            }
+    for(y = 0; y < h; y += 8) {
+        for(x = 0; x < w; x++) {
+            oled[(cx + x) + (cy + y / 8) * AB_OLED_WIDTH] = pgm_read_byte(data + offset);
+            offset++;
         }
     }
 }
