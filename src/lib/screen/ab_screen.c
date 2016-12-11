@@ -165,20 +165,47 @@ void ab_screen_clear(void) {
     }
 }
 
-void ab_screen_drawBmp(int8_t cx, int8_t cy, const ab_Image* img) {
+void ab_screen_drawTile(int8_t cx, int8_t cy, const ab_Image* img) {
     uint8_t x, y;
     uint8_t w = pgm_read_byte(&img->width);
     uint8_t h = pgm_read_byte(&img->height);
     const uint8_t* data = pgm_read_byte(&img->data);
     uint16_t offset = 0;
 
+    if (cy % 8 != 0) return;
     if (cx + w > AB_OLED_WIDTH) return;
     if (cy + h > AB_OLED_HEIGHT) return;
 
     for(y = 0; y < h; y += 8) {
         for(x = 0; x < w; x++) {
-            oled[(cx + x) + (cy + y / 8) * AB_OLED_WIDTH] = pgm_read_byte(data + offset);
+            oled[(cx + x) + ((cy + y) / 8) * AB_OLED_WIDTH] = pgm_read_byte(data + offset);
             offset++;
+        }
+    }
+}
+
+void ab_screen_drawImage(int8_t cx, int8_t cy, const ab_Image* img) {
+    uint8_t x, y;
+    uint8_t w = pgm_read_byte(&img->width);
+    uint8_t h = pgm_read_byte(&img->height);
+    const uint8_t* data = pgm_read_word(&img->data);
+    uint16_t offset = 0;
+    uint8_t yoff = cy % 8;
+    uint8_t val;
+
+    if (yoff == 0) {
+        ab_screen_drawTile(cx, cy, img); // switch to faster draw
+    } else {
+        offset = 0;
+        for(y = 0; y < (h / 8) + 1; ++y) {
+            for(x = 0; x < w; x++) {
+                val = 0;
+                if (y < (h / 8)) val |= pgm_read_byte(data + offset) << yoff;
+                if (y > 0)       val |= pgm_read_byte(data + offset - w) >> (8 - yoff);
+
+                oled[(cx + x) + (cy / 8 + y) * AB_OLED_WIDTH] = val;
+                offset++;
+            }
         }
     }
 }

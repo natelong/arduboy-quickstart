@@ -53,6 +53,8 @@ int main(void) {
         {  0, 255, 255},
     };
 
+    uint8_t y = 0;
+
     for (;;) {
         uint32_t now = ab_millis();
         uint8_t delta = (uint8_t)(now - last);
@@ -66,13 +68,10 @@ int main(void) {
         uint8_t pressed  = ab_key_getPressed();
         uint8_t released = ab_key_getReleased();
 
-        if (pressed & AB_KEY_U) save.score++;
-        if (pressed & AB_KEY_D) ab_storage_write(&save, sizeof(SaveData));
-        if (pressed & AB_KEY_L) {
-            // Color c = colors[colorIndex++ % (sizeof(colors) / sizeof(Color))];
-            // ab_setLED(c.r, c.g, c.b);
-        }
-        if (pressed & AB_KEY_R) num = ab_random();
+        if (pressed & AB_KEY_U) y--;
+        if (pressed & AB_KEY_D) y++;
+        if (pressed & AB_KEY_L) save.score = ab_random();
+        if (pressed & AB_KEY_R) ab_storage_write(&save, sizeof(SaveData));
         if (pressed & AB_KEY_B) {
             lightShow = !lightShow;
             ab_setLED(0, 0, 0);
@@ -94,7 +93,7 @@ int main(void) {
             ab_setLED(c.r, c.g, c.b);
         }
 
-        ab_screen_drawBmp(0, 0, &img_stephanie_png);
+        ab_screen_drawImage(0, y, &img_stephanie_png);
 
         ab_screen_setCursor(0, 0);
         ab_screen_drawString("Arduino Mini: ");
