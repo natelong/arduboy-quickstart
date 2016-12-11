@@ -23,5 +23,5 @@ void ab_screen_drawNumber(uint32_t n);
 void ab_screen_drawChar(uint8_t x, uint8_t y, char c);
 
 void ab_screen_drawDot(uint8_t x, uint8_t y);
-void ab_screen_drawTile(int8_t x, int8_t y, const ab_Image* img);
-void ab_screen_drawImage(int8_t x, int8_t y, const ab_Image* img);
+void ab_screen_drawTile(uint8_t x, uint8_t y, const ab_Image* img);
+void ab_screen_drawImage(uint8_t x, uint8_t y, const ab_Image* img);

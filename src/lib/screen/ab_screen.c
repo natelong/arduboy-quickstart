@@ -2,6 +2,7 @@
 #include "../core/ab_core.h"
 #include "../../res/font.h"
 
+#define AB_OLED_LENGTH   ((uint16_t)(AB_OLED_WIDTH * AB_OLED_WIDTH / 8))
 #define SPI_CLOCK_DIV2   0x04
 #define SPI_CLOCK_MASK   0x03 // SPR1 = bit 1, SPR0 = bit 0 on SPCR
 #define SPI_2XCLOCK_MASK 0x01 // SPI2X = bit 0 on SPSR
@@ -165,46 +166,48 @@ void ab_screen_clear(void) {
     }
 }
 
-void ab_screen_drawTile(int8_t cx, int8_t cy, const ab_Image* img) {
-    uint8_t x, y;
-    uint8_t w = pgm_read_byte(&img->width);
-    uint8_t h = pgm_read_byte(&img->height);
-    const uint8_t* data = pgm_read_byte(&img->data);
-    uint16_t offset = 0;
-
+void ab_screen_drawTile(uint8_t cx, uint8_t cy, const ab_Image* img) {
     if (cy % 8 != 0) return;
-    if (cx + w > AB_OLED_WIDTH) return;
-    if (cy + h > AB_OLED_HEIGHT) return;
 
-    for(y = 0; y < h; y += 8) {
-        for(x = 0; x < w; x++) {
-            oled[(cx + x) + ((cy + y) / 8) * AB_OLED_WIDTH] = pgm_read_byte(data + offset);
-            offset++;
+    uint8_t x, y;
+    uint8_t stride = pgm_read_byte(&img->width);
+    const uint8_t* data = pgm_read_byte(&img->data);
+
+    uint8_t sw = stride;
+    uint8_t sh = pgm_read_byte(&img->height);
+
+    if (cx + sw > AB_OLED_WIDTH)  sw = AB_OLED_WIDTH - cx;
+    if (cy + sh > AB_OLED_HEIGHT) sh = AB_OLED_HEIGHT - cy;
+
+    for(y = 0; y < sh / 8; ++y) {
+        for(x = 0; x < sw; ++x) {
+            oled[(cx + x) + (cy / 8 + y) * AB_OLED_WIDTH] = pgm_read_byte(data + (y * stride + x));
         }
     }
 }
 
-void ab_screen_drawImage(int8_t cx, int8_t cy, const ab_Image* img) {
+void ab_screen_drawImage(uint8_t dx, uint8_t dy, const ab_Image* img) {
     uint8_t x, y;
     uint8_t w = pgm_read_byte(&img->width);
     uint8_t h = pgm_read_byte(&img->height);
     const uint8_t* data = pgm_read_word(&img->data);
-    uint16_t offset = 0;
-    uint8_t yoff = cy % 8;
+    uint8_t yoff = dy % 8;
     uint8_t val;
+    uint16_t index;
 
     if (yoff == 0) {
-        ab_screen_drawTile(cx, cy, img); // switch to faster draw
+        ab_screen_drawTile(dx, dy, img); // switch to faster draw
     } else {
-        offset = 0;
-        for(y = 0; y < (h / 8) + 1; ++y) {
-            for(x = 0; x < w; x++) {
-                val = 0;
-                if (y < (h / 8)) val |= pgm_read_byte(data + offset) << yoff;
-                if (y > 0)       val |= pgm_read_byte(data + offset - w) >> (8 - yoff);
+        for(y = 0; y < h/8 + 1; ++y) {
+            for(x = 0; x < w && x + dx < AB_OLED_WIDTH; ++x) {
+                index = dx+x + (dy/8 + y) * AB_OLED_WIDTH;
 
-                oled[(cx + x) + (cy / 8 + y) * AB_OLED_WIDTH] = val;
-                offset++;
+                if (index < AB_OLED_LENGTH) {
+                    val = 0;
+                    if (y < (h / 8)) val |= pgm_read_byte(data + (x + y * w)) << yoff;
+                    if (y > 0)       val |= pgm_read_byte(data + (x + (y-1) * w)) >> (8 - yoff);
+                    oled[index] = val;
+                }
             }
         }
     }
